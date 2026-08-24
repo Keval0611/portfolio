@@ -92,3 +92,52 @@ function openChest() {
     lucide.createIcons();
   }, 400);
 }
+
+// In-Browser Ping Simulation Logic
+let simInterval = null;
+let lastSimRTT = 0;
+
+function toggleWebSimulation() {
+  const btn = document.getElementById('sim-btn');
+  const rttEl = document.getElementById('sim-rtt');
+  const jitterEl = document.getElementById('sim-jitter');
+  const statusEl = document.getElementById('sim-status');
+  const target = document.getElementById('sim-target').value;
+
+  if (simInterval) {
+    clearInterval(simInterval);
+    simInterval = null;
+    btn.innerText = "Run Demo";
+    btn.classList.remove('bg-hud-magenta', 'text-white');
+    btn.classList.add('bg-hud-cyan', 'text-black');
+    statusEl.innerText = "IDLE";
+    statusEl.className = "font-bold text-slate-400 text-sm";
+    return;
+  }
+
+  btn.innerText = "Stop Demo";
+  btn.classList.remove('bg-hud-cyan', 'text-black');
+  btn.classList.add('bg-hud-magenta', 'text-white');
+
+  const baseLatencies = { val: 24, cf: 12, ggl: 18 };
+
+  simInterval = setInterval(() => {
+    const base = baseLatencies[target] || 20;
+    const isSpike = Math.random() < 0.15;
+    const variance = isSpike ? Math.floor(Math.random() * 45) + 30 : Math.floor(Math.random() * 6) - 3;
+    const currentRTT = Math.max(8, base + variance);
+    const jitter = lastSimRTT > 0 ? Math.abs(currentRTT - lastSimRTT) : 1;
+    lastSimRTT = currentRTT;
+
+    rttEl.innerText = `${currentRTT} ms`;
+    jitterEl.innerText = `${jitter} ms`;
+
+    if (jitter > 20) {
+      statusEl.innerText = "SPIKE";
+      statusEl.className = "font-bold text-hud-magenta text-sm";
+    } else {
+      statusEl.innerText = "OPTIMAL";
+      statusEl.className = "font-bold text-hud-green text-sm";
+    }
+  }, 600);
+}
