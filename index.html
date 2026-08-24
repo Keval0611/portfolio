@@ -326,7 +326,6 @@
     </div>
 
     <!-- SCREEN 4: PROTOTYPES -->
-    <!-- SCREEN 4: PROTOTYPES -->
     <div id="screen-prototypes" class="hidden hud-box p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
         <h2 class="text-lg font-orbitron font-extrabold text-hud-cyan glow-cyan uppercase">Technical Lab & Prototypes</h2>
@@ -388,22 +387,64 @@
           </div>
         </div>
 
-        <!-- Card 2: TensorFlow CNN -->
-        <div class="p-5 bg-black/50 border border-hud-yellow/40 flex flex-col justify-between">
-          <div>
-            <div class="text-[10px] text-hud-yellow font-bold uppercase mb-1">AI / COMPUTER VISION // TENSORFLOW</div>
-            <h3 class="text-base font-orbitron font-bold text-white mb-2">CNN Image Classification Pipeline</h3>
-            <p class="text-slate-400 leading-relaxed mb-4">
-              Convolutional Neural Network model utilizing feature extraction, pooling layers, and dropout regularization to classify complex multi-class image datasets with verified Coursera validation.
-            </p>
+    <!-- Interactive Prototype Card: CNN Vision Pipeline -->
+<div class="p-5 bg-black/50 border border-hud-yellow/40 flex flex-col justify-between hover:border-hud-yellow transition">
+  <div>
+    <div class="flex items-center justify-between text-[10px] text-hud-yellow font-bold uppercase mb-1">
+      <span>AI / COMPUTER VISION // TENSORFLOW</span>
+      <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full animate-pulse"></span> INFERENCE READY</span>
+    </div>
+    <h3 class="text-base font-orbitron font-bold text-white mb-1">CNN Vision Pipeline // Object Classifier</h3>
+    <p class="text-xs text-slate-400 leading-relaxed mb-3">
+      Multi-class feature extraction engine classifying optical targets with softmax probability vectors.
+    </p>
+
+    <!-- Embedded In-Browser Vision Widget -->
+    <div class="bg-[#05070a] border border-slate-800 p-3 rounded mb-4">
+      <div class="flex items-center justify-between gap-2 mb-2 text-xs">
+        <select id="vision-sample" class="bg-[#111927] border border-slate-700 text-white text-[11px] p-1.5 rounded flex-1 focus:outline-none focus:border-hud-yellow">
+          <option value="plane">Target Alpha: Commercial Airliner</option>
+          <option value="truck">Target Bravo: Logistics Freight Truck</option>
+          <option value="dog">Target Charlie: K9 / Canine Subject</option>
+          <option value="ship">Target Delta: Naval Cargo Vessel</option>
+        </select>
+        <button id="vision-btn" onclick="runVisionInference()" class="px-3 py-1.5 bg-hud-yellow text-black font-bold font-orbitron text-[11px] uppercase hover:bg-hud-yellow/80 transition">
+          Classify
+        </button>
+      </div>
+
+      <!-- Live Confidence Bars -->
+      <div class="space-y-1.5 text-xs pt-1">
+        <div>
+          <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
+            <span id="label-top" class="font-bold text-white">Top Match: Ready</span>
+            <span id="conf-top" class="text-hud-yellow font-bold">0%</span>
           </div>
-          <div class="flex justify-between items-center pt-3 border-t border-white/10 text-[11px]">
-            <span class="text-hud-yellow font-bold">#TensorFlow #DeepLearning #Python</span>
-            <span class="text-slate-400">Verified Certified</span>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div id="bar-top" class="bg-hud-yellow h-full w-0 transition-all duration-500"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
+            <span id="label-sub" class="text-slate-400">Secondary Candidate</span>
+            <span id="conf-sub" class="text-slate-400">0%</span>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div id="bar-sub" class="bg-slate-500 h-full w-0 transition-all duration-500"></div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="flex justify-between items-center pt-2 border-t border-white/10 text-[11px]">
+    <span class="text-hud-yellow font-bold">#TensorFlow #DeepLearning #Python</span>
+    <a href="https://github.com/keval0611/cnn-vision-pipeline" target="_blank" class="px-3 py-1 bg-hud-yellow/10 border border-hud-yellow text-hud-yellow hover:bg-hud-yellow hover:text-black font-bold transition flex items-center gap-1">
+      <span>Pipeline Repo</span>
+      <i data-lucide="external-link" class="w-3 h-3"></i>
+    </a>
+  </div>
+</div>
 
     <!-- SCREEN 5: COMMS -->
     <div id="screen-comms" class="hidden hud-box p-8 text-center space-y-5">
