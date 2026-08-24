@@ -181,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 // --- LOOT CHEST UNBOXING SYSTEM ---
+
 const lootTable = [
   {
     name: "CYBERPUNK HUD",
@@ -195,6 +196,12 @@ const lootTable = [
     action: () => applyTheme("theme-matrix")
   },
   {
+    name: "SOLAR FLARE HUD",
+    rarity: "item-rare",
+    desc: "Terminal palette shifted to Tactical Amber.",
+    action: () => applyTheme("theme-amber")
+  },
+  {
     name: "CLASSIFIED RESUME",
     rarity: "item-legendary",
     desc: "Operator Dossier ready for download.",
@@ -206,19 +213,22 @@ const lootTable = [
     }
   },
   {
-    name: "SOLAR FLARE HUD",
-    rarity: "item-rare",
-    desc: "Terminal palette shifted to Tactical Amber.",
-    action: () => applyTheme("theme-amber")
-  },
-  {
     name: "TELEMETRY LOG",
     rarity: "item-common",
-    desc: "Probe diagnostic: Jitter 0.3ms // Status Optimal.",
-    action: null
+    desc: "Telemetry probe: Jitter 0.3ms // Status Optimal.",
+    action: () => triggerCommsLog()
   }
 ];
 
+// Comms trigger for Telemetry drop
+function triggerCommsLog() {
+  const commsEl = document.getElementById("comms-text");
+  if (commsEl) {
+    commsEl.innerText = "\"// SYSTEM EVENT: Tactical probe telemetry buffer synchronized. Latency stabilized.\"";
+    commsEl.style.color = "#00ff88";
+    setTimeout(() => { commsEl.style.color = ""; }, 2500);
+  }
+}
 const CARD_WIDTH = 130;
 const TOTAL_CARDS = 40;
 let generatedCards = [];
