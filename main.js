@@ -183,22 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- LOOT CHEST UNBOXING SYSTEM ---
 const lootTable = [
   {
-    name: "MATRIX OVERRIDE",
-    rarity: "item-rare",
-    desc: "Terminal palette shifted to Matrix Green.",
-    action: () => applyTheme("theme-matrix")
-  },
-  {
     name: "CYBERPUNK HUD",
     rarity: "item-rare",
     desc: "Terminal palette shifted to Neon Magenta.",
     action: () => applyTheme("theme-violet")
   },
   {
-    name: "SOLAR FLARE HUD",
+    name: "MATRIX OVERRIDE",
     rarity: "item-rare",
-    desc: "Terminal palette shifted to Tactical Amber.",
-    action: () => applyTheme("theme-amber")
+    desc: "Terminal palette shifted to Matrix Green.",
+    action: () => applyTheme("theme-matrix")
   },
   {
     name: "CLASSIFIED RESUME",
@@ -212,6 +206,12 @@ const lootTable = [
     }
   },
   {
+    name: "SOLAR FLARE HUD",
+    rarity: "item-rare",
+    desc: "Terminal palette shifted to Tactical Amber.",
+    action: () => applyTheme("theme-amber")
+  },
+  {
     name: "TELEMETRY LOG",
     rarity: "item-common",
     desc: "Probe diagnostic: Jitter 0.3ms // Status Optimal.",
@@ -219,23 +219,9 @@ const lootTable = [
   }
 ];
 
-const modal = document.getElementById("loot-modal");
-const closeBtn = document.getElementById("close-btn");
-const spinBtn = document.getElementById("spin-btn");
-const strip = document.getElementById("roulette-strip");
-const rewardDisplay = document.getElementById("reward-display");
-
 const CARD_WIDTH = 130;
 const TOTAL_CARDS = 40;
 let generatedCards = [];
-
-function openLootModal() {
-  if (modal) modal.classList.remove("hidden");
-}
-
-if (closeBtn) {
-  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
-}
 
 function applyTheme(themeClass) {
   document.body.classList.remove("theme-matrix", "theme-violet", "theme-amber");
@@ -243,55 +229,93 @@ function applyTheme(themeClass) {
   localStorage.setItem("operator_hud_theme", themeClass);
 }
 
-// Restore saved theme on page load
-const savedTheme = localStorage.getItem("operator_hud_theme");
-if (savedTheme) {
-  document.body.classList.add(savedTheme);
-}
-
 function populateStrip() {
+  const strip = document.getElementById("roulette-strip");
+  if (!strip) return;
   strip.innerHTML = "";
+  strip.style.transition = "none";
+  strip.style.transform = "translateX(0px)";
   generatedCards = [];
+
   for (let i = 0; i < TOTAL_CARDS; i++) {
     const item = lootTable[Math.floor(Math.random() * lootTable.length)];
     generatedCards.push(item);
+
+    let borderAccent = "border-b-[#00f2fe] text-[#00f2fe]";
+    if (item.rarity === "item-rare") borderAccent = "border-b-[#fe007a] text-[#fe007a]";
+    if (item.rarity === "item-legendary") borderAccent = "border-b-[#fcee0a] text-[#fcee0a]";
+
     const card = document.createElement("div");
-    card.className = `loot-item ${item.rarity}`;
-    card.innerHTML = `<strong>${item.name}</strong>`;
+    card.className = `w-[130px] h-full flex-shrink-0 border-r border-[#1b2a4a] border-b-4 ${borderAccent} flex flex-col items-center justify-center font-orbitron text-[10px] text-center p-2 box-border bg-[#0a0f18] select-none`;
+    card.innerHTML = `<span class="font-bold tracking-wide">${item.name}</span>`;
     strip.appendChild(card);
   }
 }
 
-if (spinBtn) {
-  spinBtn.addEventListener("click", () => {
+// Global function callable from HTML onclick
+window.openLootModal = function() {
+  const modal = document.getElementById("loot-modal");
+  if (modal) {
+    modal.classList.remove("hidden");
     populateStrip();
-    spinBtn.disabled = true;
-    rewardDisplay.classList.add("hidden");
+  }
+};
 
-    const winningIndex = 32;
-    const containerWidth = document.querySelector(".roulette-container").offsetWidth;
-    const offset = -(winningIndex * CARD_WIDTH - (containerWidth / 2 - CARD_WIDTH / 2));
+window.closeLootModal = function() {
+  const modal = document.getElementById("loot-modal");
+  if (modal) modal.classList.add("hidden");
+};
 
-    strip.style.transition = "none";
-    strip.style.transform = "translateX(0px)";
+function initLootChestEvents() {
+  const closeBtn = document.getElementById("close-btn");
+  const spinBtn = document.getElementById("spin-btn");
+  const strip = document.getElementById("roulette-strip");
+  const rewardDisplay = document.getElementById("reward-display");
 
-    setTimeout(() => {
-      strip.style.transition = "transform 4.5s cubic-bezier(0.12, 0.8, 0.2, 1)";
-      strip.style.transform = `translateX(${offset}px)`;
-    }, 50);
+  if (closeBtn) {
+    closeBtn.onclick = window.closeLootModal;
+  }
 
-    setTimeout(() => {
-      spinBtn.disabled = false;
-      const wonReward = generatedCards[winningIndex];
-      rewardDisplay.innerHTML = `
-        <div style="color: var(--hud-secondary); font-weight: bold;">// DROP ACQUIRED: ${wonReward.name}</div>
-        <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">${wonReward.desc}</div>
-      `;
-      rewardDisplay.classList.remove("hidden");
+  if (spinBtn) {
+    spinBtn.onclick = function() {
+      populateStrip();
+      spinBtn.disabled = true;
+      if (rewardDisplay) rewardDisplay.classList.add("hidden");
 
-      if (typeof wonReward.action === "function") {
-        wonReward.action();
-      }
-    }, 4600);
-  });
+      const winningIndex = 32;
+      const viewport = document.getElementById("roulette-viewport");
+      const containerWidth = viewport ? viewport.offsetWidth : 540;
+      const offset = -(winningIndex * CARD_WIDTH - (containerWidth / 2 - CARD_WIDTH / 2));
+
+      setTimeout(() => {
+        if (strip) {
+          strip.style.transition = "transform 4.5s cubic-bezier(0.12, 0.8, 0.2, 1)";
+          strip.style.transform = `translateX(${offset}px)`;
+        }
+      }, 50);
+
+      setTimeout(() => {
+        spinBtn.disabled = false;
+        const wonReward = generatedCards[winningIndex];
+        if (rewardDisplay && wonReward) {
+          rewardDisplay.innerHTML = `
+            <div class="text-[#fcee0a] font-bold font-orbitron text-xs">// DROP ACQUIRED: ${wonReward.name}</div>
+            <div class="text-[11px] text-slate-400 mt-1 font-mono">${wonReward.desc}</div>
+          `;
+          rewardDisplay.classList.remove("hidden");
+        }
+
+        if (wonReward && typeof wonReward.action === "function") {
+          wonReward.action();
+        }
+      }, 4600);
+    };
+  }
 }
+
+// Initialize on load
+document.addEventListener("DOMContentLoaded", () => {
+  initLootChestEvents();
+  const savedTheme = localStorage.getItem("operator_hud_theme");
+  if (savedTheme) document.body.classList.add(savedTheme);
+});
