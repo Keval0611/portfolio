@@ -1,99 +1,42 @@
-// Initialize Lucide SVG Icons
-lucide.createIcons();
-
-// Narrative Objectives Engine
-const objectives = [
-  {
-    id: "LOG #01 // PRIMARY FIELD OBJECTIVE",
-    text: '"Tactical Objective: To deliver rapid, tier-1/tier-2 IT diagnostics, hardware maintenance, and systems reliability for enterprise field environments—leveraging an analytical Computer Science foundation and practical business workflow execution."'
-  },
-  {
-    id: "LOG #02 // TROUBLESHOOTING DOCTRINE",
-    text: '"Operational Philosophy: Systematic root-cause isolation over guesswork. Whether diagnosing networked pay-station peripherals or remote client OS connectivity, every issue is documented, tracked, and eliminated with minimal downtime."'
-  },
-  {
-    id: "LOG #03 // TECHNICAL & AUTOMATION SYNERGY",
-    text: '"Development & Tools: Python-certified and trained in Machine Learning architectures (TensorFlow/CNNs), combining programmatic scripting with hands-on hardware troubleshooting to automate repetitive support workflows."'
-  },
-  {
-    id: "LOG #04 // BUSINESS & SLA ACCOUNTABILITY",
-    text: '"Business Operations: Holding a Business Diploma from Algonquin College, I manage shifts, balance audits, and interface directly with end-users while keeping strict adherence to operational KPIs and SLAs."'
-  }
-];
-
-let currentObjIndex = 0;
-
-function cycleObjective() {
-  currentObjIndex = (currentObjIndex + 1) % objectives.length;
-  const el = document.getElementById('dialogue-text');
-  const idEl = document.getElementById('transmission-id');
-  el.style.opacity = '0';
-  setTimeout(() => {
-    idEl.innerText = objectives[currentObjIndex].id;
-    el.innerText = objectives[currentObjIndex].text;
-    el.style.opacity = '1';
-  }, 150);
-}
-
-const customDialogue = {
-  field: '"Field Operations: Experienced in on-site terminal maintenance, hardware swaps, cash-handling systems, and rapid escalation resolution under tight service windows."',
-  troubleshoot: '"Troubleshooting: Methodical diagnosis of connectivity, peripheral device drivers, operating system configurations, and customer-facing software errors."',
-  biz: '"Business Operations: Trained in market research, SWOT analysis, inventory reconciliation, and front-line team supervision."'
-};
-
-function showDialogue(key) {
-  const el = document.getElementById('dialogue-text');
-  const idEl = document.getElementById('transmission-id');
-  el.style.opacity = '0';
-  setTimeout(() => {
-    idEl.innerText = "QUERY RESPONSE // " + key.toUpperCase();
-    el.innerText = customDialogue[key];
-    el.style.opacity = '1';
-  }, 150);
-}
-
-// Screen / Tab Switcher Logic
-function switchScreen(screenName) {
-  const screens = ['status', 'inventory', 'quests', 'prototypes', 'comms'];
+// Screen Navigation Switching
+function switchScreen(screenId) {
+  const screens = ['status', 'loot', 'missions', 'prototypes'];
+  const tabs = ['tab-status', 'tab-loot', 'tab-missions', 'tab-prototypes'];
+  
   screens.forEach(s => {
-    const el = document.getElementById('screen-' + s);
-    const btn = document.getElementById('btn-' + s);
-    if (s === screenName) {
-      el.classList.remove('hidden');
-      if (btn) {
-        btn.classList.remove('text-slate-400', 'bg-black/40', 'border-slate-700');
-        btn.classList.add('bg-hud-cyan', 'text-black', 'border-hud-cyan');
-      }
-    } else {
-      el.classList.add('hidden');
-      if (btn) {
-        btn.classList.remove('bg-hud-cyan', 'text-black', 'border-hud-cyan');
-        btn.classList.add('text-slate-400', 'bg-black/40', 'border-slate-700');
-      }
+    const el = document.getElementById(`screen-${s}`);
+    if (el) el.classList.add('hidden');
+  });
+
+  tabs.forEach(t => {
+    const tabEl = document.getElementById(t);
+    if (tabEl) {
+      tabEl.className = "px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-hud-card text-slate-300 hover:border-hud-cyan hover:text-hud-cyan whitespace-nowrap transition";
     }
   });
+
+  const activeScreen = document.getElementById(`screen-${screenId}`);
+  if (activeScreen) activeScreen.classList.remove('hidden');
+
+  const activeTab = document.getElementById(`tab-${screenId}`);
+  if (activeTab) {
+    activeTab.className = "px-3 py-2 text-xs font-orbitron font-bold border border-hud-cyan bg-hud-cyan text-black whitespace-nowrap transition";
+  }
 }
 
-// Loot Chest Unlock Animation & State
-let chestOpen = false;
-function openChest() {
-  const container = document.getElementById('chest-container');
-  const icon = document.getElementById('chest-icon');
-  const prompt = document.getElementById('chest-prompt');
-
-  container.classList.add('animate-chest-shake');
-  setTimeout(() => {
-    container.classList.remove('animate-chest-shake');
-    chestOpen = true;
-    icon.innerHTML = '<i data-lucide="sparkles" class="w-10 h-10 text-hud-cyan animate-pulse"></i>';
-    icon.classList.remove('border-hud-yellow');
-    icon.classList.add('border-hud-cyan', 'bg-hud-cyan/20');
-    prompt.innerHTML = '<span class="text-hud-cyan glow-cyan">★ VAULT UNLOCKED // ALL CERTIFICATIONS ACTIVE ★</span>';
-    lucide.createIcons();
-  }, 400);
+// Interactive Comms Dialogue Feeds
+function triggerComms(mode) {
+  const feed = document.getElementById('comms-text');
+  if (mode === 'deploy') {
+    feed.innerText = "\"Deployment readiness: 100%. Open to IT Systems Specialist & Operations opportunities in Ottawa, Sudbury, or Kitchener.\"";
+  } else if (mode === 'skills') {
+    feed.innerText = "\"Core matrix: L1/L2 Technical Support, Active Directory, Python automation, Win32 network optimization, and TensorFlow CNN pipelines.\"";
+  } else if (mode === 'contact') {
+    feed.innerText = "\"Transmission channel open: Connect via GitHub or direct professional channels for interview scheduling.\"";
+  }
 }
 
-// In-Browser Ping Simulation Logic
+// 1. In-Browser Ping Simulation Logic
 let simInterval = null;
 let lastSimRTT = 0;
 
@@ -111,7 +54,7 @@ function toggleWebSimulation() {
     btn.classList.remove('bg-hud-magenta', 'text-white');
     btn.classList.add('bg-hud-cyan', 'text-black');
     statusEl.innerText = "IDLE";
-    statusEl.className = "font-bold text-slate-400 text-sm";
+    statusEl.className = "font-bold text-slate-400 text-xs";
     return;
   }
 
@@ -134,14 +77,15 @@ function toggleWebSimulation() {
 
     if (jitter > 20) {
       statusEl.innerText = "SPIKE";
-      statusEl.className = "font-bold text-hud-magenta text-sm";
+      statusEl.className = "font-bold text-hud-magenta text-xs";
     } else {
       statusEl.innerText = "OPTIMAL";
-      statusEl.className = "font-bold text-hud-green text-sm";
+      statusEl.className = "font-bold text-hud-green text-xs";
     }
   }, 600);
 }
-// In-Browser CNN Softmax Inference Simulation
+
+// 2. In-Browser CNN Softmax Inference Simulation
 function runVisionInference() {
   const btn = document.getElementById('vision-btn');
   const target = document.getElementById('vision-sample').value;
@@ -176,3 +120,10 @@ function runVisionInference() {
     btn.disabled = false;
   }, 400);
 }
+
+// Initialize Lucide Icons
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+});
