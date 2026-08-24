@@ -234,31 +234,67 @@ const TOTAL_CARDS = 40;
 let generatedCards = [];
 
 function applyTheme(themeClass) {
-  const main = document.querySelector("main");
-  if (!main) return;
+  // Theme Color Configurations
+  const themes = {
+    "theme-matrix": {
+      primaryHex: "#00ff88",
+      primaryText: "text-[#00ff88]",
+      primaryBg: "bg-[#00ff88]",
+      primaryBorder: "border-[#00ff88]",
+      glowColor: "rgba(0, 255, 136, 0.6)"
+    },
+    "theme-violet": {
+      primaryHex: "#fe007a",
+      primaryText: "text-[#fe007a]",
+      primaryBg: "bg-[#fe007a]",
+      primaryBorder: "border-[#fe007a]",
+      glowColor: "rgba(254, 0, 122, 0.6)"
+    },
+    "theme-amber": {
+      primaryHex: "#fcee0a",
+      primaryText: "text-[#fcee0a]",
+      primaryBg: "bg-[#fcee0a]",
+      primaryBorder: "border-[#fcee0a]",
+      glowColor: "rgba(252, 238, 10, 0.6)"
+    }
+  };
 
-  // Remove existing filters
-  main.style.transition = "filter 0.4s ease, transform 0.2s ease";
+  const theme = themes[themeClass];
+  if (!theme) return;
 
-  if (themeClass === "theme-matrix") {
-    main.style.filter = "hue-rotate(85deg) saturate(1.6) brightness(1.1)";
-  } else if (themeClass === "theme-violet") {
-    main.style.filter = "hue-rotate(155deg) saturate(1.8) brightness(1.05)";
-  } else if (themeClass === "theme-amber") {
-    main.style.filter = "hue-rotate(220deg) saturate(1.7) brightness(1.15)";
-  } else {
-    main.style.filter = "none";
+  // 1. Swap Active Nav Tab Button
+  const activeTab = document.querySelector("#tab-status");
+  if (activeTab) {
+    activeTab.style.backgroundColor = theme.primaryHex;
+    activeTab.style.borderColor = theme.primaryHex;
+    activeTab.style.color = "#000000";
+  }
+
+  // 2. Swap Big Vault Button
+  const vaultBtn = document.querySelector("button[onclick*='loot']");
+  if (vaultBtn) {
+    vaultBtn.style.backgroundColor = theme.primaryHex;
+    vaultBtn.style.boxShadow = `0 0 15px ${theme.glowColor}`;
+  }
+
+  // 3. Swap "OPERATOR:" label & Avatar border
+  const operatorLabel = document.querySelector("header div div");
+  if (operatorLabel) operatorLabel.style.color = theme.primaryHex;
+
+  // 4. Update Header Name Glow
+  const glowNames = document.querySelectorAll(".glow-cyan, h2.glow-cyan");
+  glowNames.forEach(el => {
+    el.style.textShadow = `0 0 12px ${theme.glowColor}`;
+  });
+
+  // 5. Swap corner tick marks
+  const box = document.querySelector(".hud-box");
+  if (box) {
+    box.style.setProperty("--theme-primary", theme.primaryHex);
   }
 
   localStorage.setItem("operator_hud_theme", themeClass);
 }
-
-// Restore saved theme on startup
-document.addEventListener("DOMContentLoaded", () => {
-  const saved = localStorage.getItem("operator_hud_theme");
-  if (saved) applyTheme(saved);
-});
-
 function populateStrip() {
   const strip = document.getElementById("roulette-strip");
   if (!strip) return;
