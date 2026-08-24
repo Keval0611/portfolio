@@ -64,9 +64,9 @@
         <button id="tab-status" onclick="switchScreen('status')" class="px-3 py-2 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe] text-black whitespace-nowrap transition">
           STATUS
         </button>
-        <button id="tab-loot" onclick="switchScreen('loot')" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#fcee0a] hover:text-[#fcee0a] whitespace-nowrap flex items-center gap-1.5 transition">
-          <i data-lucide="package" class="w-3.5 h-3.5 text-[#fcee0a]"></i> LOOT CHEST
-        </button>
+       <button id="tab-loot" onclick="openLootModal()" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#fcee0a] hover:text-[#fcee0a] whitespace-nowrap flex items-center gap-1.5 transition">
+  <i data-lucide="package" class="w-3.5 h-3.5 text-[#fcee0a]"></i> LOOT CHEST
+</button>
         <button id="tab-missions" onclick="switchScreen('missions')" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#fe007a] hover:text-[#fe007a] whitespace-nowrap transition">
           MISSIONS
         </button>
@@ -556,8 +556,33 @@
     </footer>
 
   </main>
+  <!-- LOOT CHEST POPUP MODAL -->
+<div id="loot-modal" class="hud-modal hidden">
+  <div class="loot-box-wrapper">
+    <div class="hud-header">
+      <span>// CRATE DEPLOYMENT: SUPPLY_DROP_v1.0</span>
+      <button id="close-btn" class="hud-btn-close">✕</button>
+    </div>
+
+    <!-- The Rolling Strip -->
+    <div class="roulette-container">
+      <div class="roulette-marker"></div>
+      <div id="roulette-strip" class="roulette-strip"></div>
+    </div>
+
+    <!-- Action & Result Display -->
+    <div class="loot-actions">
+      <button id="spin-btn" class="hud-btn-primary">INITIATE UNBOXING</button>
+      <div id="reward-display" class="reward-text hidden"></div>
+    </div>
+  </div>
+</div>
 
   <!-- External Script -->
+<!-- External Script -->
   <script src="main.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
