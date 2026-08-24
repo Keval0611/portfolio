@@ -1,29 +1,33 @@
-/* Reset & Dark Mode Defaults */
+/* Core Tactical Dark Theme */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
+html, body {
   background-color: #05070a !important;
   color: #e2e8f0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
   background-image: 
     linear-gradient(rgba(0, 242, 254, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 242, 254, 0.04) 1px, transparent 1px);
   background-size: 24px 24px;
-  overflow-x: hidden;
   display: flex;
   justify-content: center;
   padding: 12px;
 }
 
-/* Tactical HUD Card Container */
+/* Tactical HUD Card Styling */
 .hud-box {
   border: 1px solid #1b2a4a;
-  background: rgba(10, 15, 24, 0.95);
-  backdrop-filter: blur(12px);
+  background-color: #0a0f18 !important;
   position: relative;
   border-radius: 4px;
 }
@@ -50,6 +54,11 @@ body {
   border-right: 2px solid #fe007a;
 }
 
+.hud-card-item {
+  background-color: #070b12 !important;
+  border: 1px solid #1b2a4a;
+}
+
 .glow-cyan {
   text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
 }
@@ -58,7 +67,7 @@ body {
   display: none !important;
 }
 
-/* Custom Scrollbar */
+/* Mobile Scrollbar Hide */
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
