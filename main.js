@@ -234,14 +234,30 @@ const TOTAL_CARDS = 40;
 let generatedCards = [];
 
 function applyTheme(themeClass) {
-  document.body.style.opacity = "0.7";
-  setTimeout(() => {
-    document.body.classList.remove("theme-matrix", "theme-violet", "theme-amber");
-    document.body.classList.add(themeClass);
-    document.body.style.opacity = "1";
-    localStorage.setItem("operator_hud_theme", themeClass);
-  }, 100);
+  const main = document.querySelector("main");
+  if (!main) return;
+
+  // Remove existing filters
+  main.style.transition = "filter 0.4s ease, transform 0.2s ease";
+
+  if (themeClass === "theme-matrix") {
+    main.style.filter = "hue-rotate(85deg) saturate(1.6) brightness(1.1)";
+  } else if (themeClass === "theme-violet") {
+    main.style.filter = "hue-rotate(155deg) saturate(1.8) brightness(1.05)";
+  } else if (themeClass === "theme-amber") {
+    main.style.filter = "hue-rotate(220deg) saturate(1.7) brightness(1.15)";
+  } else {
+    main.style.filter = "none";
+  }
+
+  localStorage.setItem("operator_hud_theme", themeClass);
 }
+
+// Restore saved theme on startup
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("operator_hud_theme");
+  if (saved) applyTheme(saved);
+});
 
 function populateStrip() {
   const strip = document.getElementById("roulette-strip");
