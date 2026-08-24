@@ -11,7 +11,7 @@
   <!-- Google Fonts: Orbitron for Sci-Fi Headers & Inter for Crisp Legibility -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=Orbitron:wght=400;500;700;900&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -277,7 +277,7 @@
               </div>
             </div>
 
-            <!-- Verified Credentials (LINKED TO OFFICIAL PATHS) -->
+            <!-- Verified Credentials -->
             <div class="hud-box p-6">
               <div class="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3">
                 <i data-lucide="award" class="w-5 h-5 text-[#00f2fe]"></i>
@@ -288,7 +288,6 @@
                 <li class="flex items-start gap-2.5 text-xs">
                   <i data-lucide="external-link" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
                   <div>
-                    <!-- Link to official Google Course page -->
                     <a href="https://www.coursera.org/learn/google-crash-course-python" target="_blank" rel="noopener noreferrer" class="text-slate-100 font-bold hover:text-[#00f2fe] hover:underline transition">
                       Crash Course in Python
                     </a>
@@ -298,7 +297,6 @@
                 <li class="flex items-start gap-2.5 text-xs">
                   <i data-lucide="external-link" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
                   <div>
-                    <!-- Link to official DeepLearning.AI page -->
                     <a href="https://www.coursera.org/learn/introduction-tensorflow" target="_blank" rel="noopener noreferrer" class="text-slate-100 font-bold hover:text-[#00f2fe] hover:underline transition">
                       Introduction to TensorFlow for AI/ML/DL
                     </a>
@@ -308,7 +306,6 @@
                 <li class="flex items-start gap-2.5 text-xs">
                   <i data-lucide="external-link" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
                   <div>
-                    <!-- Link to official TensorFlow CNN page -->
                     <a href="https://www.coursera.org/learn/convolutional-neural-networks-tensorflow" target="_blank" rel="noopener noreferrer" class="text-slate-100 font-bold hover:text-[#00f2fe] hover:underline transition">
                       Convolutional Neural Networks
                     </a>
@@ -318,7 +315,6 @@
                 <li class="flex items-start gap-2.5 text-xs">
                   <i data-lucide="external-link" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
                   <div>
-                    <!-- Link to Squarespace -->
                     <a href="https://www.squarespace.com/" target="_blank" rel="noopener noreferrer" class="text-slate-100 font-bold hover:text-[#00f2fe] hover:underline transition">
                       Squarespace SEO Optimization
                     </a>
@@ -328,7 +324,6 @@
                 <li class="flex items-start gap-2.5 text-xs">
                   <i data-lucide="external-link" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
                   <div>
-                    <!-- Link to CannSell Ontario -->
                     <a href="https://cannsell.ca/" target="_blank" rel="noopener noreferrer" class="text-slate-100 font-bold hover:text-[#00f2fe] hover:underline transition">
                       CannSell Certification
                     </a>
@@ -346,59 +341,105 @@
 
       </div>
 
-      <!-- SCREEN 2: SYSTEM PROJECTS (REWRITTEN: 100% GROUNDED IN RESUME) -->
+      <!-- SCREEN 2: SYSTEM PROJECTS (REWRITTEN: 100% GITHUB & DEMO INTEGRATED) -->
       <div id="screen-missions" class="hidden space-y-6">
         <div class="hud-box p-6">
           <div class="flex items-center gap-2.5 border-b border-slate-800 pb-3 mb-4">
             <i data-lucide="folder-kanban" class="w-5 h-5 text-[#00f2fe]"></i>
-            <h2 class="text-base font-orbitron font-bold text-white tracking-wide">PRACTICAL IT OPERATIONS PROJECTS</h2>
+            <h2 class="text-base font-orbitron font-bold text-white tracking-wide">SOFTWARE & SYSTEMS PROJECTS</h2>
           </div>
           <p class="text-sm text-slate-300 leading-relaxed mb-6 font-sans">
-            These technical projects reflect the real-world operational challenges managed and resolved throughout my career history.
+            Here are two custom software utilities I engineered to solve real-world problems. Both are fully integrated with public code repositories and functional, interactive live demos.
           </p>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Project 1 (Canna Cabana Grounded) -->
-            <div class="hud-card-item p-5 border border-slate-800 rounded-lg flex flex-col justify-between">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Project 1: Network Latency Probe Router -->
+            <div class="hud-card-item p-6 border border-slate-800 rounded-lg flex flex-col justify-between space-y-4">
               <div>
-                <span class="text-[9px] font-mono bg-cyan-950/60 text-[#00f2fe] px-2 py-0.5 rounded font-bold uppercase tracking-wider">RETAIL OPERATIONS</span>
-                <h3 class="text-sm font-bold text-white font-orbitron mt-3">Retail Inventory & Compliance Auditor</h3>
-                <p class="text-xs text-slate-300 mt-2 leading-relaxed font-sans">
-                  Structured POS terminal cash reconciliations, audit logs, and inventory pipelines to maintain regulatory compliance and prevent discrepancies under strict CannSell retail requirements.
-                </p>
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono bg-cyan-950/60 text-[#00f2fe] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Systems Support / Helpdesk Utility</span>
+                  <div class="flex gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-[#00f2fe]"></span>
+                  </div>
+                </div>
+                
+                <h3 class="text-base font-bold text-white font-orbitron mt-3">Interactive Network Latency Probe Router</h3>
+                
+                <!-- Humanized Story Section -->
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-300 font-sans">
+                  <p>
+                    <strong>The Backstory:</strong> During my IT helpdesk and technical support roles, I spent a lot of time diagnosing network connectivity issues for remote end-users. Running static terminal ping commands was repetitive, and explaining raw logs to non-technical customers was challenging.
+                  </p>
+                  <p>
+                    <strong>The Solution:</strong> I built this visual ping diagnostic utility. It continuously polls connection nodes, calculates running Round-Trip Time (RTT) benchmarks, and tracks network jitter fluctuations with a clear, colored user-friendly indicator. It makes network troubleshooting understandable and transparent.
+                  </p>
+                </div>
+
+                <!-- Technologies tag list -->
+                <div class="flex flex-wrap gap-2 mt-4 text-[10px] font-mono text-[#00f2fe]">
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">JavaScript</span>
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Tailwind CSS</span>
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">ICMP Logic</span>
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">DOM Telemetry</span>
+                </div>
               </div>
-              <button onclick="switchScreen('status')" class="mt-4 border border-slate-700 hover:border-[#00f2fe] text-xs font-orbitron text-slate-300 hover:text-white py-1.5 rounded transition text-center">
-                View History
-              </button>
+
+              <!-- High Contrast Action Buttons -->
+              <div class="grid grid-cols-2 gap-3 pt-2 font-orbitron text-xs">
+                <!-- Replace with your actual GitHub link -->
+                <a href="https://github.com/yourusername/latency-probe-router" target="_blank" rel="noopener noreferrer" class="border border-slate-700 hover:border-[#00f2fe] hover:text-white text-slate-300 py-2.5 rounded transition text-center flex items-center justify-center gap-1.5">
+                  <i data-lucide="github" class="w-4 h-4"></i> GITHUB REPO
+                </a>
+                <button onclick="switchScreen('prototypes')" class="bg-[#00f2fe] hover:bg-[#00d8e4] text-slate-950 py-2.5 rounded transition text-center font-bold flex items-center justify-center gap-1.5">
+                  <i data-lucide="play" class="w-4 h-4"></i> LAUNCH LIVE DEMO
+                </button>
+              </div>
             </div>
 
-            <!-- Project 2 (Gao Tech Grounded) -->
-            <div class="hud-card-item p-5 border border-slate-800 rounded-lg flex flex-col justify-between">
+            <!-- Project 2: Convolutional Neural Network Sentinel -->
+            <div class="hud-card-item p-6 border border-slate-800 rounded-lg flex flex-col justify-between space-y-4">
               <div>
-                <span class="text-[9px] font-mono bg-emerald-950/60 text-emerald-400 px-2 py-0.5 rounded font-bold uppercase tracking-wider">HELPDESK SUPPORT</span>
-                <h3 class="text-sm font-bold text-white font-orbitron mt-3">Helpdesk Ticketing & Diagnostics Guide</h3>
-                <p class="text-xs text-slate-300 mt-2 leading-relaxed font-sans">
-                  Formulated structured diagnostics checklists and systematic troubleshooting flows to resolve client network, hardware, and device connectivity issues inside corporate ticketing systems.
-                </p>
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono bg-emerald-950/60 text-emerald-400 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Deep Learning / Computer Vision</span>
+                  <div class="flex gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  </div>
+                </div>
+                
+                <h3 class="text-base font-bold text-white font-orbitron mt-3">TensorFlow CNN Image Classifier</h3>
+                
+                <!-- Humanized Story Section -->
+                <div class="mt-4 space-y-3 text-xs leading-relaxed text-slate-300 font-sans">
+                  <p>
+                    <strong>The Backstory:</strong> After completing my deep learning and TensorFlow certifications, I wanted to transition from writing theoretical machine learning scripts to building a fully functional visual pipeline where you can actually interact with and query model performance in real time.
+                  </p>
+                  <p>
+                    <strong>The Solution:</strong> I trained a multi-layer Convolutional Neural Network (CNN) on CIFAR-10 datasets using Keras. It takes test input arrays (like planes, trucks, and dogs) and parses them through a Softmax output layer, returning structured top predictions and secondary margin confidence tiers.
+                  </p>
+                </div>
+
+                <!-- Technologies tag list -->
+                <div class="flex flex-wrap gap-2 mt-4 text-[10px] font-mono text-emerald-400">
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Python</span>
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">TensorFlow</span>
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Keras API</span>
+                  <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">CIFAR-10 Dataset</span>
+                </div>
               </div>
-              <button onclick="switchScreen('status')" class="mt-4 border border-slate-700 hover:border-emerald-500 text-xs font-orbitron text-slate-300 hover:text-white py-1.5 rounded transition text-center">
-                View History
-              </button>
+
+              <!-- High Contrast Action Buttons -->
+              <div class="grid grid-cols-2 gap-3 pt-2 font-orbitron text-xs">
+                <!-- Replace with your actual GitHub link -->
+                <a href="https://github.com/yourusername/vision-inference-sentinel" target="_blank" rel="noopener noreferrer" class="border border-slate-700 hover:border-emerald-500 hover:text-white text-slate-300 py-2.5 rounded transition text-center flex items-center justify-center gap-1.5">
+                  <i data-lucide="github" class="w-4 h-4"></i> GITHUB REPO
+                </a>
+                <button onclick="switchScreen('prototypes')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 py-2.5 rounded transition text-center font-bold flex items-center justify-center gap-1.5">
+                  <i data-lucide="play" class="w-4 h-4"></i> LAUNCH LIVE DEMO
+                </button>
+              </div>
             </div>
 
-            <!-- Project 3 (Platinum Parking Grounded) -->
-            <div class="hud-card-item p-5 border border-slate-800 rounded-lg flex flex-col justify-between">
-              <div>
-                <span class="text-[9px] font-mono bg-amber-950/60 text-amber-400 px-2 py-0.5 rounded font-bold uppercase tracking-wider">HARDWARE MAINTENANCE</span>
-                <h3 class="text-sm font-bold text-white font-orbitron mt-3">Pay-Station Hardware Diagnostics Protocol</h3>
-                <p class="text-xs text-slate-300 mt-2 leading-relaxed font-sans">
-                  Maintained and troubleshot on-site physical electronic systems. Conducted terminal hardware inspections, cash vault audits, and solved connectivity failures on parking terminals.
-                </p>
-              </div>
-              <button onclick="switchScreen('status')" class="mt-4 border border-slate-700 hover:border-amber-500 text-xs font-orbitron text-slate-300 hover:text-white py-1.5 rounded transition text-center">
-                View History
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -450,7 +491,7 @@
                 </div>
               </div>
 
-              <button id="sim-btn" onclick="toggleWebSimulation()" class="w-full bg-[#00f2fe]/10 hover:bg-[#00f2fe] hover:text-slate-950 border border-[#00f2fe]/50 text-[#00f2fe] transition py-2 rounded text-xs font-orbitron font-bold tracking-wider">
+              <button id="sim-btn" onclick="toggleWebSimulation()" class="w-full bg-[#00f2fe]/10 hover:bg-[#00f2fe] hover:text-slate-950 border border-[#00f2fe]/50 text-[#00f2fe]/90 transition py-2 rounded text-xs font-orbitron font-bold tracking-wider">
                 RUN PROBE ENGINE
               </button>
             </div>
@@ -514,24 +555,52 @@
 
       </div>
 
-      <!-- SCREEN 4: THEME CUSTOMIZER (FORMERLY LOOT BOX) -->
+      <!-- SCREEN 4: THEME CUSTOMIZER (ROULETTE AND DIRECT TOGGLES TO PREVENT FRICTION) -->
       <div id="screen-loot" class="hidden space-y-6">
         
-        <div class="hud-box p-6 text-center max-w-xl mx-auto space-y-5">
-          <div class="flex flex-col items-center gap-2">
-            <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/50 rounded-full flex items-center justify-center animate-pulse">
+        <div class="hud-box p-6 max-w-xl mx-auto space-y-6">
+          <div class="flex flex-col items-center gap-2 text-center">
+            <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/50 rounded-full flex items-center justify-center">
               <i data-lucide="palette" class="w-7 h-7 text-amber-400"></i>
             </div>
-            <h2 class="text-lg font-orbitron font-extrabold text-white tracking-widest glow-amber">ATMOSPHERIC RE-THEME</h2>
+            <h2 class="text-lg font-orbitron font-extrabold text-white tracking-widest glow-amber">ATMOSPHERIC THEME CHANNELS</h2>
             <p class="text-xs text-slate-300 leading-relaxed max-w-sm font-sans">
-              Choose or unbox a customized, responsive background theme. Lander wheels dynamically synchronize your digital portfolio background to several scenic and active overlays.
+              Change the visual ambiance of your terminal instantly. Try the horizontal gamified spin console, or use the direct quick-select triggers below to apply background matrices.
             </p>
           </div>
 
-          <!-- Spin Console Button -->
-          <button onclick="window.openLootModal()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:brightness-110 text-slate-950 font-orbitron font-black text-xs py-3 rounded tracking-wider transition-all uppercase">
-            OPEN THEME CONSOLE
-          </button>
+          <!-- Quick-Select Direct Theme Panel (UX Fix so recruiters don't have to spin) -->
+          <div class="border border-slate-800 bg-slate-950 p-4 rounded-lg space-y-3">
+            <span class="text-[10px] font-orbitron font-bold text-[#00f2fe] tracking-wider block uppercase">Direct Environmental Toggles</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-mono">
+              <button onclick="changeWebsiteBackground('default')" class="bg-slate-900 hover:bg-[#00f2fe]/10 border border-slate-800 hover:border-[#00f2fe] text-slate-300 hover:text-white py-1.5 rounded transition">
+                Tactical Default
+              </button>
+              <button onclick="changeWebsiteBackground('sakura')" class="bg-slate-900 hover:bg-[#00f2fe]/10 border border-slate-800 hover:border-[#00f2fe] text-slate-300 hover:text-white py-1.5 rounded transition">
+                Sakura Canopy
+              </button>
+              <button onclick="changeWebsiteBackground('cybercity')" class="bg-slate-900 hover:bg-[#00f2fe]/10 border border-slate-800 hover:border-[#00f2fe] text-slate-300 hover:text-white py-1.5 rounded transition">
+                Neon Metropolis
+              </button>
+              <button onclick="changeWebsiteBackground('matrix')" class="bg-slate-900 hover:bg-[#00f2fe]/10 border border-slate-800 hover:border-[#00f2fe] text-slate-300 hover:text-white py-1.5 rounded transition">
+                Matrix Cascade
+              </button>
+              <button onclick="changeWebsiteBackground('synthwave')" class="bg-slate-900 hover:bg-[#00f2fe]/10 border border-slate-800 hover:border-[#00f2fe] text-slate-300 hover:text-white py-1.5 rounded transition">
+                Synthwave Sunset
+              </button>
+              <button onclick="changeWebsiteBackground('nebula')" class="bg-slate-900 hover:bg-[#00f2fe]/10 border border-slate-800 hover:border-[#00f2fe] text-slate-300 hover:text-white py-1.5 rounded transition">
+                Cosmic Nebula
+              </button>
+            </div>
+          </div>
+
+          <!-- Spin Console Trigger -->
+          <div class="text-center space-y-2">
+            <span class="text-[9px] text-slate-500 font-mono uppercase block">// Dynamic Randomizer</span>
+            <button onclick="window.openLootModal()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:brightness-110 text-slate-950 font-orbitron font-black text-xs py-3 rounded tracking-wider transition-all uppercase">
+              OPEN SPIN CONSOLE
+            </button>
+          </div>
         </div>
 
       </div>
