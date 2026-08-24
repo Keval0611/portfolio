@@ -234,9 +234,13 @@ const TOTAL_CARDS = 40;
 let generatedCards = [];
 
 function applyTheme(themeClass) {
-  document.body.classList.remove("theme-matrix", "theme-violet", "theme-amber");
-  document.body.classList.add(themeClass);
-  localStorage.setItem("operator_hud_theme", themeClass);
+  document.body.style.opacity = "0.7";
+  setTimeout(() => {
+    document.body.classList.remove("theme-matrix", "theme-violet", "theme-amber");
+    document.body.classList.add(themeClass);
+    document.body.style.opacity = "1";
+    localStorage.setItem("operator_hud_theme", themeClass);
+  }, 100);
 }
 
 function populateStrip() {
