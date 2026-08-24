@@ -1,4 +1,4 @@
-// Navigation Screen Switcher
+// Screen Navigation Switching Logic
 function switchScreen(screenId) {
   const screens = ['status', 'loot', 'missions', 'prototypes'];
   const tabs = ['tab-status', 'tab-loot', 'tab-missions', 'tab-prototypes'];
@@ -9,7 +9,7 @@ function switchScreen(screenId) {
     if (el) el.classList.add('hidden');
   });
 
-  // Reset all tabs to inactive styling
+  // Reset all tabs to inactive state
   tabs.forEach(t => {
     const tabEl = document.getElementById(t);
     if (tabEl) {
@@ -17,45 +17,56 @@ function switchScreen(screenId) {
     }
   });
 
-  // Show active screen
+  // Activate chosen screen
   const activeScreen = document.getElementById(`screen-${screenId}`);
   if (activeScreen) {
     activeScreen.classList.remove('hidden');
   }
 
-  // Highlight active tab
+  // Activate chosen tab
   const activeTab = document.getElementById(`tab-${screenId}`);
   if (activeTab) {
     activeTab.className = "px-3 py-2 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe] text-black whitespace-nowrap transition";
   }
 
-  // Re-mount Lucide icons on tab switch
+  // Refresh Lucide Icons on DOM updates
   if (window.lucide) {
     lucide.createIcons();
   }
 }
 
-// Reset Directive / Target Objective Cycling Logic
+// Recruiter-Focused Objective Directive Switcher
 let directiveIndex = 0;
-const directives = [
-  "IT Systems / Support Specialist",
-  "Technical Operations & Systems Analyst",
-  "Infrastructure & Network Support Specialist"
+const recruiterDirectives = [
+  {
+    role: "IT Support & Systems Specialist",
+    hook: "Bridging computer science foundations with business operations to resolve L1/L2 incidents, streamline workflows, and ensure 99.9% endpoint uptime."
+  },
+  {
+    role: "Operations & Technical Analyst",
+    hook: "Leveraging dual-discipline expertise in CS and Business Strategy to translate technical telemetry and POS diagnostics into scalable business growth."
+  },
+  {
+    role: "Helpdesk & Infrastructure Analyst",
+    hook: "Dedicated to rapid-response incident resolution, automated hardware diagnostics, and delivering white-glove technical support across enterprise environments."
+  }
 ];
 
 function resetObjectiveDirective() {
-  directiveIndex = (directiveIndex + 1) % directives.length;
+  directiveIndex = (directiveIndex + 1) % recruiterDirectives.length;
+  const current = recruiterDirectives[directiveIndex];
+  
   const roleEl = document.getElementById('target-role-text');
   const commsEl = document.getElementById('comms-text');
   
   if (roleEl) {
-    roleEl.innerText = directives[directiveIndex];
+    roleEl.innerText = current.role;
     roleEl.style.color = '#fcee0a';
-    setTimeout(() => { roleEl.style.color = '#ffffff'; }, 500);
+    setTimeout(() => { roleEl.style.color = '#ffffff'; }, 400);
   }
   
   if (commsEl) {
-    commsEl.innerText = `\"Directive updated: Target profile re-aligned to [${directives[directiveIndex]}]. System calibration complete.\"`;
+    commsEl.innerText = `"${current.hook}"`;
   }
 }
 
@@ -65,15 +76,15 @@ function triggerComms(mode) {
   if (!feed) return;
 
   if (mode === 'deploy') {
-    feed.innerText = "\"Deployment readiness: 100%. Open to IT Systems Specialist & Operations opportunities in Ottawa, Sudbury, or Kitchener.\"";
+    feed.innerText = "\"Candidate status: Available immediately. Open to on-site, hybrid, and remote IT Support & Operations opportunities in Ottawa and across Ontario.\"";
   } else if (mode === 'skills') {
-    feed.innerText = "\"Core matrix: L1/L2 Technical Support, Active Directory, Python automation, Win32 network optimization, and TensorFlow CNN pipelines.\"";
+    feed.innerText = "\"Core Toolkit: Python automation, hardware diagnostics, POS infrastructure, TensorFlow CNN pipelines, ticketing workflows, and Active Directory.\"";
   } else if (mode === 'contact') {
-    feed.innerText = "\"Transmission channel open: Connect via GitHub or direct professional channels for interview scheduling.\"";
+    feed.innerText = "\"Transmission open: Reach out at kevalp061411@gmail.com or 613-219-6739 for immediate interview scheduling.\"";
   }
 }
 
-// 1. In-Browser Ping Simulation Logic
+// 1. Interactive In-Browser Ping Probe Simulation
 let simInterval = null;
 let lastSimRTT = 0;
 
@@ -122,7 +133,7 @@ function toggleWebSimulation() {
   }, 600);
 }
 
-// 2. In-Browser CNN Softmax Inference Simulation
+// 2. Interactive In-Browser CNN Softmax Inference Simulation
 function runVisionInference() {
   const btn = document.getElementById('vision-btn');
   const target = document.getElementById('vision-sample') ? document.getElementById('vision-sample').value : 'plane';
@@ -162,7 +173,7 @@ function runVisionInference() {
   }, 400);
 }
 
-// Initial Screen Boot & Lucide Icon Initialization
+// Mount Default Screen on Boot
 document.addEventListener("DOMContentLoaded", () => {
   switchScreen('status');
   if (window.lucide) {
