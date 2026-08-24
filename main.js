@@ -180,3 +180,118 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
   }
 });
+// --- LOOT CHEST UNBOXING SYSTEM ---
+const lootTable = [
+  {
+    name: "MATRIX OVERRIDE",
+    rarity: "item-rare",
+    desc: "Terminal palette shifted to Matrix Green.",
+    action: () => applyTheme("theme-matrix")
+  },
+  {
+    name: "CYBERPUNK HUD",
+    rarity: "item-rare",
+    desc: "Terminal palette shifted to Neon Magenta.",
+    action: () => applyTheme("theme-violet")
+  },
+  {
+    name: "SOLAR FLARE HUD",
+    rarity: "item-rare",
+    desc: "Terminal palette shifted to Tactical Amber.",
+    action: () => applyTheme("theme-amber")
+  },
+  {
+    name: "CLASSIFIED RESUME",
+    rarity: "item-legendary",
+    desc: "Operator Dossier ready for download.",
+    action: () => {
+      const link = document.createElement("a");
+      link.href = "./resume.pdf";
+      link.download = "Keval_Patel_Resume.pdf";
+      link.click();
+    }
+  },
+  {
+    name: "TELEMETRY LOG",
+    rarity: "item-common",
+    desc: "Probe diagnostic: Jitter 0.3ms // Status Optimal.",
+    action: null
+  }
+];
+
+const modal = document.getElementById("loot-modal");
+const closeBtn = document.getElementById("close-btn");
+const spinBtn = document.getElementById("spin-btn");
+const strip = document.getElementById("roulette-strip");
+const rewardDisplay = document.getElementById("reward-display");
+
+const CARD_WIDTH = 130;
+const TOTAL_CARDS = 40;
+let generatedCards = [];
+
+function openLootModal() {
+  if (modal) modal.classList.remove("hidden");
+}
+
+if (closeBtn) {
+  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+}
+
+function applyTheme(themeClass) {
+  document.body.classList.remove("theme-matrix", "theme-violet", "theme-amber");
+  document.body.classList.add(themeClass);
+  localStorage.setItem("operator_hud_theme", themeClass);
+}
+
+// Restore saved theme on page load
+const savedTheme = localStorage.getItem("operator_hud_theme");
+if (savedTheme) {
+  document.body.classList.add(savedTheme);
+}
+
+function populateStrip() {
+  strip.innerHTML = "";
+  generatedCards = [];
+  for (let i = 0; i < TOTAL_CARDS; i++) {
+    const item = lootTable[Math.floor(Math.random() * lootTable.length)];
+    generatedCards.push(item);
+    const card = document.createElement("div");
+    card.className = `loot-item ${item.rarity}`;
+    card.innerHTML = `<strong>${item.name}</strong>`;
+    strip.appendChild(card);
+  }
+}
+
+if (spinBtn) {
+  spinBtn.addEventListener("click", () => {
+    populateStrip();
+    spinBtn.disabled = true;
+    rewardDisplay.classList.add("hidden");
+
+    const winningIndex = 32;
+    const containerWidth = document.querySelector(".roulette-container").offsetWidth;
+    const offset = -(winningIndex * CARD_WIDTH - (containerWidth / 2 - CARD_WIDTH / 2));
+
+    strip.style.transition = "none";
+    strip.style.transform = "translateX(0px)";
+
+    setTimeout(() => {
+      strip.style.transition = "transform 4.5s cubic-bezier(0.12, 0.8, 0.2, 1)";
+      strip.style.transform = `translateX(${offset}px)`;
+    }, 50);
+
+    setTimeout(() => {
+      spinBtn.disabled = false;
+      const wonReward = generatedCards[winningIndex];
+      rewardDisplay.innerHTML = `
+        <div style="color: var(--hud-secondary); font-weight: bold;">// DROP ACQUIRED: ${wonReward.name}</div>
+        <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">${wonReward.desc}</div>
+      `;
+      rewardDisplay.classList.remove("hidden");
+
+      if (typeof wonReward.action === "function") {
+        wonReward.action();
+      }
+    }, 4600);
+  });
+}
