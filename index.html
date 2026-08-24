@@ -110,7 +110,7 @@
       <div class="grid grid-cols-1 gap-2 text-xs font-mono max-w-xl mx-auto">
         <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
           <span class="text-slate-400">Target Role:</span>
-          <span class="text-white font-bold">IT Systems / Support Specialist</span>
+          <span id="target-role-text" class="text-white font-bold">IT Systems / Support Specialist</span>
         </div>
         <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
           <span class="text-slate-400">Core Dual-Spec:</span>
@@ -122,24 +122,34 @@
         </div>
       </div>
 
-      <!-- Interactive Comms Dialogue Terminal -->
-      <div class="max-w-xl mx-auto bg-black/70 border border-hud-cyan/40 p-3 rounded">
-        <div class="flex items-center justify-between text-[10px] font-mono text-hud-cyan border-b border-white/10 pb-1 mb-2">
+      <!-- Interactive Comms Dialogue Terminal & Objective Reset -->
+      <div class="max-w-xl mx-auto bg-black/70 border border-hud-cyan/40 p-3 rounded space-y-3">
+        <div class="flex items-center justify-between text-[10px] font-mono text-hud-cyan border-b border-white/10 pb-1">
           <span>COMMS_FEED // TERMINAL</span>
           <span class="animate-pulse text-hud-green">ONLINE</span>
         </div>
+        
         <p id="comms-text" class="text-xs text-slate-300 font-mono min-h-[36px] leading-relaxed">
           "System initialized. Ready for operations in technical support, network diagnostics, or infrastructure automation."
         </p>
-        <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10">
-          <button onclick="triggerComms('deploy')" class="px-2 py-1 bg-hud-cyan/10 border border-hud-cyan text-hud-cyan text-[10px] font-mono hover:bg-hud-cyan hover:text-black transition">
-            [DEPLOYMENT]
-          </button>
-          <button onclick="triggerComms('skills')" class="px-2 py-1 bg-hud-magenta/10 border border-hud-magenta text-hud-magenta text-[10px] font-mono hover:bg-hud-magenta hover:text-white transition">
-            [SKILL_MATRIX]
-          </button>
-          <button onclick="triggerComms('contact')" class="px-2 py-1 bg-hud-yellow/10 border border-hud-yellow text-hud-yellow text-[10px] font-mono hover:bg-hud-yellow hover:text-black transition">
-            [TRANSMIT_MSG]
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/10">
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="triggerComms('deploy')" class="px-2 py-1 bg-hud-cyan/10 border border-hud-cyan text-hud-cyan text-[10px] font-mono hover:bg-hud-cyan hover:text-black transition">
+              [DEPLOYMENT]
+            </button>
+            <button onclick="triggerComms('skills')" class="px-2 py-1 bg-hud-magenta/10 border border-hud-magenta text-hud-magenta text-[10px] font-mono hover:bg-hud-magenta hover:text-white transition">
+              [SKILL_MATRIX]
+            </button>
+            <button onclick="triggerComms('contact')" class="px-2 py-1 bg-hud-yellow/10 border border-hud-yellow text-hud-yellow text-[10px] font-mono hover:bg-hud-yellow hover:text-black transition">
+              [TRANSMIT_MSG]
+            </button>
+          </div>
+
+          <!-- Reset Objective Directive Button -->
+          <button onclick="resetObjectiveDirective()" class="px-2 py-1 bg-red-950/40 border border-red-500/50 text-red-400 text-[10px] font-mono hover:bg-red-600 hover:text-white transition flex items-center gap-1">
+            <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+            <span>RESET DIRECTIVE</span>
           </button>
         </div>
       </div>
@@ -151,43 +161,134 @@
       </div>
     </section>
 
-    <!-- SCREEN 2: LOOT CHEST (VAULT // CERTS & ATTRIBUTES) -->
-    <section id="screen-loot" class="hidden hud-box p-4 sm:p-6 space-y-5">
+    <!-- SCREEN 2: LOOT CHEST (VAULT // CERTS, INVENTORY & ATTRIBUTES) -->
+    <section id="screen-loot" class="hidden hud-box p-4 sm:p-6 space-y-6">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
-        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-yellow uppercase">Vault // Loot Chest</h2>
+        <div>
+          <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-yellow uppercase flex items-center gap-2">
+            <i data-lucide="package-open" class="w-5 h-5 text-hud-yellow"></i> Vault // Loot Chest
+          </h2>
+          <div class="text-[10px] font-mono text-slate-400">UNLOCKED INVENTORY & CERTIFICATION MATRIX</div>
+        </div>
         <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
         </button>
       </div>
 
+      <!-- Certifications Vault Grid -->
       <div class="space-y-2">
-        <div class="text-[10px] font-mono text-hud-yellow font-bold uppercase tracking-wider">UNLOCKED CERTIFICATIONS</div>
+        <div class="text-[10px] font-mono text-hud-yellow font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <i data-lucide="award" class="w-3.5 h-3.5"></i> Verified Credentials & Accreditations
+        </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-          <div class="p-3 bg-black/50 border border-hud-yellow/40">
-            <div class="flex justify-between items-center text-[10px] text-hud-yellow font-bold">
-              <span>PROFESSIONAL</span>
-              <span class="text-hud-green">VERIFIED</span>
+          <div class="p-3.5 bg-black/60 border border-hud-yellow/40 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center text-[10px] text-hud-yellow font-bold">
+                <span>GOOGLE ACCREDITED</span>
+                <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full"></span> VERIFIED</span>
+              </div>
+              <div class="font-bold text-white text-sm mt-1">Google IT Support Professional</div>
+              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
+                Hardware lifecycle management, OS administration, TCP/IP, DNS, DHCP, subnetting, Active Directory, and cybersecurity defense principles.
+              </div>
             </div>
-            <div class="font-bold text-white text-sm mt-1">Google IT Support Professional</div>
-            <div class="text-slate-400 text-[11px] mt-1">Troubleshooting, OS Administration, DNS/DHCP, Security</div>
+            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+              <span>ISSUER: Coursera / Google</span>
+              <span class="text-hud-yellow">ID: VERIFIED-01</span>
+            </div>
           </div>
-          <div class="p-3 bg-black/50 border border-hud-yellow/40">
-            <div class="flex justify-between items-center text-[10px] text-hud-yellow font-bold">
-              <span>SPECIALIZATION</span>
-              <span class="text-hud-green">VERIFIED</span>
+
+          <div class="p-3.5 bg-black/60 border border-hud-yellow/40 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center text-[10px] text-hud-yellow font-bold">
+                <span>AI SPECIALIZATION</span>
+                <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full"></span> VERIFIED</span>
+              </div>
+              <div class="font-bold text-white text-sm mt-1">Deep Learning & Computer Vision</div>
+              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
+                TensorFlow 2.x, Convolutional Neural Networks (CNN), hyperparameter optimization, dropout regularization, and softmax classification.
+              </div>
             </div>
-            <div class="font-bold text-white text-sm mt-1">Deep Learning & Computer Vision</div>
-            <div class="text-slate-400 text-[11px] mt-1">TensorFlow, CNN Architectures, Neural Optimization</div>
+            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+              <span>ISSUER: Coursera / DeepLearning.AI</span>
+              <span class="text-hud-yellow">ID: VERIFIED-02</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-black/60 border border-hud-cyan/40 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center text-[10px] text-hud-cyan font-bold">
+                <span>ACADEMIC DIPLOMA</span>
+                <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full"></span> COMPLETED</span>
+              </div>
+              <div class="font-bold text-white text-sm mt-1">Business Administration & Strategy</div>
+              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
+                Algonquin College. Operations workflows, business communication, fiscal modeling, and resource scheduling.
+              </div>
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+              <span>INSTITUTION: Algonquin College</span>
+              <span class="text-hud-cyan">OTTAWA, ON</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-black/60 border border-hud-magenta/40 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center text-[10px] text-hud-magenta font-bold">
+                <span>COMPUTER SCIENCE CORE</span>
+                <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full"></span> FOUNDATION</span>
+              </div>
+              <div class="font-bold text-white text-sm mt-1">CS Foundations & Scripting</div>
+              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
+                Data structures, algorithms, object-oriented programming (Python/Java), relational databases (SQL), and Win32 automation.
+              </div>
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+              <span>FOCUS: Systems & Code</span>
+              <span class="text-hud-magenta">SYSTEMS CORE</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="space-y-2 pt-2">
-        <div class="text-[10px] font-mono text-hud-cyan font-bold uppercase tracking-wider">OPERATOR STAT METRICS</div>
-        <div class="space-y-2 text-xs font-mono">
+      <!-- Tactical Inventory / Tech Gear Matrix -->
+      <div class="space-y-2 pt-1">
+        <div class="text-[10px] font-mono text-hud-cyan font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Operator Equipment & Technical Stack
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono">
+          <div class="p-2.5 bg-black/50 border border-slate-800 hover:border-hud-cyan transition">
+            <div class="text-[10px] text-slate-500">SYSTEMS</div>
+            <div class="font-bold text-white mt-0.5">Windows / Linux</div>
+            <div class="text-[9px] text-hud-cyan mt-0.5">Active Directory</div>
+          </div>
+          <div class="p-2.5 bg-black/50 border border-slate-800 hover:border-hud-cyan transition">
+            <div class="text-[10px] text-slate-500">SCRIPTING</div>
+            <div class="font-bold text-white mt-0.5">Python / Bash</div>
+            <div class="text-[9px] text-hud-cyan mt-0.5">PowerShell / Sockets</div>
+          </div>
+          <div class="p-2.5 bg-black/50 border border-slate-800 hover:border-hud-cyan transition">
+            <div class="text-[10px] text-slate-500">NETWORKING</div>
+            <div class="font-bold text-white mt-0.5">TCP/IP & DNS</div>
+            <div class="text-[9px] text-hud-cyan mt-0.5">Wi-Fi Telemetry</div>
+          </div>
+          <div class="p-2.5 bg-black/50 border border-slate-800 hover:border-hud-cyan transition">
+            <div class="text-[10px] text-slate-500">MACHINE LEARNING</div>
+            <div class="font-bold text-white mt-0.5">TensorFlow</div>
+            <div class="text-[9px] text-hud-cyan mt-0.5">Keras / NumPy</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attributes / Core Stats -->
+      <div class="space-y-2 pt-1">
+        <div class="text-[10px] font-mono text-hud-green font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i> Calibrated Skill Attributes
+        </div>
+        <div class="space-y-2.5 text-xs font-mono bg-black/40 p-3.5 border border-slate-800 rounded">
           <div>
             <div class="flex justify-between text-[11px] mb-1">
-              <span class="text-slate-300">Technical Troubleshooting & Diagnostic Analysis</span>
+              <span class="text-slate-300">Technical Diagnostic Analysis & Hardware Lifecycle</span>
               <span class="text-hud-cyan font-bold">95%</span>
             </div>
             <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
@@ -196,7 +297,7 @@
           </div>
           <div>
             <div class="flex justify-between text-[11px] mb-1">
-              <span class="text-slate-300">Network Telemetry & Sockets (Python / Win32)</span>
+              <span class="text-slate-300">Network Telemetry, Jitter Optimization & Sockets</span>
               <span class="text-hud-magenta font-bold">90%</span>
             </div>
             <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
@@ -205,7 +306,7 @@
           </div>
           <div>
             <div class="flex justify-between text-[11px] mb-1">
-              <span class="text-slate-300">Business Strategy & Operations Lifecycle</span>
+              <span class="text-slate-300">Business Strategy, Cross-Functional Comms & SLA Delivery</span>
               <span class="text-hud-yellow font-bold">92%</span>
             </div>
             <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
@@ -216,44 +317,85 @@
       </div>
     </section>
 
-    <!-- SCREEN 3: MISSIONS (FIELD EXPERIENCE & LOGS) -->
-    <section id="screen-missions" class="hidden hud-box p-4 sm:p-6 space-y-4">
+    <!-- SCREEN 3: MISSIONS (TACTICAL CAREER LOGS & EXPERIENCE) -->
+    <section id="screen-missions" class="hidden hud-box p-4 sm:p-6 space-y-5">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
-        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-magenta uppercase">Tactical Missions // Field Logs</h2>
+        <div>
+          <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-magenta uppercase flex items-center gap-2">
+            <i data-lucide="crosshair" class="w-5 h-5 text-hud-magenta"></i> Tactical Missions // Career Logs
+          </h2>
+          <div class="text-[10px] font-mono text-slate-400">DEPLOYED INDUSTRY ROLES & OPERATIONAL HISTORY</div>
+        </div>
         <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
         </button>
       </div>
 
-      <div class="space-y-3 text-xs">
-        <div class="p-4 bg-black/50 border-l-2 border-hud-magenta bg-hud-card">
-          <div class="flex justify-between items-center text-[10px] text-hud-magenta font-mono font-bold uppercase">
-            <span>LOG 01 // SYSTEMS & HARDWARE</span>
-            <span class="text-hud-green">COMPLETED</span>
+      <div class="space-y-4 text-xs font-mono">
+        
+        <!-- Mission Log 01: GAO Tek -->
+        <div class="p-4 bg-black/60 border border-slate-800 border-l-4 border-l-hud-magenta bg-hud-card hover:border-slate-700 transition">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center text-[10px] font-bold uppercase mb-1.5 gap-1">
+            <span class="text-hud-magenta">MISSION 01 // TECHNICAL SUPPORT INTERN</span>
+            <span class="text-hud-green flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> MAY 2024 – JAN 2025</span>
           </div>
-          <h3 class="font-orbitron font-bold text-white text-sm mt-1">IT Systems Support & Endpoint Provisioning</h3>
-          <p class="text-slate-400 mt-2 leading-relaxed font-mono text-[11px]">
-            Engineered automated workstation provisioning scripts, resolved L1/L2 network tickets, and optimized peripheral driver pipelines for zero-downtime environments.
+          <div class="text-xs font-bold text-white font-orbitron">GAO Tek Inc. // Remote</div>
+          <p class="text-slate-400 mt-2 leading-relaxed text-[11px]">
+            Managed L1/L2 technical support ticketing queues, executed remote diagnostic routines for enterprise client hardware, and resolved customer software integration issues. Documented troubleshooting runbooks and standard operating procedures (SOPs) to boost resolution velocity across the support lifecycle.
           </p>
+          <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-300">
+            <span class="px-2 py-0.5 bg-hud-magenta/10 text-hud-magenta border border-hud-magenta/30">#IncidentTriage</span>
+            <span class="px-2 py-0.5 bg-hud-magenta/10 text-hud-magenta border border-hud-magenta/30">#SystemDiagnostics</span>
+            <span class="px-2 py-0.5 bg-hud-magenta/10 text-hud-magenta border border-hud-magenta/30">#ITSMRunbooks</span>
+          </div>
         </div>
 
-        <div class="p-4 bg-black/50 border-l-2 border-hud-cyan bg-hud-card">
-          <div class="flex justify-between items-center text-[10px] text-hud-cyan font-mono font-bold uppercase">
-            <span>LOG 02 // NETWORK OPS</span>
-            <span class="text-hud-green">COMPLETED</span>
+        <!-- Mission Log 02: Platinum Parking -->
+        <div class="p-4 bg-black/60 border border-slate-800 border-l-4 border-l-hud-cyan bg-hud-card hover:border-slate-700 transition">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center text-[10px] font-bold uppercase mb-1.5 gap-1">
+            <span class="text-hud-cyan">MISSION 02 // ON-SITE TECH SUPPORT & FACILITY AMBASSADOR</span>
+            <span class="text-hud-green flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> SEP 2023 – MAY 2025</span>
           </div>
-          <h3 class="font-orbitron font-bold text-white text-sm mt-1">Wi-Fi Scan Jitter Mitigation & Telemetry</h3>
-          <p class="text-slate-400 mt-2 leading-relaxed font-mono text-[11px]">
-            Isolated periodic latency spikes caused by OS background BSSID roaming scans and built custom telemetry probes to stabilize gaming and enterprise VoIP packets.
+          <div class="text-xs font-bold text-white font-orbitron">Platinum Parking // Ottawa, ON</div>
+          <p class="text-slate-400 mt-2 leading-relaxed text-[11px]">
+            Delivered critical on-site hardware maintenance, network endpoint validation, and real-time failure mitigation across automated POS terminals and gate infrastructure. Performed continuous equipment health monitoring and expedited hardware swaps to guarantee zero client operational downtime.
           </p>
+          <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-300">
+            <span class="px-2 py-0.5 bg-hud-cyan/10 text-hud-cyan border border-hud-cyan/30">#HardwareSupport</span>
+            <span class="px-2 py-0.5 bg-hud-cyan/10 text-hud-cyan border border-hud-cyan/30">#POSTerminals</span>
+            <span class="px-2 py-0.5 bg-hud-cyan/10 text-hud-cyan border border-hud-cyan/30">#InfrastructureMaintenance</span>
+          </div>
         </div>
+
+        <!-- Mission Log 03: Canna Cabana -->
+        <div class="p-4 bg-black/60 border border-slate-800 border-l-4 border-l-hud-yellow bg-hud-card hover:border-slate-700 transition">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center text-[10px] font-bold uppercase mb-1.5 gap-1">
+            <span class="text-hud-yellow">MISSION 03 // SHIFT LEADER & MANAGER ON DUTY</span>
+            <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full animate-pulse"></span> JUN 2025 – PRESENT</span>
+          </div>
+          <div class="text-xs font-bold text-white font-orbitron">Canna Cabana // Ottawa, ON</div>
+          <p class="text-slate-400 mt-2 leading-relaxed text-[11px]">
+            Direct store-level operational workflows, digital POS reconciliation, and inventory tracking systems in compliance with strict provincial regulatory frameworks. Lead and train personnel on operational compliance, team communications, and escalated customer resolution strategies.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-300">
+            <span class="px-2 py-0.5 bg-hud-yellow/10 text-hud-yellow border border-hud-yellow/30">#TeamLeadership</span>
+            <span class="px-2 py-0.5 bg-hud-yellow/10 text-hud-yellow border border-hud-yellow/30">#InventoryAudit</span>
+            <span class="px-2 py-0.5 bg-hud-yellow/10 text-hud-yellow border border-hud-yellow/30">#OperationsStrategy</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- SCREEN 4: PROTOTYPES (LAB & LIVE DEMOS) -->
     <section id="screen-prototypes" class="hidden hud-box p-4 sm:p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
-        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-cyan glow-cyan uppercase">Technical Lab & Prototypes</h2>
+        <div>
+          <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-cyan glow-cyan uppercase flex items-center gap-2">
+            <i data-lucide="terminal" class="w-5 h-5 text-hud-cyan"></i> Technical Lab & Prototypes
+          </h2>
+          <div class="text-[10px] font-mono text-slate-400">INTERACTIVE IN-BROWSER SIMULATIONS</div>
+        </div>
         <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
         </button>
