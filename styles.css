@@ -1,17 +1,31 @@
-/* Custom HUD Theme & Animations */
-body {
-  background-color: #05070a;
-  background-image: 
-    linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Reset & Dark Mode Defaults */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+body {
+  background-color: #05070a !important;
+  color: #e2e8f0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-image: 
+    linear-gradient(rgba(0, 242, 254, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 254, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+
+/* Tactical HUD Card Container */
 .hud-box {
   border: 1px solid #1b2a4a;
-  background: rgba(10, 15, 24, 0.85);
+  background: rgba(10, 15, 24, 0.95);
   backdrop-filter: blur(12px);
   position: relative;
+  border-radius: 4px;
 }
 
 .hud-box::before {
@@ -37,13 +51,17 @@ body {
 }
 
 .glow-cyan {
-  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
 }
 
+.hidden {
+  display: none !important;
+}
+
+/* Custom Scrollbar */
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
-
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
