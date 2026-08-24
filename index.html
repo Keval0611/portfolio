@@ -127,11 +127,25 @@
       </div>
 
       <div class="flex flex-col items-center text-center space-y-4">
-        <!-- Tactical Avatar Box -->
-        <div class="relative w-28 h-28 sm:w-32 sm:h-32 border-2 border-hud-cyan/40 bg-slate-900 flex items-center justify-center overflow-hidden rounded">
-          <div class="absolute inset-0 bg-gradient-to-b from-transparent via-hud-cyan/10 to-transparent animate-pulse"></div>
-          <i data-lucide="shield" class="w-16 h-16 text-hud-cyan/70"></i>
-          <span class="absolute bottom-1 right-1 bg-hud-magenta text-white font-mono text-[9px] font-bold px-1.5 py-0.5 uppercase">FIELD-READY</span>
+        <!-- Stylized Cyber-Visor Avatar -->
+        <div class="relative w-28 h-28 sm:w-32 sm:h-32 border-2 border-hud-cyan/40 bg-slate-950 flex items-center justify-center overflow-hidden rounded shadow-[0_0_15px_rgba(0,242,254,0.15)]">
+          <svg class="w-24 h-24 sm:w-28 sm:h-28 text-hud-cyan" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Anime Spiky Cyber Hair -->
+            <polygon points="50,10 65,30 85,15 75,40 92,42 78,58 88,72 70,68 62,85 50,70 38,85 30,68 12,72 22,58 8,42 25,40 15,15 35,30" fill="#0b2038" stroke="#00f2fe" stroke-width="1.5" />
+            <!-- Face Structure -->
+            <polygon points="35,42 65,42 58,74 50,82 42,74" fill="#fcd5b5" />
+            <!-- Cyber Visor -->
+            <polygon points="28,48 72,48 68,58 32,58" fill="#fe007a" />
+            <polygon points="32,50 68,50 66,54 34,54" fill="#fcee0a" />
+            <!-- Collar / Cyber Armor -->
+            <polygon points="30,80 50,72 70,80 82,98 18,98" fill="#111927" stroke="#00f2fe" stroke-width="1.5" />
+            <polygon points="44,82 50,75 56,82 50,96" fill="#fe007a" />
+            <!-- Headset -->
+            <rect x="24" y="46" width="6" height="14" rx="2" fill="#00f2fe" />
+            <rect x="70" y="46" width="6" height="14" rx="2" fill="#00f2fe" />
+            <path d="M 27 60 Q 32 72 42 70" stroke="#00f2fe" stroke-width="1.5" fill="none" />
+          </svg>
+          <span class="absolute bottom-1 right-1 bg-hud-magenta text-white font-mono text-[9px] font-bold px-1.5 py-0.5 uppercase tracking-tighter">FIELD-READY</span>
         </div>
 
         <div>
@@ -140,7 +154,7 @@
         </div>
       </div>
 
-      <!-- Specs Grid -->
+      <!-- Core Specs Grid -->
       <div class="grid grid-cols-1 gap-2 text-xs font-mono max-w-xl mx-auto">
         <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
           <span class="text-slate-400">Target Role:</span>
@@ -148,7 +162,7 @@
         </div>
         <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
           <span class="text-slate-400">Core Dual-Spec:</span>
-          <span class="text-white font-bold">Computer Science + Business</span>
+          <span class="text-white font-bold">Computer Science + Business Strategy</span>
         </div>
         <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
           <span class="text-slate-400">Deployment:</span>
@@ -156,15 +170,37 @@
         </div>
       </div>
 
+      <!-- Interactive Comms Dialogue Terminal -->
+      <div class="max-w-xl mx-auto bg-black/70 border border-hud-cyan/40 p-3 rounded">
+        <div class="flex items-center justify-between text-[10px] font-mono text-hud-cyan border-b border-white/10 pb-1 mb-2">
+          <span>COMMS_FEED // TERMINAL</span>
+          <span class="animate-pulse text-hud-green">ONLINE</span>
+        </div>
+        <p id="comms-text" class="text-xs text-slate-300 font-mono min-h-[36px] leading-relaxed">
+          "System initialized. Ready for operations in technical support, network diagnostics, or infrastructure automation."
+        </p>
+        <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10">
+          <button onclick="triggerComms('deploy')" class="px-2 py-1 bg-hud-cyan/10 border border-hud-cyan text-hud-cyan text-[10px] font-mono hover:bg-hud-cyan hover:text-black transition">
+            [DEPLOYMENT]
+          </button>
+          <button onclick="triggerComms('skills')" class="px-2 py-1 bg-hud-magenta/10 border border-hud-magenta text-hud-magenta text-[10px] font-mono hover:bg-hud-magenta hover:text-white transition">
+            [SKILL_MATRIX]
+          </button>
+          <button onclick="triggerComms('contact')" class="px-2 py-1 bg-hud-yellow/10 border border-hud-yellow text-hud-yellow text-[10px] font-mono hover:bg-hud-yellow hover:text-black transition">
+            [TRANSMIT_MSG]
+          </button>
+        </div>
+      </div>
+
       <div class="max-w-xl mx-auto">
-        <button onclick="switchScreen('loot')" class="w-full py-3 bg-hud-cyan hover:bg-hud-cyan/80 text-black font-orbitron font-black text-xs uppercase flex items-center justify-center gap-2 transition tracking-wider">
+        <button onclick="switchScreen('loot')" class="w-full py-3 bg-hud-cyan hover:bg-hud-cyan/80 text-black font-orbitron font-black text-xs uppercase flex items-center justify-center gap-2 transition tracking-wider shadow-[0_0_10px_rgba(0,242,254,0.3)]">
           <i data-lucide="unlock" class="w-4 h-4"></i> Unlock Inventory Chest
         </button>
       </div>
     </section>
 
-    <!-- SCREEN 2: LOOT CHEST (CERTIFICATIONS & SKILLS) -->
-    <section id="screen-loot" class="hidden hud-box p-4 sm:p-6 space-y-4">
+    <!-- SCREEN 2: LOOT CHEST (VAULT // CERTS & ATTRIBUTES) -->
+    <section id="screen-loot" class="hidden hud-box p-4 sm:p-6 space-y-5">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
         <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-yellow uppercase">Vault // Loot Chest</h2>
         <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
@@ -172,24 +208,68 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-        <div class="p-3 bg-black/50 border border-hud-yellow/30">
-          <div class="text-[10px] text-hud-yellow font-bold uppercase">CERTIFICATION</div>
-          <div class="font-bold text-white text-sm mt-1">Google IT Support Professional</div>
-          <div class="text-slate-400 text-[11px] mt-1">Troubleshooting, OS Administration, DNS/DHCP, Security</div>
+      <!-- Certifications -->
+      <div class="space-y-2">
+        <div class="text-[10px] font-mono text-hud-yellow font-bold uppercase tracking-wider">UNLOCKED CERTIFICATIONS</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+          <div class="p-3 bg-black/50 border border-hud-yellow/40">
+            <div class="flex justify-between items-center text-[10px] text-hud-yellow font-bold">
+              <span>PROFESSIONAL</span>
+              <span class="text-hud-green">VERIFIED</span>
+            </div>
+            <div class="font-bold text-white text-sm mt-1">Google IT Support Professional</div>
+            <div class="text-slate-400 text-[11px] mt-1">Troubleshooting, OS Administration, DNS/DHCP, Security</div>
+          </div>
+          <div class="p-3 bg-black/50 border border-hud-yellow/40">
+            <div class="flex justify-between items-center text-[10px] text-hud-yellow font-bold">
+              <span>SPECIALIZATION</span>
+              <span class="text-hud-green">VERIFIED</span>
+            </div>
+            <div class="font-bold text-white text-sm mt-1">Deep Learning & Computer Vision</div>
+            <div class="text-slate-400 text-[11px] mt-1">TensorFlow, CNN Architectures, Neural Optimization</div>
+          </div>
         </div>
-        <div class="p-3 bg-black/50 border border-hud-cyan/30">
-          <div class="text-[10px] text-hud-cyan font-bold uppercase">TECHNICAL SKILLSET</div>
-          <div class="font-bold text-white text-sm mt-1">Systems, Networking & Automation</div>
-          <div class="text-slate-400 text-[11px] mt-1">Python, Win32 API, Linux/Bash, Active Directory, Wi-Fi Analysis</div>
+      </div>
+
+      <!-- Attributes / Core Stats -->
+      <div class="space-y-2 pt-2">
+        <div class="text-[10px] font-mono text-hud-cyan font-bold uppercase tracking-wider">OPERATOR STAT METRICS</div>
+        <div class="space-y-2 text-xs font-mono">
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-300">Technical Troubleshooting & Diagnostic Analysis</span>
+              <span class="text-hud-cyan font-bold">95%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-hud-cyan h-full w-[95%]"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-300">Network Telemetry & Sockets (Python / Win32)</span>
+              <span class="text-hud-magenta font-bold">90%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-hud-magenta h-full w-[90%]"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-300">Business Strategy & Operations Lifecycle</span>
+              <span class="text-hud-yellow font-bold">92%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-hud-yellow h-full w-[92%]"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SCREEN 3: MISSIONS (EXPERIENCE / LOGS) -->
+    <!-- SCREEN 3: MISSIONS (FIELD EXPERIENCE & LOGS) -->
     <section id="screen-missions" class="hidden hud-box p-4 sm:p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
-        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-magenta uppercase">Tactical Missions // Experience</h2>
+        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-magenta uppercase">Tactical Missions // Field Logs</h2>
         <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
         </button>
@@ -198,18 +278,29 @@
       <div class="space-y-3 text-xs">
         <div class="p-4 bg-black/50 border-l-2 border-hud-magenta bg-hud-card">
           <div class="flex justify-between items-center text-[10px] text-hud-magenta font-mono font-bold uppercase">
-            <span>FIELD LOG 01</span>
-            <span>SYSTEM MONITORING</span>
+            <span>LOG 01 // SYSTEMS & HARDWARE</span>
+            <span class="text-hud-green">COMPLETED</span>
           </div>
-          <h3 class="font-orbitron font-bold text-white text-sm mt-1">Infrastructure Support & Optimization</h3>
-          <p class="text-slate-400 mt-2 leading-relaxed">
-            Provided hardware lifecycle support, resolved network latency degradation issues, and provisioned user workstations in enterprise environments.
+          <h3 class="font-orbitron font-bold text-white text-sm mt-1">IT Systems Support & Endpoint Provisioning</h3>
+          <p class="text-slate-400 mt-2 leading-relaxed font-mono text-[11px]">
+            Engineered automated workstation provisioning scripts, resolved L1/L2 network tickets, and optimized peripheral driver pipelines for zero-downtime environments.
+          </p>
+        </div>
+
+        <div class="p-4 bg-black/50 border-l-2 border-hud-cyan bg-hud-card">
+          <div class="flex justify-between items-center text-[10px] text-hud-cyan font-mono font-bold uppercase">
+            <span>LOG 02 // NETWORK OPS</span>
+            <span class="text-hud-green">COMPLETED</span>
+          </div>
+          <h3 class="font-orbitron font-bold text-white text-sm mt-1">Wi-Fi Scan Jitter Mitigation & Telemetry</h3>
+          <p class="text-slate-400 mt-2 leading-relaxed font-mono text-[11px]">
+            Isolated periodic latency spikes caused by OS background BSSID roaming scans and built custom telemetry probes to stabilize gaming and enterprise VoIP packets.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- SCREEN 4: PROTOTYPES (TECHNICAL LAB & DEMOS) -->
+    <!-- SCREEN 4: PROTOTYPES (LAB & LIVE DEMOS) -->
     <section id="screen-prototypes" class="hidden hud-box p-4 sm:p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
         <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-cyan glow-cyan uppercase">Technical Lab & Prototypes</h2>
@@ -370,6 +461,18 @@
       const activeTab = document.getElementById(`tab-${screenId}`);
       if (activeTab) {
         activeTab.className = "px-3 py-2 text-xs font-orbitron font-bold border border-hud-cyan bg-hud-cyan text-black whitespace-nowrap transition";
+      }
+    }
+
+    // Terminal Dialogue Feeds
+    function triggerComms(mode) {
+      const feed = document.getElementById('comms-text');
+      if (mode === 'deploy') {
+        feed.innerText = "\"Deployment readiness: 100%. Open to IT Systems Specialist & Operations opportunities in Ottawa, Sudbury, or Kitchener.\"";
+      } else if (mode === 'skills') {
+        feed.innerText = "\"Core matrix: L1/L2 Technical Support, Active Directory, Python automation, Win32 network optimization, and TensorFlow CNN pipelines.\"";
+      } else if (mode === 'contact') {
+        feed.innerText = "\"Transmission channel open: Connect via GitHub or direct professional channels for interview scheduling.\"";
       }
     }
 
