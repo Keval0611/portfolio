@@ -2,485 +2,381 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keval Patel // Tactical Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Keval Patel // Tactical Portfolio HUD</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Fonts: Orbitron & JetBrains Mono -->
+  <!-- Google Fonts: Orbitron & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Tailwind Config -->
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            hud: {
-              bg: '#070a10',
-              panel: '#0e1422',
-              cyan: '#00f0ff',
-              magenta: '#ff0055',
-              yellow: '#ffd000',
-              green: '#00ff9d',
-              border: 'rgba(0, 240, 255, 0.25)',
-            }
-          },
           fontFamily: {
             orbitron: ['Orbitron', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            hud: {
+              cyan: '#00f2fe',
+              magenta: '#fe007a',
+              yellow: '#fcee0a',
+              green: '#00ff88',
+              bg: '#05070a',
+              card: '#0a0f18',
+              border: '#1b2a4a'
+            }
           }
         }
       }
     }
   </script>
+
+  <style>
+    body {
+      background-color: #05070a;
+      background-image: 
+        linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .hud-box {
+      border: 1px solid #1b2a4a;
+      background: rgba(10, 15, 24, 0.85);
+      backdrop-filter: blur(12px);
+      position: relative;
+    }
+    .hud-box::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid #00f2fe;
+      border-left: 2px solid #00f2fe;
+    }
+    .hud-box::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 8px;
+      height: 8px;
+      border-bottom: 2px solid #fe007a;
+      border-right: 2px solid #fe007a;
+    }
+    .glow-cyan {
+      text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+    }
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 </head>
-<body class="text-slate-300 font-mono antialiased min-h-screen flex flex-col justify-between select-none">
 
-  <!-- HUD Header -->
-  <header class="border-b border-hud-border bg-[#070a10]/90 backdrop-blur px-6 py-3 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <span class="w-3 h-3 bg-hud-cyan rounded-full animate-ping"></span>
-        <div>
-          <span class="font-orbitron font-extrabold text-hud-cyan text-sm tracking-wider glow-cyan">OPERATOR: KEVAL PATEL</span>
-          <span class="text-[10px] text-slate-500 block">STATUS // FIELD DEPLOYABLE</span>
+<body class="text-slate-200 min-h-screen overflow-x-hidden p-3 sm:p-6 md:p-8 flex justify-center selection:bg-hud-cyan selection:text-black">
+
+  <main class="w-full max-w-4xl mx-auto space-y-4">
+    
+    <!-- TOP HEADER / HUD STATUS & NAVIGATION -->
+    <header class="w-full flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border-b border-hud-border pb-4">
+      <div>
+        <div class="text-[10px] text-hud-cyan font-bold tracking-widest uppercase">OPERATOR:</div>
+        <h1 class="text-xl sm:text-2xl font-orbitron font-black text-white tracking-wider">KEVAL PATEL</h1>
+        <div class="text-[10px] text-slate-400 font-mono flex items-center gap-1.5 mt-0.5">
+          <span class="w-2 h-2 rounded-full bg-hud-green animate-pulse"></span>
+          <span>STATUS // FIELD DEPLOYABLE</span>
         </div>
       </div>
-      
-      <!-- RPG Quest Navigation -->
-      <nav class="flex gap-2 text-xs font-orbitron">
-        <button onclick="switchScreen('status')" id="btn-status" class="px-3 py-1.5 border border-hud-cyan bg-hud-cyan text-black font-bold uppercase transition">Status</button>
-        <button onclick="switchScreen('inventory')" id="btn-inventory" class="px-3 py-1.5 border border-slate-700 bg-black/40 text-slate-400 hover:border-hud-cyan font-bold uppercase transition flex items-center gap-1.5">
-          <i data-lucide="box" class="w-3.5 h-3.5 text-hud-yellow"></i> Loot Chest
+
+      <!-- Scrollable Mobile Tab Bar -->
+      <nav class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
+        <button id="tab-status" onclick="switchScreen('status')" class="px-3 py-2 text-xs font-orbitron font-bold border border-hud-cyan bg-hud-cyan text-black whitespace-nowrap transition">
+          STATUS
         </button>
-        <button onclick="switchScreen('quests')" id="btn-quests" class="px-3 py-1.5 border border-slate-700 bg-black/40 text-slate-400 hover:border-hud-cyan font-bold uppercase transition">Missions</button>
-        <button onclick="switchScreen('prototypes')" id="btn-prototypes" class="px-3 py-1.5 border border-slate-700 bg-black/40 text-slate-400 hover:border-hud-cyan font-bold uppercase transition">Prototypes</button>
-        <button onclick="switchScreen('comms')" id="btn-comms" class="px-3 py-1.5 border border-slate-700 bg-black/40 text-slate-400 hover:border-hud-cyan font-bold uppercase transition">Comms</button>
+        <button id="tab-loot" onclick="switchScreen('loot')" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-hud-card text-slate-300 hover:border-hud-yellow hover:text-hud-yellow whitespace-nowrap flex items-center gap-1.5 transition">
+          <i data-lucide="package" class="w-3.5 h-3.5 text-hud-yellow"></i> LOOT CHEST
+        </button>
+        <button id="tab-missions" onclick="switchScreen('missions')" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-hud-card text-slate-300 hover:border-hud-magenta hover:text-hud-magenta whitespace-nowrap transition">
+          MISSIONS
+        </button>
+        <button id="tab-prototypes" onclick="switchScreen('prototypes')" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-hud-card text-slate-300 hover:border-hud-cyan hover:text-hud-cyan whitespace-nowrap transition">
+          PROTOTYPES
+        </button>
       </nav>
-    </div>
-  </header>
+    </header>
 
-  <!-- Central Console -->
-  <main class="max-w-6xl mx-auto px-4 py-6 w-full flex-1 flex flex-col justify-center">
+    <!-- SCREEN 1: STATUS / MAIN PROFILE -->
+    <section id="screen-status" class="hud-box p-4 sm:p-6 space-y-6">
+      <div class="flex items-center justify-between border-b border-hud-border pb-2 text-[11px] font-mono">
+        <span class="text-hud-cyan font-bold">TACTICAL_PROFILE</span>
+        <span class="text-hud-yellow font-bold">LVL.24</span>
+      </div>
 
-    <!-- SCREEN 1: STATUS -->
-    <div id="screen-status" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-      
-      <!-- Avatar & Spec Card -->
-      <div class="lg:col-span-4 hud-box p-5 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between text-[11px] text-slate-400 border-b border-white/10 pb-2 mb-4">
-            <span class="text-hud-cyan font-bold">TACTICAL_PROFILE</span>
-            <span class="text-hud-yellow font-bold">LVL.24</span>
-          </div>
-
-          <!-- Anime Cyberpunk Avatar -->
-          <div class="relative w-44 h-44 mx-auto mb-4 bg-black/60 border-2 border-hud-cyan/50 rounded-md p-2 overflow-hidden shadow-[0_0_20px_rgba(0,240,255,0.2)]">
-            <svg viewBox="0 0 200 200" class="w-full h-full">
-              <defs>
-                <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#00f0ff" />
-                  <stop offset="100%" stop-color="#111726" />
-                </linearGradient>
-                <linearGradient id="visorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#ff0055" />
-                  <stop offset="100%" stop-color="#ffd000" />
-                </linearGradient>
-              </defs>
-              <polygon points="40,90 20,40 60,60 85,15 115,20 145,15 165,55 180,45 160,95 185,100 150,140 50,140" fill="url(#hairGrad)" />
-              <polygon points="65,85 135,85 125,145 100,165 75,145" fill="#f8d7c0" />
-              <polygon points="55,92 145,92 135,115 65,115" fill="url(#visorGrad)" opacity="0.95" />
-              <line x1="55" y1="103" x2="145" y2="103" stroke="#fff" stroke-width="1.5" stroke-dasharray="4" />
-              <rect x="42" y="98" width="15" height="22" rx="3" fill="#00f0ff" />
-              <rect x="143" y="98" width="15" height="22" rx="3" fill="#00f0ff" />
-              <path d="M50,120 Q60,145 88,142" stroke="#00f0ff" stroke-width="3" fill="none" />
-              <polygon points="45,170 75,145 100,165 125,145 155,170 180,200 20,200" fill="#111726" stroke="#00f0ff" stroke-width="2" />
-              <polygon points="80,160 100,165 120,160 115,200 85,200" fill="#ff0055" />
-            </svg>
-            <span class="absolute bottom-1 right-1 bg-hud-magenta text-white text-[9px] font-bold px-1.5 py-0.5 rounded">FIELD-READY</span>
-          </div>
-
-          <h1 class="text-xl font-orbitron font-extrabold text-center text-white glow-cyan">KEVAL PATEL</h1>
-          <p class="text-center text-[10px] text-hud-cyan tracking-widest uppercase mb-4">Ottawa, ON // IT Systems & Ops</p>
-
-          <div class="space-y-1.5 text-xs">
-            <div class="flex justify-between bg-black/50 p-2 border border-white/5">
-              <span class="text-slate-400">Target Role:</span>
-              <span class="text-white font-semibold">IT Systems / Support Specialist</span>
-            </div>
-            <div class="flex justify-between bg-black/50 p-2 border border-white/5">
-              <span class="text-slate-400">Core Dual-Spec:</span>
-              <span class="text-white font-semibold">CS + Business Strategy</span>
-            </div>
-            <div class="flex justify-between bg-black/50 p-2 border border-white/5">
-              <span class="text-slate-400">Deployment:</span>
-              <span class="text-hud-green font-semibold">Available Immediately</span>
-            </div>
-          </div>
+      <div class="flex flex-col items-center text-center space-y-4">
+        <!-- Tactical Avatar Box -->
+        <div class="relative w-28 h-28 sm:w-32 sm:h-32 border-2 border-hud-cyan/40 bg-slate-900 flex items-center justify-center overflow-hidden rounded">
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent via-hud-cyan/10 to-transparent animate-pulse"></div>
+          <i data-lucide="shield" class="w-16 h-16 text-hud-cyan/70"></i>
+          <span class="absolute bottom-1 right-1 bg-hud-magenta text-white font-mono text-[9px] font-bold px-1.5 py-0.5 uppercase">FIELD-READY</span>
         </div>
 
-        <button onclick="switchScreen('inventory')" class="mt-4 w-full py-2.5 bg-hud-cyan text-black font-orbitron font-bold text-xs uppercase hover:bg-hud-cyan/80 transition flex items-center justify-center gap-2">
-          <i data-lucide="unlock" class="w-3.5 h-3.5"></i> Unlock Inventory Chest
+        <div>
+          <h2 class="text-xl sm:text-2xl font-orbitron font-black text-white glow-cyan">KEVAL PATEL</h2>
+          <p class="text-xs text-hud-cyan font-mono mt-1">OTTAWA, ON // IT SYSTEMS & OPS</p>
+        </div>
+      </div>
+
+      <!-- Specs Grid -->
+      <div class="grid grid-cols-1 gap-2 text-xs font-mono max-w-xl mx-auto">
+        <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
+          <span class="text-slate-400">Target Role:</span>
+          <span class="text-white font-bold">IT Systems / Support Specialist</span>
+        </div>
+        <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
+          <span class="text-slate-400">Core Dual-Spec:</span>
+          <span class="text-white font-bold">Computer Science + Business</span>
+        </div>
+        <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
+          <span class="text-slate-400">Deployment:</span>
+          <span class="text-hud-green font-bold">Available Immediately</span>
+        </div>
+      </div>
+
+      <div class="max-w-xl mx-auto">
+        <button onclick="switchScreen('loot')" class="w-full py-3 bg-hud-cyan hover:bg-hud-cyan/80 text-black font-orbitron font-black text-xs uppercase flex items-center justify-center gap-2 transition tracking-wider">
+          <i data-lucide="unlock" class="w-4 h-4"></i> Unlock Inventory Chest
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: LOOT CHEST (CERTIFICATIONS & SKILLS) -->
+    <section id="screen-loot" class="hidden hud-box p-4 sm:p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-hud-border pb-3">
+        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-yellow uppercase">Vault // Loot Chest</h2>
+        <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
         </button>
       </div>
 
-      <!-- Dialogue Terminal -->
-      <div class="lg:col-span-8 hud-box p-6 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between text-[11px] text-slate-400 border-b border-white/10 pb-2 mb-4">
-            <div class="flex items-center gap-2">
-              <i data-lucide="radio" class="w-4 h-4 text-hud-magenta animate-pulse"></i>
-              <span class="text-hud-magenta font-bold">CORE_TRANSMISSION // DISPATCH FREQUENCY</span>
-            </div>
-            <span id="transmission-id" class="text-slate-500">LOG #01</span>
-          </div>
-
-          <div class="bg-black/40 border border-hud-border p-4 rounded min-h-[140px] flex items-center">
-            <p id="dialogue-text" class="text-sm md:text-base text-slate-200 leading-relaxed font-mono">
-              "Tactical Objective: To deliver rapid, tier-1/tier-2 IT diagnostics, hardware maintenance, and systems reliability for enterprise field environments—leveraging an analytical Computer Science foundation and practical business workflow execution."
-            </p>
-          </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+        <div class="p-3 bg-black/50 border border-hud-yellow/30">
+          <div class="text-[10px] text-hud-yellow font-bold uppercase">CERTIFICATION</div>
+          <div class="font-bold text-white text-sm mt-1">Google IT Support Professional</div>
+          <div class="text-slate-400 text-[11px] mt-1">Troubleshooting, OS Administration, DNS/DHCP, Security</div>
         </div>
-
-        <div class="mt-6 space-y-2">
-          <div class="flex items-center justify-between text-[10px] text-slate-400 tracking-wider">
-            <span>TACTICAL INQUIRIES:</span>
-            <span class="text-hud-yellow">CLICK BELOW TO INTERROGATE</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            <button onclick="showDialogue('field')" class="p-2.5 bg-black/50 hover:bg-hud-cyan/10 border border-slate-800 hover:border-hud-cyan text-left text-slate-200 transition flex items-center justify-between">
-              <span>&gt; Field Support Capabilities</span>
-              <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-hud-cyan"></i>
-            </button>
-            <button onclick="showDialogue('troubleshoot')" class="p-2.5 bg-black/50 hover:bg-hud-magenta/10 border border-slate-800 hover:border-hud-magenta text-left text-slate-200 transition flex items-center justify-between">
-              <span>&gt; Troubleshooting Methodology</span>
-              <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-hud-magenta"></i>
-            </button>
-            <button onclick="showDialogue('biz')" class="p-2.5 bg-black/50 hover:bg-hud-yellow/10 border border-slate-800 hover:border-hud-yellow text-left text-slate-200 transition flex items-center justify-between">
-              <span>&gt; Business Operations & SLA Mindset</span>
-              <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-hud-yellow"></i>
-            </button>
-            <button onclick="cycleObjective()" class="p-2.5 bg-hud-magenta/20 hover:bg-hud-magenta/30 border border-hud-magenta text-left text-white font-bold transition flex items-center justify-between">
-              <span>&gt; Cycle Transmission / Reset</span>
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-hud-magenta"></i>
-            </button>
-          </div>
+        <div class="p-3 bg-black/50 border border-hud-cyan/30">
+          <div class="text-[10px] text-hud-cyan font-bold uppercase">TECHNICAL SKILLSET</div>
+          <div class="font-bold text-white text-sm mt-1">Systems, Networking & Automation</div>
+          <div class="text-slate-400 text-[11px] mt-1">Python, Win32 API, Linux/Bash, Active Directory, Wi-Fi Analysis</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- SCREEN 2: INVENTORY & LOOT CHEST -->
-    <div id="screen-inventory" class="hidden hud-box p-6 space-y-6">
+    <!-- SCREEN 3: MISSIONS (EXPERIENCE / LOGS) -->
+    <section id="screen-missions" class="hidden hud-box p-4 sm:p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
-        <div>
-          <h2 class="text-lg font-orbitron font-extrabold text-hud-yellow glow-cyan uppercase flex items-center gap-2">
-            <i data-lucide="sparkles" class="w-5 h-5 text-hud-yellow"></i> Skill Vault & Verified Loot
-          </h2>
-          <p class="text-xs text-slate-400">Click the chest to trigger interactive skill unlock</p>
-        </div>
+        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-magenta uppercase">Tactical Missions // Experience</h2>
         <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Status
-        </button>
-      </div>
-
-      <div class="bg-black/60 border border-slate-800 p-6 text-center rounded-sm">
-        <div id="chest-container" onclick="openChest()" class="cursor-pointer inline-block group transform transition duration-200">
-          <div id="chest-icon" class="w-20 h-20 mx-auto rounded-lg bg-gradient-to-b from-amber-500/20 to-black border-2 border-hud-yellow flex items-center justify-center shadow-[0_0_20px_rgba(255,208,0,0.3)] group-hover:scale-105 transition">
-            <i data-lucide="package" class="w-10 h-10 text-hud-yellow"></i>
-          </div>
-          <p id="chest-prompt" class="text-xs font-orbitron font-bold text-hud-yellow mt-3 uppercase tracking-widest group-hover:glow-cyan">
-            [ Click Chest To Unlock Verified Artifacts ]
-          </p>
-        </div>
-      </div>
-
-      <div id="loot-reveal" class="space-y-6">
-        <div>
-          <h3 class="text-xs font-orbitron text-hud-cyan tracking-wider uppercase mb-3 flex items-center gap-2">
-            <i data-lucide="award" class="w-4 h-4 text-hud-cyan"></i> Verified Industry Certifications (Coursera Verified)
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <a href="https://www.coursera.org/account/accomplishments/verify/HSH8HBYAHEWS" target="_blank" class="p-3 bg-hud-panel border border-hud-cyan/40 hover:border-hud-cyan hover:bg-hud-cyan/10 transition flex items-center justify-between group">
-              <div>
-                <div class="font-bold text-white group-hover:text-hud-cyan">Crash Course on Python</div>
-                <div class="text-[11px] text-slate-400">Automation & Scripting Foundations</div>
-              </div>
-              <span class="text-[10px] bg-hud-cyan/20 text-hud-cyan px-2 py-1 border border-hud-cyan flex items-center gap-1">Verify <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
-            </a>
-
-            <a href="https://www.coursera.org/account/accomplishments/verify/V3A2GRKM2JDW" target="_blank" class="p-3 bg-hud-panel border border-hud-yellow/40 hover:border-hud-yellow hover:bg-hud-yellow/10 transition flex items-center justify-between group">
-              <div>
-                <div class="font-bold text-white group-hover:text-hud-yellow">Intro to TensorFlow for AI & ML</div>
-                <div class="text-[11px] text-slate-400">Deep Learning & Model Training</div>
-              </div>
-              <span class="text-[10px] bg-hud-yellow/20 text-hud-yellow px-2 py-1 border border-hud-yellow flex items-center gap-1">Verify <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
-            </a>
-
-            <a href="https://www.coursera.org/account/accomplishments/verify/ZFYS2S8W3G8T" target="_blank" class="p-3 bg-hud-panel border border-hud-magenta/40 hover:border-hud-magenta hover:bg-hud-magenta/10 transition flex items-center justify-between group">
-              <div>
-                <div class="font-bold text-white group-hover:text-hud-magenta">Convolutional Neural Networks (CNNs)</div>
-                <div class="text-[11px] text-slate-400">Computer Vision & Deep Architectures</div>
-              </div>
-              <span class="text-[10px] bg-hud-magenta/20 text-hud-magenta px-2 py-1 border border-hud-magenta flex items-center gap-1">Verify <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
-            </a>
-
-            <a href="https://www.coursera.org/account/accomplishments/verify/HSH8HBYAHEWS" target="_blank" class="p-3 bg-hud-panel border border-hud-green/40 hover:border-hud-green hover:bg-hud-green/10 transition flex items-center justify-between group">
-              <div>
-                <div class="font-bold text-white group-hover:text-hud-green">SEO with Squarespace</div>
-                <div class="text-[11px] text-slate-400">Search Engine Discovery & Web Platforms</div>
-              </div>
-              <span class="text-[10px] bg-hud-green/20 text-hud-green px-2 py-1 border border-hud-green flex items-center gap-1">Verify <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
-            </a>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="text-xs font-orbitron text-hud-cyan tracking-wider uppercase mb-3 flex items-center gap-2">
-            <i data-lucide="cpu" class="w-4 h-4 text-hud-cyan"></i> Field Deployment Skill Matrix
-          </h3>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div class="p-3 bg-black/40 border border-white/10">
-              <div class="text-slate-400 text-[10px]">DIAGNOSTICS</div>
-              <div class="text-white font-bold mt-1">Hardware / On-Site</div>
-              <div class="text-hud-cyan text-[10px]">Tier 1/2 Escalation</div>
-            </div>
-            <div class="p-3 bg-black/40 border border-white/10">
-              <div class="text-slate-400 text-[10px]">NETWORKING</div>
-              <div class="text-white font-bold mt-1">TCP/IP & Connectivity</div>
-              <div class="text-hud-cyan text-[10px]">Latency Optimization</div>
-            </div>
-            <div class="p-3 bg-black/40 border border-white/10">
-              <div class="text-slate-400 text-[10px]">SERVICE DESK</div>
-              <div class="text-white font-bold mt-1">Ticketing & SLA</div>
-              <div class="text-hud-cyan text-[10px]">Accurate Logging</div>
-            </div>
-            <div class="p-3 bg-black/40 border border-white/10">
-              <div class="text-slate-400 text-[10px]">BUSINESS LOGIC</div>
-              <div class="text-white font-bold mt-1">Operational Flow</div>
-              <div class="text-hud-cyan text-[10px]">Inventory & Auditing</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SCREEN 3: MISSIONS -->
-    <div id="screen-quests" class="hidden hud-box p-6 space-y-4">
-      <div class="flex items-center justify-between border-b border-hud-border pb-3">
-        <h2 class="text-lg font-orbitron font-extrabold text-hud-magenta glow-magenta uppercase">Field Missions & Tactical Experience</h2>
-        <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Status
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
         </button>
       </div>
 
       <div class="space-y-3 text-xs">
-        <div class="p-4 bg-black/50 border-l-2 border-hud-yellow border border-white/5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-1.5">
-            <span class="font-orbitron font-bold text-white text-sm">Shift Leader / Operations Manager On Duty</span>
-            <span class="text-hud-yellow font-bold">June 2025 - Present // Ottawa, ON</span>
+        <div class="p-4 bg-black/50 border-l-2 border-hud-magenta bg-hud-card">
+          <div class="flex justify-between items-center text-[10px] text-hud-magenta font-mono font-bold uppercase">
+            <span>FIELD LOG 01</span>
+            <span>SYSTEM MONITORING</span>
           </div>
-          <div class="text-hud-cyan text-[11px] mb-2 font-semibold">Canna Cabana</div>
-          <ul class="list-disc list-inside space-y-1 text-slate-300">
-            <li>Directed real-time store operations, supervising floor personnel to maintain high operational uptime and strict policy compliance.</li>
-            <li>Managed POS hardware reconciliation, cash balancing, and computerized inventory tracking systems with zero discrepancy.</li>
-            <li>Resolved on-the-spot customer service escalations, providing rapid problem resolution and personalized technical product recommendations.</li>
-          </ul>
-        </div>
-
-        <div class="p-4 bg-black/50 border-l-2 border-hud-cyan border border-white/5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-1.5">
-            <span class="font-orbitron font-bold text-white text-sm">Technical Support Specialist Intern</span>
-            <span class="text-hud-cyan font-bold">May 2024 - Jan 2025 // Toronto, ON</span>
-          </div>
-          <div class="text-hud-cyan text-[11px] mb-2 font-semibold">Gao Tech</div>
-          <ul class="list-disc list-inside space-y-1 text-slate-300">
-            <li>Delivered front-line technical triage across remote client systems, diagnosing connectivity failures, operating system faults, and device errors.</li>
-            <li>Formulated structured, step-by-step diagnostic pathways to guide non-technical users through troubleshooting, cutting mean resolution time.</li>
-            <li>Documented, categorized, and tracked tickets through internal support ticketing systems to ensure strict SLA compliance.</li>
-          </ul>
-        </div>
-
-        <div class="p-4 bg-black/50 border-l-2 border-hud-green border border-white/5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-1.5">
-            <span class="font-orbitron font-bold text-white text-sm">On-Site Technical Support & Field Ambassador</span>
-            <span class="text-hud-green font-bold">Sept 2023 - May 2025 // Regina, SK</span>
-          </div>
-          <div class="text-hud-cyan text-[11px] mb-2 font-semibold">Platinum Parking Management</div>
-          <ul class="list-disc list-inside space-y-1 text-slate-300">
-            <li>Conducted on-site hardware maintenance and diagnostic troubleshooting on automated, networked pay-and-park terminals to minimize system downtime.</li>
-            <li>Responded rapidly to on-site technical dispatch tickets, replacing faulty peripheral components and restoring network connectivity.</li>
-            <li>Conducted systematic preventive maintenance routines and audit reconciliation to maintain continuous terminal reliability.</li>
-          </ul>
+          <h3 class="font-orbitron font-bold text-white text-sm mt-1">Infrastructure Support & Optimization</h3>
+          <p class="text-slate-400 mt-2 leading-relaxed">
+            Provided hardware lifecycle support, resolved network latency degradation issues, and provisioned user workstations in enterprise environments.
+          </p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- SCREEN 4: PROTOTYPES -->
-    <div id="screen-prototypes" class="hidden hud-box p-6 space-y-4">
+    <!-- SCREEN 4: PROTOTYPES (TECHNICAL LAB & DEMOS) -->
+    <section id="screen-prototypes" class="hidden hud-box p-4 sm:p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-hud-border pb-3">
-        <h2 class="text-lg font-orbitron font-extrabold text-hud-cyan glow-cyan uppercase">Technical Lab & Prototypes</h2>
+        <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-hud-cyan glow-cyan uppercase">Technical Lab & Prototypes</h2>
         <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-hud-cyan flex items-center gap-1">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Status
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <!-- Card 1: Interactive PingStabilizer -->
-        <div class="p-5 bg-black/50 border border-hud-cyan/40 flex flex-col justify-between">
+        
+        <!-- Prototype 1: PingStabilizer -->
+        <div class="p-4 bg-black/50 border border-hud-cyan/40 flex flex-col justify-between space-y-3">
           <div>
-            <div class="flex items-center justify-between text-[10px] text-hud-magenta font-bold uppercase mb-1">
-              <span>SYSTEMS UTILITY // PYTHON & WIN32</span>
-              <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full animate-pulse"></span> LIVE SIMULATION</span>
+            <div class="flex items-center justify-between text-[10px] text-hud-cyan font-bold uppercase mb-1">
+              <span>SYSTEMS UTILITY // PYTHON</span>
+              <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full animate-pulse"></span> LIVE SIM</span>
             </div>
-            <h3 class="text-base font-orbitron font-bold text-white mb-1">PingStabilizer // Telemetry Probe</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-3">
-              Monitors real-time packet round-trip time (RTT), tracks moving delta jitter, and detects network queue spikes.
+            <h3 class="text-sm font-orbitron font-bold text-white mb-1">PingStabilizer // Telemetry Probe</h3>
+            <p class="text-[11px] text-slate-400 leading-relaxed mb-3">
+              Monitors packet round-trip time (RTT), tracks delta jitter, and detects network queue spikes.
             </p>
 
-            <!-- Embedded Interactive Widget -->
-            <div class="bg-[#05070a] border border-slate-800 p-3 rounded mb-4">
-              <div class="flex items-center justify-between gap-2 mb-2 text-xs">
-                <select id="sim-target" class="bg-[#111927] border border-slate-700 text-white text-[11px] p-1.5 rounded flex-1 focus:outline-none focus:border-hud-cyan">
+            <!-- Responsive Interactive Widget -->
+            <div class="bg-[#05070a] border border-slate-800 p-2.5 rounded mb-2">
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-2 text-xs">
+                <select id="sim-target" class="bg-[#111927] border border-slate-700 text-white text-[11px] p-1.5 rounded flex-1 focus:outline-none focus:border-hud-cyan w-full">
                   <option value="val">Valorant NA East (Ashburn)</option>
                   <option value="cf">Cloudflare Edge (1.1.1.1)</option>
                   <option value="ggl">Google DNS (8.8.8.8)</option>
                 </select>
-                <button id="sim-btn" onclick="toggleWebSimulation()" class="px-3 py-1.5 bg-hud-cyan text-black font-bold font-orbitron text-[11px] uppercase hover:bg-hud-cyan/80 transition">
+                <button id="sim-btn" onclick="toggleWebSimulation()" class="w-full sm:w-auto px-3 py-1.5 bg-hud-cyan text-black font-bold font-orbitron text-[11px] uppercase hover:bg-hud-cyan/80 transition text-center whitespace-nowrap">
                   Run Demo
                 </button>
               </div>
 
               <!-- Live Readouts -->
-              <div class="grid grid-cols-3 gap-2 text-center text-xs">
+              <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
                 <div class="bg-black/60 p-1.5 border border-white/5">
                   <div class="text-[9px] text-slate-500">RTT</div>
-                  <div id="sim-rtt" class="font-bold text-hud-cyan text-sm">-- ms</div>
+                  <div id="sim-rtt" class="font-bold text-hud-cyan text-xs">-- ms</div>
                 </div>
                 <div class="bg-black/60 p-1.5 border border-white/5">
                   <div class="text-[9px] text-slate-500">JITTER</div>
-                  <div id="sim-jitter" class="font-bold text-hud-magenta text-sm">-- ms</div>
+                  <div id="sim-jitter" class="font-bold text-hud-magenta text-xs">-- ms</div>
                 </div>
                 <div class="bg-black/60 p-1.5 border border-white/5">
                   <div class="text-[9px] text-slate-500">STATUS</div>
-                  <div id="sim-status" class="font-bold text-slate-400 text-sm">IDLE</div>
+                  <div id="sim-status" class="font-bold text-slate-400 text-xs">IDLE</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="flex justify-between items-center pt-2 border-t border-white/10 text-[11px]">
+          <div class="flex flex-wrap justify-between items-center pt-2 border-t border-white/10 gap-2 text-[11px]">
             <span class="text-hud-cyan font-bold">#Python #Sockets #Win32API</span>
-            <a href="https://github.com/keval0611/ping-stabilizer" target="_blank" class="px-3 py-1 bg-hud-cyan/10 border border-hud-cyan text-hud-cyan hover:bg-hud-cyan hover:text-black font-bold transition flex items-center gap-1">
+            <a href="https://github.com/keval0611/ping-stabilizer" target="_blank" class="px-2.5 py-1 bg-hud-cyan/10 border border-hud-cyan text-hud-cyan hover:bg-hud-cyan hover:text-black font-bold transition flex items-center gap-1">
               <span>Desktop Repo</span>
               <i data-lucide="external-link" class="w-3 h-3"></i>
             </a>
           </div>
         </div>
 
-    <!-- Interactive Prototype Card: CNN Vision Pipeline -->
-<div class="p-5 bg-black/50 border border-hud-yellow/40 flex flex-col justify-between hover:border-hud-yellow transition">
-  <div>
-    <div class="flex items-center justify-between text-[10px] text-hud-yellow font-bold uppercase mb-1">
-      <span>AI / COMPUTER VISION // TENSORFLOW</span>
-      <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full animate-pulse"></span> INFERENCE READY</span>
-    </div>
-    <h3 class="text-base font-orbitron font-bold text-white mb-1">CNN Vision Pipeline // Object Classifier</h3>
-    <p class="text-xs text-slate-400 leading-relaxed mb-3">
-      Multi-class feature extraction engine classifying optical targets with softmax probability vectors.
-    </p>
+        <!-- Prototype 2: CNN Vision Pipeline -->
+        <div class="p-4 bg-black/50 border border-hud-yellow/40 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between text-[10px] text-hud-yellow font-bold uppercase mb-1">
+              <span>AI / VISION // TENSORFLOW</span>
+              <span class="text-hud-green flex items-center gap-1"><span class="w-1.5 h-1.5 bg-hud-green rounded-full animate-pulse"></span> INFERENCE READY</span>
+            </div>
+            <h3 class="text-sm font-orbitron font-bold text-white mb-1">CNN Vision // Classifier</h3>
+            <p class="text-[11px] text-slate-400 leading-relaxed mb-3">
+              Multi-class feature extraction engine classifying optical targets with softmax probability vectors.
+            </p>
 
-    <!-- Embedded In-Browser Vision Widget -->
-    <div class="bg-[#05070a] border border-slate-800 p-3 rounded mb-4">
-      <div class="flex items-center justify-between gap-2 mb-2 text-xs">
-        <select id="vision-sample" class="bg-[#111927] border border-slate-700 text-white text-[11px] p-1.5 rounded flex-1 focus:outline-none focus:border-hud-yellow">
-          <option value="plane">Target Alpha: Commercial Airliner</option>
-          <option value="truck">Target Bravo: Logistics Freight Truck</option>
-          <option value="dog">Target Charlie: K9 / Canine Subject</option>
-          <option value="ship">Target Delta: Naval Cargo Vessel</option>
-        </select>
-        <button id="vision-btn" onclick="runVisionInference()" class="px-3 py-1.5 bg-hud-yellow text-black font-bold font-orbitron text-[11px] uppercase hover:bg-hud-yellow/80 transition">
-          Classify
-        </button>
+            <!-- Responsive Interactive Widget -->
+            <div class="bg-[#05070a] border border-slate-800 p-2.5 rounded mb-2">
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-2 text-xs">
+                <select id="vision-sample" class="bg-[#111927] border border-slate-700 text-white text-[11px] p-1.5 rounded flex-1 focus:outline-none focus:border-hud-yellow w-full">
+                  <option value="plane">Target Alpha: Commercial Airliner</option>
+                  <option value="truck">Target Bravo: Freight Truck</option>
+                  <option value="dog">Target Charlie: K9 / Canine</option>
+                  <option value="ship">Target Delta: Naval Cargo Vessel</option>
+                </select>
+                <button id="vision-btn" onclick="runVisionInference()" class="w-full sm:w-auto px-3 py-1.5 bg-hud-yellow text-black font-bold font-orbitron text-[11px] uppercase hover:bg-hud-yellow/80 transition text-center whitespace-nowrap">
+                  Classify
+                </button>
+              </div>
+
+              <!-- Dynamic Confidence Readout -->
+              <div class="space-y-1.5 text-xs pt-1">
+                <div>
+                  <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
+                    <span id="label-top" class="font-bold text-white">Top Match: Ready</span>
+                    <span id="conf-top" class="text-hud-yellow font-bold">0%</span>
+                  </div>
+                  <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div id="bar-top" class="bg-hud-yellow h-full w-0 transition-all duration-500"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
+                    <span id="label-sub" class="text-slate-400">Secondary Candidate</span>
+                    <span id="conf-sub" class="text-slate-400">0%</span>
+                  </div>
+                  <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div id="bar-sub" class="bg-slate-500 h-full w-0 transition-all duration-500"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap justify-between items-center pt-2 border-t border-white/10 gap-2 text-[11px]">
+            <span class="text-hud-yellow font-bold">#TensorFlow #DeepLearning</span>
+            <a href="https://github.com/keval0611/cnn-vision-pipeline" target="_blank" class="px-2.5 py-1 bg-hud-yellow/10 border border-hud-yellow text-hud-yellow hover:bg-hud-yellow hover:text-black font-bold transition flex items-center gap-1">
+              <span>Pipeline Repo</span>
+              <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
       </div>
+    </section>
 
-      <!-- Live Confidence Bars -->
-      <div class="space-y-1.5 text-xs pt-1">
-        <div>
-          <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
-            <span id="label-top" class="font-bold text-white">Top Match: Ready</span>
-            <span id="conf-top" class="text-hud-yellow font-bold">0%</span>
-          </div>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-            <div id="bar-top" class="bg-hud-yellow h-full w-0 transition-all duration-500"></div>
-          </div>
-        </div>
-        <div>
-          <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
-            <span id="label-sub" class="text-slate-400">Secondary Candidate</span>
-            <span id="conf-sub" class="text-slate-400">0%</span>
-          </div>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-            <div id="bar-sub" class="bg-slate-500 h-full w-0 transition-all duration-500"></div>
-          </div>
-        </div>
+    <!-- FOOTER -->
+    <footer class="pt-6 pb-2 text-center text-[10px] font-mono text-slate-500 space-y-1">
+      <div class="flex items-center justify-center gap-1 text-hud-green">
+        <span class="w-1.5 h-1.5 bg-hud-green rounded-full"></span>
+        <span>SYSTEM ALLOCATION: OPTIMAL</span>
       </div>
-    </div>
-  </div>
-
-  <div class="flex justify-between items-center pt-2 border-t border-white/10 text-[11px]">
-    <span class="text-hud-yellow font-bold">#TensorFlow #DeepLearning #Python</span>
-    <a href="https://github.com/keval0611/cnn-vision-pipeline" target="_blank" class="px-3 py-1 bg-hud-yellow/10 border border-hud-yellow text-hud-yellow hover:bg-hud-yellow hover:text-black font-bold transition flex items-center gap-1">
-      <span>Pipeline Repo</span>
-      <i data-lucide="external-link" class="w-3 h-3"></i>
-    </a>
-  </div>
-</div>
-
-    <!-- SCREEN 5: COMMS -->
-    <div id="screen-comms" class="hidden hud-box p-8 text-center space-y-5">
-      <div class="max-w-md mx-auto">
-        <div class="w-12 h-12 rounded-full border border-hud-cyan mx-auto flex items-center justify-center bg-hud-cyan/10 mb-3">
-          <i data-lucide="radio" class="w-6 h-6 text-hud-cyan"></i>
-        </div>
-        <h2 class="text-xl font-orbitron font-bold text-white glow-cyan uppercase">Direct Comms Channel</h2>
-        <p class="text-xs text-slate-400 mt-2">
-          Seeking a dedicated technical support specialist or operations-minded IT graduate? Initialize direct contact via email or phone.
-        </p>
-        <div class="mt-6 space-y-3">
-          <a href="mailto:kevalpo61411@gmail.com" class="block w-full py-3 bg-hud-cyan text-black font-orbitron font-bold text-xs uppercase tracking-widest hover:bg-hud-cyan/80 transition shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-            Send Email Transmission: kevalpo61411@gmail.com
-          </a>
-          <div class="text-xs text-slate-400">
-            Location: <span class="text-white font-bold">Ottawa, ON</span> | Phone: <span class="text-white font-bold">613-219-6739</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      <div>&copy; KEVAL PATEL // TACTICAL FIELD PORTFOLIO</div>
+    </footer>
 
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-hud-border bg-[#070a10] px-6 py-2.5 text-[11px] text-slate-500">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-hud-green"></span>
-        <span>SYSTEM ALLOCATION: OPTIMAL</span>
-      </div>
-      <div>© KEVAL PATEL // TACTICAL FIELD PORTFOLIO</div>
-    </div>
-  </footer>
-
-  <!-- Application Logic -->
   <script src="main.js"></script>
+  <script>
+    // Tab Switching Logic
+    function switchScreen(screenId) {
+      const screens = ['status', 'loot', 'missions', 'prototypes'];
+      const tabs = ['tab-status', 'tab-loot', 'tab-missions', 'tab-prototypes'];
+      
+      screens.forEach(s => {
+        const el = document.getElementById(`screen-${s}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      tabs.forEach(t => {
+        const tabEl = document.getElementById(t);
+        if (tabEl) {
+          tabEl.className = "px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-hud-card text-slate-300 hover:border-hud-cyan hover:text-hud-cyan whitespace-nowrap transition";
+        }
+      });
+
+      const activeScreen = document.getElementById(`screen-${screenId}`);
+      if (activeScreen) activeScreen.classList.remove('hidden');
+
+      const activeTab = document.getElementById(`tab-${screenId}`);
+      if (activeTab) {
+        activeTab.className = "px-3 py-2 text-xs font-orbitron font-bold border border-hud-cyan bg-hud-cyan text-black whitespace-nowrap transition";
+      }
+    }
+
+    // Initialize Lucide Icons
+    document.addEventListener("DOMContentLoaded", () => {
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
 </body>
 </html>
