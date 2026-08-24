@@ -141,3 +141,38 @@ function toggleWebSimulation() {
     }
   }, 600);
 }
+// In-Browser CNN Softmax Inference Simulation
+function runVisionInference() {
+  const btn = document.getElementById('vision-btn');
+  const target = document.getElementById('vision-sample').value;
+  const labelTop = document.getElementById('label-top');
+  const confTop = document.getElementById('conf-top');
+  const barTop = document.getElementById('bar-top');
+  const labelSub = document.getElementById('label-sub');
+  const confSub = document.getElementById('conf-sub');
+  const barSub = document.getElementById('bar-sub');
+
+  btn.innerText = "Analyzing...";
+  btn.disabled = true;
+
+  const datasetMap = {
+    plane: { top: "Airplane (Class 0)", topPct: 94.2, sub: "Bird (Class 2)", subPct: 4.1 },
+    truck: { top: "Automobile/Truck (Class 9)", topPct: 91.8, sub: "Ship (Class 8)", subPct: 5.3 },
+    dog:   { top: "Dog / Canine (Class 5)", topPct: 88.6, sub: "Cat / Feline (Class 3)", subPct: 8.4 },
+    ship:  { top: "Ship / Vessel (Class 8)", topPct: 96.1, sub: "Airplane (Class 0)", subPct: 2.7 }
+  };
+
+  setTimeout(() => {
+    const res = datasetMap[target];
+    labelTop.innerText = `Identified: ${res.top}`;
+    confTop.innerText = `${res.topPct}%`;
+    barTop.style.width = `${res.topPct}%`;
+
+    labelSub.innerText = `Secondary: ${res.sub}`;
+    confSub.innerText = `${res.subPct}%`;
+    barSub.style.width = `${res.subPct}%`;
+
+    btn.innerText = "Classify";
+    btn.disabled = false;
+  }, 400);
+}
