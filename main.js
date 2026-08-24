@@ -11,7 +11,7 @@ function switchScreen(screenId) {
   // Reset all navigation tabs to inactive state
   const navButtons = document.querySelectorAll('nav button');
   navButtons.forEach(btn => {
-    btn.className = "px-4 py-2.5 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18]/90 text-slate-300 hover:border-[#00f2fe] hover:text-[#00f2fe] whitespace-nowrap transition flex items-center gap-1.5 rounded";
+    btn.className = "px-4 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-slate-900/80 text-slate-400 hover:border-[#00f2fe] hover:text-white whitespace-nowrap transition flex items-center gap-1.5 rounded";
   });
 
   // Activate selected screen
@@ -23,7 +23,7 @@ function switchScreen(screenId) {
   // Activate selected tab styling
   const activeTab = document.getElementById(`tab-${screenId}`);
   if (activeTab) {
-    activeTab.className = "px-4 py-2.5 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe] text-black whitespace-nowrap transition flex items-center gap-1.5 rounded shadow-[0_0_10px_rgba(0,242,254,0.3)]";
+    activeTab.className = "px-4 py-2 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe]/10 text-[#00f2fe] whitespace-nowrap transition flex items-center gap-1.5 rounded shadow-[0_0_8px_rgba(0,242,254,0.2)]";
   }
 
   // Refresh Lucide Icons
@@ -37,15 +37,15 @@ let directiveIndex = 0;
 const recruiterDirectives = [
   { 
     role: "IT Support & Systems Specialist", 
-    hook: "Bridging computer science foundations with business operations to resolve L1/L2 incidents, streamline workflows, and ensure 99.9% endpoint uptime." 
+    hook: "Applying computer science principles and business operations expertise to solve L1/L2 incidents, maintain active directory structures, and optimize POS endpoint uptime." 
   },
   { 
     role: "Operations & Technical Analyst", 
-    hook: "Leveraging dual-discipline expertise in CS and Business Strategy to translate technical telemetry and POS diagnostics into scalable business growth." 
+    hook: "Translating technical diagnostic records and systems logs into actionable workflows to improve business efficiency, inventory tracking, and retail success." 
   },
   { 
     role: "Helpdesk & Infrastructure Analyst", 
-    hook: "Dedicated to rapid-response incident resolution, automated hardware diagnostics, and delivering white-glove technical support across enterprise environments." 
+    hook: "Resolving technical hardware tickets, implementing automated diagnostics, and delivering white-glove hardware support to ensure high availability." 
   }
 ];
 
@@ -58,7 +58,7 @@ function resetObjectiveDirective() {
   
   if (roleEl) {
     roleEl.innerText = current.role;
-    roleEl.style.color = '#fcee0a';
+    roleEl.style.color = '#00f2fe';
     setTimeout(() => { roleEl.style.color = '#ffffff'; }, 400);
   }
   
@@ -73,11 +73,11 @@ function triggerComms(mode) {
   if (!feed) return;
   
   if (mode === 'deploy') {
-    feed.innerText = "Candidate status: Available immediately. Open to on-site, hybrid, and remote IT Support & Operations opportunities in Ottawa and across Ontario.";
+    feed.innerText = "Candidate Status: Available immediately. Actively seeking IT Support, Helpdesk Analyst, and Technical Operations opportunities in Ottawa and across Ontario.";
   } else if (mode === 'skills') {
-    feed.innerText = "Core Toolkit: Python automation, hardware diagnostics, POS infrastructure, TensorFlow CNN pipelines, ticketing workflows, and Active Directory.";
+    feed.innerText = "Tech Core: Python automation, hardware diagnostics, POS terminal management, network latency testing, and TensorFlow model validation pipelines.";
   } else if (mode === 'contact') {
-    feed.innerText = "Transmission open: Reach out at kevalp061411@gmail.com or 613-219-6739 for immediate interview scheduling.";
+    feed.innerText = "Direct Line: Reach out at kevalp061411@gmail.com or call 613-219-6739 to coordinate an interview or reference check.";
   }
 }
 
@@ -99,10 +99,10 @@ function toggleWebSimulation() {
     if (btn) btn.innerText = "RUN PROBE ENGINE";
     if (statusEl) {
       statusEl.innerText = "IDLE";
-      statusEl.className = "font-bold text-slate-400";
+      statusEl.className = "font-bold text-slate-500";
     }
     if (indicatorEl) {
-      indicatorEl.className = "w-2 h-2 rounded-full bg-slate-500";
+      indicatorEl.className = "w-2 h-2 rounded-full bg-slate-600";
     }
     return;
   }
@@ -122,10 +122,10 @@ function toggleWebSimulation() {
     if (jitterEl) jitterEl.innerText = `${jitter} ms`;
     if (statusEl) {
       statusEl.innerText = "ACTIVE";
-      statusEl.className = "font-bold text-green-400 animate-pulse";
+      statusEl.className = "font-bold text-emerald-400";
     }
     if (indicatorEl) {
-      indicatorEl.className = "w-2 h-2 rounded-full bg-green-500 animate-ping";
+      indicatorEl.className = "w-2 h-2 rounded-full bg-emerald-500 animate-ping";
     }
   }, 600);
 }
@@ -142,13 +142,13 @@ function runVisionInference() {
   const barSub = document.getElementById('bar-sub');
   
   if (btn) {
-    btn.innerText = "RUNNING...";
+    btn.innerText = "RUNNING INFERENCE...";
     btn.disabled = true;
   }
   
   const datasetMap = {
     plane: { top: "Airplane (Class 0)", topPct: 94.2, sub: "Bird (Class 2)", subPct: 4.1 },
-    truck: { top: "Automobile/Truck (Class 9)\n[Automobile/Truck]", topPct: 91.8, sub: "Ship (Class 8)\n[Ship / Vessel]", subPct: 5.3 },
+    truck: { top: "Automobile/Truck (Class 9)", topPct: 91.8, sub: "Ship (Class 8)\n[Ship / Vessel]", subPct: 5.3 },
     dog:   { top: "Dog / Canine (Class 5)\n[Dog / Canine]", topPct: 88.6, sub: "Cat / Feline (Class 3)\n[Cat / Feline]", subPct: 8.4 },
     ship:  { top: "Ship / Vessel (Class 8)\n[Ship / Vessel]", topPct: 96.1, sub: "Airplane (Class 0)", subPct: 2.7 }
   };
@@ -184,9 +184,9 @@ function changeWebsiteBackground(bgKey) {
   // Announce background change to user in real-time
   const commsEl = document.getElementById("comms-text");
   if (commsEl) {
-    commsEl.innerText = `// ATMOSPHERE LOG: Environmental backdrop calibrated successfully to "${bgKey.toUpperCase()}". Grid matrix synced.`;
+    commsEl.innerText = `// BACKGROUND MANIFEST: Website environmental background synced to "${bgKey.toUpperCase()}". High contrast overlay applied.`;
     commsEl.style.color = "#00ff88";
-    setTimeout(() => { commsEl.style.color = ""; }, 3500);
+    setTimeout(() => { commsEl.style.color = ""; }, 3000);
   }
 }
 
@@ -195,37 +195,37 @@ const lootTable = [
   { 
     name: "SAKURA SANCTUARY", 
     rarity: "item-rare", 
-    desc: "Deploys a serene, glowing cyber-cherry blossom canopy.", 
+    desc: "Loads a serene cherry blossom background.", 
     action: () => changeWebsiteBackground("sakura") 
   },
   { 
     name: "NEON METROPOLIS", 
     rarity: "item-rare", 
-    desc: "Shifts UI background to a high-rise rainy cyberpunk city skyline.", 
+    desc: "Applies a misty cyberpunk city skyline backdrop.", 
     action: () => changeWebsiteBackground("cybercity") 
   },
   { 
     name: "MATRIX GRID", 
     rarity: "item-rare", 
-    desc: "Loads an active hacking green digital code-rain terminal wall.", 
+    desc: "Injects an active green machine-code cascade wall.", 
     action: () => changeWebsiteBackground("matrix") 
   },
   { 
     name: "SYNTHWAVE SUNSET", 
     rarity: "item-rare", 
-    desc: "Renders a vintage neon outrun sunset grid landscape.", 
+    desc: "Sets a vintage sunset wireframe wiregrid horizon.", 
     action: () => changeWebsiteBackground("synthwave") 
   },
   { 
     name: "COSMIC NEBULA", 
     rarity: "item-legendary", 
-    desc: "Synchronizes background to a highly detailed deep space nebula starfield.", 
+    desc: "Fuses interface with a deep-space colorful starfield.", 
     action: () => changeWebsiteBackground("nebula") 
   },
   { 
-    name: "CLASSIFIED RESUME", 
+    name: "OFFICIAL RESUME", 
     rarity: "item-legendary", 
-    desc: "Ready for high-speed download. Ingressing PDF operator file.", 
+    desc: "Triggers immediate download of Keval's printable PDF resume.", 
     action: () => {
       const link = document.createElement("a");
       link.href = "./resume.pdf";
@@ -236,7 +236,7 @@ const lootTable = [
   { 
     name: "TACTICAL DEFAULT", 
     rarity: "item-common", 
-    desc: "Resets environmental settings to initial neon blue overlay grids.", 
+    desc: "Restores standard high-readability digital interface matrix.", 
     action: () => changeWebsiteBackground("default") 
   }
 ];
@@ -254,19 +254,16 @@ function populateStrip() {
   generatedCards = [];
   
   for (let i = 0; i < TOTAL_CARDS; i++) {
-    // Generate a random item from loot pool
     const item = lootTable[Math.floor(Math.random() * lootTable.length)];
     generatedCards.push(item);
     
-    // Create card element
     const card = document.createElement("div");
     card.style.width = `${CARD_WIDTH}px`;
     card.className = `flex-shrink-0 h-16 border border-slate-800 bg-[#070b12] rounded flex flex-col items-center justify-center p-1 font-orbitron transition ${item.rarity}`;
     
-    // Rarity styles inside class definitions
     let rarityColor = "text-slate-400";
     if (item.rarity === 'item-rare') rarityColor = "text-[#00f2fe]";
-    if (item.rarity === 'item-legendary') rarityColor = "text-[#fcee0a]";
+    if (item.rarity === 'item-legendary') rarityColor = "text-amber-400";
     
     card.innerHTML = `
       <span class="text-[9px] font-bold ${rarityColor}">${item.rarity.replace('item-', '').toUpperCase()}</span>
@@ -276,7 +273,6 @@ function populateStrip() {
   }
 }
 
-// Global modal toggle controls
 window.openLootModal = function() {
   const modal = document.getElementById("loot-modal");
   if (modal) {
@@ -304,7 +300,7 @@ function initLootChestEvents() {
     spinBtn.onclick = function() {
       populateStrip();
       spinBtn.disabled = true;
-      spinBtn.innerText = "SWEEPING GRID...";
+      spinBtn.innerText = "ROULETTE ACTIVE...";
       
       if (rewardDisplay) {
         rewardDisplay.classList.add('hidden');
@@ -313,40 +309,35 @@ function initLootChestEvents() {
         rewardDisplay.classList.add('scale-95');
       }
       
-      // Determine winning item (index 35 serves as the anchor item)
       const winningIndex = 35;
       const winningItem = lootTable[Math.floor(Math.random() * lootTable.length)];
       generatedCards[winningIndex] = winningItem;
       
-      // Render the specific winning item card directly into position 35
       const stripCards = strip.childNodes;
       if (stripCards && stripCards[winningIndex]) {
         let rarityColor = "text-slate-400";
         if (winningItem.rarity === 'item-rare') rarityColor = "text-[#00f2fe]";
-        if (winningItem.rarity === 'item-legendary') rarityColor = "text-[#fcee0a]";
+        if (winningItem.rarity === 'item-legendary') rarityColor = "text-amber-400";
         
-        stripCards[winningIndex].className = `flex-shrink-0 h-16 border border-[#fcee0a] bg-slate-900 rounded flex flex-col items-center justify-center p-1 font-orbitron shadow-[0_0_12px_rgba(252,238,10,0.3)] ${winningItem.rarity}`;
+        stripCards[winningIndex].className = `flex-shrink-0 h-16 border border-amber-400 bg-slate-900 rounded flex flex-col items-center justify-center p-1 font-orbitron shadow-[0_0_8px_rgba(251,191,36,0.3)] ${winningItem.rarity}`;
         stripCards[winningIndex].innerHTML = `
           <span class="text-[9px] font-bold ${rarityColor}">${winningItem.rarity.replace('item-', '').toUpperCase()}</span>
           <span class="text-[10px] font-black text-white whitespace-nowrap overflow-hidden text-ellipsis w-full px-1">${winningItem.name}</span>
         `;
       }
       
-      // Smooth animated spin to the winning card
       setTimeout(() => {
         const containerWidth = strip.parentElement.clientWidth;
         const targetOffset = - (winningIndex * CARD_WIDTH) + (containerWidth / 2) - (CARD_WIDTH / 2);
         
-        strip.style.transition = "transform 4.5s cubic-bezier(0.1, 0.85, 0.25, 1)";
+        strip.style.transition = "transform 4s cubic-bezier(0.15, 0.85, 0.3, 1)";
         strip.style.transform = `translateX(${targetOffset}px)`;
       }, 50);
       
-      // Unveil the reward upon spin arrival
       setTimeout(() => {
         spinBtn.disabled = false;
-        spinBtn.innerText = "INITIATE MATRIX SWEEP";
+        spinBtn.innerText = "INITIATE SPIN";
         
-        // Populate reward description boxes
         const rewardName = document.getElementById("reward-name");
         const rewardRarity = document.getElementById("reward-rarity");
         const rewardDesc = document.getElementById("reward-desc");
@@ -358,16 +349,15 @@ function initLootChestEvents() {
           rewardRarity.className = "text-[9px] font-mono font-bold uppercase tracking-widest ";
           if (winningItem.rarity === 'item-common') rewardRarity.classList.add('text-slate-400');
           if (winningItem.rarity === 'item-rare') rewardRarity.classList.add('text-[#00f2fe]');
-          if (winningItem.rarity === 'item-legendary') rewardRarity.classList.add('text-[#fcee0a]');
+          if (winningItem.rarity === 'item-legendary') rewardRarity.classList.add('text-amber-400');
         }
         
         if (rewardDisplay) {
           rewardDisplay.classList.remove('hidden');
-          // Add border glow matching rarity
-          rewardDisplay.className = "w-full hud-card-item p-4 border rounded text-center space-y-1 transition duration-500 scale-95 opacity-0";
-          if (winningItem.rarity === 'item-rare') rewardDisplay.classList.add('border-[#00f2fe]/40', 'shadow-[0_0_10px_rgba(0,242,254,0.15)]');
-          else if (winningItem.rarity === 'item-legendary') rewardDisplay.classList.add('border-[#fcee0a]/40', 'shadow-[0_0_10px_rgba(252,238,10,0.15)]');
-          else rewardDisplay.classList.add('border-slate-800');
+          rewardDisplay.className = "w-full p-4 border border-slate-800 bg-slate-900/60 rounded text-center space-y-1 transition duration-500 scale-95 opacity-0";
+          if (winningItem.rarity === 'item-rare') rewardDisplay.classList.add('border-[#00f2fe]/30', 'bg-[#00f2fe]/5');
+          else if (winningItem.rarity === 'item-legendary') rewardDisplay.classList.add('border-amber-400/30', 'bg-amber-400/5');
+          else rewardDisplay.classList.add('border-slate-800', 'bg-slate-900/40');
           
           setTimeout(() => {
             rewardDisplay.classList.remove('scale-95', 'opacity-0');
@@ -375,23 +365,20 @@ function initLootChestEvents() {
           }, 50);
         }
         
-        // Fire reward action
         if (winningItem.action) {
           winningItem.action();
         }
         
-      }, 4600);
+      }, 4200);
     };
   }
 }
 
 // --- BOOT AND EVENT MOUNTING ---
 document.addEventListener("DOMContentLoaded", () => {
-  // Enforce Status Screen on launch
   switchScreen('status');
   initLootChestEvents();
   
-  // Reload and apply saved environment background settings
   const savedBg = localStorage.getItem("operator_background_theme") || "default";
   document.body.classList.add(`bg-${savedBg}`);
 });
