@@ -556,29 +556,37 @@
     </footer>
 
   </main>
-  <!-- LOOT CHEST POPUP MODAL -->
-<div id="loot-modal" class="hud-modal hidden">
-  <div class="loot-box-wrapper">
-    <div class="hud-header">
-      <span>// CRATE DEPLOYMENT: SUPPLY_DROP_v1.0</span>
-      <button id="close-btn" class="hud-btn-close">✕</button>
-    </div>
+<!-- LOOT CHEST POPUP MODAL -->
+  <div id="loot-modal" class="fixed inset-0 bg-[#05070a]/90 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
+    <div class="w-full max-w-xl bg-[#0a0f18] border border-[#00f2fe] shadow-[0_0_30px_rgba(0,242,254,0.25)] p-5 text-white font-mono space-y-4">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-[#1b2a4a] pb-2 text-xs font-orbitron text-[#00f2fe]">
+        <span>// CRATE DEPLOYMENT: SUPPLY_DROP_v1.0</span>
+        <button id="close-btn" class="text-slate-400 hover:text-white text-base px-2 py-0.5 cursor-pointer">✕</button>
+      </div>
 
-    <!-- The Rolling Strip -->
-    <div class="roulette-container">
-      <div class="roulette-marker"></div>
-      <div id="roulette-strip" class="roulette-strip"></div>
-    </div>
+      <!-- Roulette Frame -->
+      <div id="roulette-viewport" class="relative w-full h-28 bg-[#05070a] border border-[#1b2a4a] overflow-hidden my-3">
+        <!-- Center Target Line -->
+        <div class="absolute left-1/2 top-0 bottom-0 w-[2px] bg-[#fcee0a] shadow-[0_0_10px_#fcee0a] -translate-x-1/2 z-20 pointer-events-none"></div>
+        
+        <!-- Moving Roulette Strip -->
+        <div id="roulette-strip" class="flex h-full absolute left-0 top-0 transition-transform duration-[4500ms] ease-[cubic-bezier(0.12,0.8,0.2,1)]">
+        </div>
+      </div>
 
-    <!-- Action & Result Display -->
-    <div class="loot-actions">
-      <button id="spin-btn" class="hud-btn-primary">INITIATE UNBOXING</button>
-      <div id="reward-display" class="reward-text hidden"></div>
+      <!-- Actions & Result -->
+      <div class="space-y-3">
+        <button id="spin-btn" class="w-full py-3 bg-[#00f2fe] hover:bg-[#00f2fe]/80 text-black font-orbitron font-black text-xs uppercase tracking-wider transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+          INITIATE UNBOXING
+        </button>
+        
+        <div id="reward-display" class="hidden p-3 bg-black/70 border border-[#1b2a4a] text-xs"></div>
+      </div>
+
     </div>
   </div>
-</div>
-
-  <!-- External Script -->
 <!-- External Script -->
   <script src="main.js"></script>
   <script>
