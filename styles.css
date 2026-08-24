@@ -14,12 +14,13 @@ html, body {
   overflow-x: hidden;
 }
 
-/* --- Atmospheric Backdrops with Dark Overlays --- */
+/* --- Atmospheric Backdrops with Smooth Fading FX --- */
 body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
+  /* This transition creates the smooth fading effect when switching backgrounds */
   transition: background-image 1.2s ease-in-out, background-color 1.2s ease-in-out;
   display: flex;
   justify-content: center;
@@ -34,7 +35,7 @@ body.bg-default {
   background-size: 32px 32px;
 }
 
-/* 2. Sakura Tree (Deep Dim Filter to Guarantee 100% Text Legibility) */
+/* 2. Sakura Tree (Muted Dark Overlay to Guarantee 100% Text Legibility) */
 body.bg-sakura {
   background: 
     linear-gradient(rgba(11, 15, 25, 0.90), rgba(11, 15, 25, 0.90)), 
@@ -42,7 +43,7 @@ body.bg-sakura {
   background-size: cover !important;
 }
 
-/* 3. Cyberpunk City (Deep Dim Filter) */
+/* 3. Cyberpunk City (Muted Dark Overlay) */
 body.bg-cybercity {
   background: 
     linear-gradient(rgba(11, 15, 25, 0.90), rgba(11, 15, 25, 0.90)), 
@@ -50,7 +51,7 @@ body.bg-cybercity {
   background-size: cover !important;
 }
 
-/* 4. Matrix Code Wall Grid (Deep Dim Filter) */
+/* 4. Matrix Code Wall Grid (Muted Dark Overlay) */
 body.bg-matrix {
   background: 
     linear-gradient(rgba(11, 15, 25, 0.92), rgba(11, 15, 25, 0.92)), 
@@ -58,7 +59,7 @@ body.bg-matrix {
   background-size: cover !important;
 }
 
-/* 5. Synthwave Sunset Grid (Deep Dim Filter) */
+/* 5. Synthwave Sunset Grid (Muted Dark Overlay) */
 body.bg-synthwave {
   background: 
     linear-gradient(rgba(11, 15, 25, 0.90), rgba(11, 15, 25, 0.90)), 
@@ -66,7 +67,7 @@ body.bg-synthwave {
   background-size: cover !important;
 }
 
-/* 6. Cosmic Nebula (Deep Dim Filter) */
+/* 6. Cosmic Nebula (Muted Dark Overlay) */
 body.bg-nebula {
   background: 
     linear-gradient(rgba(11, 15, 25, 0.90), rgba(11, 15, 25, 0.90)), 
@@ -78,6 +79,7 @@ body.bg-nebula {
 .hud-box {
   border: 1px solid rgba(148, 163, 184, 0.15);
   background-color: rgba(15, 23, 42, 0.95) !important;
+  /* Adds glass blur backing to separate text from background images */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   position: relative;
@@ -85,7 +87,7 @@ body.bg-nebula {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* Subdued Professional Corner Brackets */
+/* Subdued Professional Corner Brackets (Cyberpunk Accent) */
 .hud-box::before {
   content: '';
   position: absolute;
@@ -119,7 +121,7 @@ body.bg-nebula {
   background-color: rgba(30, 41, 59, 0.6) !important;
 }
 
-/* --- Typographical Configuration --- */
+/* --- Clean Typography Enhancements --- */
 .font-orbitron {
   font-family: 'Orbitron', -apple-system, sans-serif;
   letter-spacing: 0.03em;
@@ -130,11 +132,11 @@ body.bg-nebula {
   text-shadow: 0 0 8px rgba(0, 242, 254, 0.25);
 }
 
-/* Readable Paragraph Styling */
+/* Readable Paragraph & List Styling */
 body p, body li {
   font-family: 'Inter', -apple-system, sans-serif;
   font-weight: 400;
-  color: #cbd5e1; /* Elegant slate-300 for absolute contrast */
+  color: #cbd5e1; /* Elegant slate-300 for high readability contrast */
   line-height: 1.6;
 }
 
