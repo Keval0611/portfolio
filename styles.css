@@ -75,151 +75,50 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-/* --- THEME CUSTOM PROPERTIES & OVERRIDES --- */
+/* --- DYNAMIC HUD COLOR THEMES --- */
 :root {
   --hud-primary: #00f2fe;
   --hud-secondary: #fcee0a;
 }
 
+/* 1. Matrix Theme Override */
 body.theme-matrix {
   --hud-primary: #00ff88;
   --hud-secondary: #a3e635;
 }
+body.theme-matrix #tab-status,
+body.theme-matrix #sim-btn {
+  background-color: #00ff88 !important;
+  border-color: #00ff88 !important;
+}
+body.theme-matrix .glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+}
 
+/* 2. Cyberpunk Violet Theme Override */
 body.theme-violet {
   --hud-primary: #fe007a;
   --hud-secondary: #c084fc;
 }
+body.theme-violet #tab-status,
+body.theme-violet #sim-btn {
+  background-color: #fe007a !important;
+  border-color: #fe007a !important;
+}
+body.theme-violet .glow-cyan {
+  text-shadow: 0 0 10px rgba(254, 0, 122, 0.6);
+}
 
+/* 3. Amber Theme Override */
 body.theme-amber {
   --hud-primary: #fcee0a;
   --hud-secondary: #ff8800;
 }
-
-/* Modal Backdrop */
-.hud-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 7, 10, 0.85);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+body.theme-amber #tab-status,
+body.theme-amber #sim-btn {
+  background-color: #fcee0a !important;
+  border-color: #fcee0a !important;
 }
-.hud-modal.hidden {
-  display: none !important;
-}
-
-/* Modal Card */
-.loot-box-wrapper {
-  width: 640px;
-  max-width: 92vw;
-  background: #0a0f18;
-  border: 1px solid var(--hud-primary);
-  box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-  padding: 20px;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-}
-
-.hud-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: var(--hud-primary);
-}
-
-.hud-btn-close {
-  background: transparent;
-  border: none;
-  color: #94a3b8;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 4px 8px;
-}
-.hud-btn-close:hover {
-  color: #fff;
-}
-
-/* Roulette Frame */
-.roulette-container {
-  position: relative;
-  width: 100%;
-  height: 110px;
-  overflow: hidden;
-  border: 1px solid #1b2a4a;
-  background: #05070a;
-  margin: 16px 0;
-}
-
-.roulette-marker {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: #fcee0a;
-  box-shadow: 0 0 10px #fcee0a;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-
-.roulette-strip {
-  display: flex;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  transition: transform 4.5s cubic-bezier(0.12, 0.8, 0.2, 1);
-}
-
-.loot-item {
-  width: 130px;
-  height: 100%;
-  flex-shrink: 0;
-  border-right: 1px solid #1b2a4a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-family: 'Orbitron', sans-serif;
-  text-align: center;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-/* Card Rarity Accents */
-.item-common { border-bottom: 3px solid #00f2fe; color: #00f2fe; }
-.item-rare { border-bottom: 3px solid #fe007a; color: #fe007a; }
-.item-legendary { border-bottom: 3px solid #fcee0a; color: #fcee0a; }
-
-.hud-btn-primary {
-  width: 100%;
-  background: var(--hud-primary);
-  color: #000;
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: 1px;
-  border: none;
-  padding: 12px 20px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.hud-btn-primary:hover { opacity: 0.9; }
-.hud-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.reward-text {
-  margin-top: 14px;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid #1b2a4a;
-  font-family: monospace;
-}
-.reward-text.hidden {
-  display: none !important;
+body.theme-amber .glow-cyan {
+  text-shadow: 0 0 10px rgba(252, 238, 10, 0.6);
 }
