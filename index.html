@@ -1,596 +1,666 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Keval Patel // Tactical Portfolio HUD</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keval Patel // Systems & Helpdesk Specialist HUD</title>
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts: Orbitron & Inter -->
+  <!-- Google Fonts: Orbitron for Sci-Fi Headers & Inter for Crisp Legibility -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- External Stylesheet -->
-  <link rel="stylesheet" href="style.css" />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            orbitron: ['Orbitron', 'sans-serif'],
-            sans: ['Inter', 'sans-serif'],
-          },
-          colors: {
-            hud: {
-              cyan: '#00f2fe',
-              magenta: '#fe007a',
-              yellow: '#fcee0a',
-              green: '#00ff88',
-              bg: '#05070a',
-              card: '#0a0f18',
-              border: '#1b2a4a'
-            }
-          }
-        }
-      }
-    }
-  </script>
+  
+  <link rel="stylesheet" href="styles.css">
 </head>
+<body class="bg-default text-slate-200">
 
-<body class="bg-[#05070a] text-slate-200 min-h-screen overflow-x-hidden p-3 sm:p-6 md:p-8 flex justify-center selection:bg-[#00f2fe] selection:text-black">
-
-  <main class="w-full max-w-4xl mx-auto space-y-4">
+  <!-- Main HUD Grid Outer Container -->
+  <div class="w-full max-w-6xl mx-auto flex flex-col min-h-screen gap-4 p-2 sm:p-4">
     
-    <!-- TOP HEADER / HUD STATUS & NAVIGATION -->
-    <header class="w-full flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border-b border-[#1b2a4a] pb-4">
-      <div>
-        <div class="text-[10px] text-[#00f2fe] font-bold tracking-widest uppercase">OPERATOR:</div>
-        <h1 class="text-xl sm:text-2xl font-orbitron font-black text-white tracking-wider">KEVAL PATEL</h1>
-        <div class="text-[10px] text-slate-400 font-mono flex items-center gap-1.5 mt-0.5">
-          <span class="w-2 h-2 rounded-full bg-[#00ff88] animate-pulse"></span>
-          <span>STATUS // FIELD DEPLOYABLE</span>
+    <!-- Top Tactical Header Banner -->
+    <header class="hud-box p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4 w-full md:w-auto">
+        <!-- Interactive Tech Avatar with Neon Border -->
+        <div class="relative w-16 h-16 rounded-full border border-[#00f2fe] bg-[#070b12] flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(0,242,254,0.2)]">
+          <i data-lucide="shield-alert" class="w-8 h-8 text-[#00f2fe] animate-pulse"></i>
+          <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border border-black" title="System Online"></span>
+        </div>
+        
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-orbitron font-bold text-[#fe007a] tracking-wider">OPERATOR IDENT:</span>
+            <span class="text-[10px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded font-mono font-bold">K.PATEL-061411</span>
+          </div>
+          <h1 class="text-2xl font-orbitron font-extrabold text-white tracking-tight glow-cyan">KEVAL PATEL</h1>
+          <p class="text-xs text-slate-400 mt-0.5 flex items-center gap-1">
+            <i data-lucide="map-pin" class="w-3 h-3 text-[#fcee0a]"></i> Ottawa, ON // IT Systems & Helpdesk
+          </p>
         </div>
       </div>
-
-      <!-- Scrollable Mobile Tab Bar -->
-      <nav class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
-        <button id="tab-status" onclick="switchScreen('status')" class="px-3 py-2 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe] text-black whitespace-nowrap transition">
-          STATUS
-        </button>
-       <button id="tab-loot" onclick="openLootModal()" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#fcee0a] hover:text-[#fcee0a] whitespace-nowrap flex items-center gap-1.5 transition">
-  <i data-lucide="package" class="w-3.5 h-3.5 text-[#fcee0a]"></i> LOOT CHEST
-</button>
-        <button id="tab-missions" onclick="switchScreen('missions')" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#fe007a] hover:text-[#fe007a] whitespace-nowrap transition">
-          MISSIONS
-        </button>
-        <button id="tab-prototypes" onclick="switchScreen('prototypes')" class="px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#00f2fe] hover:text-[#00f2fe] whitespace-nowrap transition">
-          PROTOTYPES
-        </button>
-      </nav>
+      
+      <!-- Objective Directive Slider & Instant Resume Access -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+        <div class="bg-[#05070a]/80 border border-slate-800 rounded p-2.5 flex-1 md:max-w-xs">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[9px] font-orbitron font-bold text-slate-400 tracking-widest uppercase">Target Role Directive</span>
+            <button onclick="resetObjectiveDirective()" title="Cycle Directives" class="text-[#00f2fe] hover:text-[#fe007a] transition">
+              <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+            </button>
+          </div>
+          <p id="target-role-text" class="text-xs font-orbitron font-bold text-white transition-all duration-300">IT Support & Systems Specialist</p>
+        </div>
+        
+        <!-- Recruiter Priority Download Button -->
+        <a href="./resume.pdf" download="Keval_Patel_Resume.pdf" class="bg-gradient-to-r from-[#fe007a] to-[#7b2cbf] text-white hover:brightness-110 transition px-4 py-3 rounded text-xs font-orbitron font-bold tracking-wider flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(254,0,122,0.35)] shrink-0">
+          <i data-lucide="file-down" class="w-4 h-4"></i> DOWNLOAD RESUME (PDF)
+        </a>
+      </div>
     </header>
 
-    <!-- SCREEN 1: STATUS / MAIN PROFILE -->
-    <section id="screen-status" class="hud-box p-4 sm:p-6 space-y-6">
-      <div class="flex items-center justify-between border-b border-[#1b2a4a] pb-2 text-[11px] font-mono">
-        <span class="text-[#00f2fe] font-bold">TACTICAL_PROFILE</span>
-        <span class="text-[#fcee0a] font-bold">LVL.24</span>
-      </div>
+    <!-- Interactive Navigation Taskbar -->
+    <nav class="flex overflow-x-auto scrollbar-none gap-2 border border-slate-800 bg-[#070b12]/90 p-1.5 rounded-lg">
+      <button id="tab-status" onclick="switchScreen('status')" class="px-4 py-2.5 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe] text-black whitespace-nowrap transition flex items-center gap-1.5 rounded">
+        <i data-lucide="user" class="w-3.5 h-3.5"></i> PROFILE & STATUS
+      </button>
+      <button id="tab-missions" onclick="switchScreen('missions')" class="px-4 py-2.5 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#fe007a] hover:text-[#fe007a] whitespace-nowrap transition flex items-center gap-1.5 rounded">
+        <i data-lucide="compass" class="w-3.5 h-3.5"></i> PROJECT MISSIONS
+      </button>
+      <button id="tab-prototypes" onclick="switchScreen('prototypes')" class="px-4 py-2.5 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#00f2fe] hover:text-[#00f2fe] whitespace-nowrap transition flex items-center gap-1.5 rounded">
+        <i data-lucide="cpu" class="w-3.5 h-3.5"></i> INTERACTIVE DEMOS
+      </button>
+      <button id="tab-loot" onclick="switchScreen('loot')" class="px-4 py-2.5 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#fcee0a] hover:text-[#fcee0a] whitespace-nowrap transition flex items-center gap-1.5 rounded">
+        <i data-lucide="package" class="w-3.5 h-3.5"></i> ENV LOOT BOX
+      </button>
+      <button id="tab-contact" onclick="switchScreen('contact')" class="px-4 py-2.5 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#00ff88] hover:text-[#00ff88] whitespace-nowrap transition flex items-center gap-1.5 rounded">
+        <i data-lucide="mail" class="w-3.5 h-3.5"></i> CONTACT CHANNEL
+      </button>
+    </nav>
 
-      <div class="flex flex-col items-center text-center space-y-4">
-        <!-- Stylized Cyber-Visor Avatar -->
-        <div class="relative w-28 h-28 sm:w-32 sm:h-32 border-2 border-[#00f2fe]/40 bg-slate-950 flex items-center justify-center overflow-hidden rounded shadow-[0_0_15px_rgba(0,242,254,0.15)]">
-          <svg class="w-24 h-24 sm:w-28 sm:h-28 text-[#00f2fe]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="50,10 65,30 85,15 75,40 92,42 78,58 88,72 70,68 62,85 50,70 38,85 30,68 12,72 22,58 8,42 25,40 15,15 35,30" fill="#0b2038" stroke="#00f2fe" stroke-width="1.5" />
-            <polygon points="35,42 65,42 58,74 50,82 42,74" fill="#fcd5b5" />
-            <polygon points="28,48 72,48 68,58 32,58" fill="#fe007a" />
-            <polygon points="32,50 68,50 66,54 34,54" fill="#fcee0a" />
-            <polygon points="30,80 50,72 70,80 82,98 18,98" fill="#111927" stroke="#00f2fe" stroke-width="1.5" />
-            <polygon points="44,82 50,75 56,82 50,96" fill="#fe007a" />
-            <rect x="24" y="46" width="6" height="14" rx="2" fill="#00f2fe" />
-            <rect x="70" y="46" width="6" height="14" rx="2" fill="#00f2fe" />
-            <path d="M 27 60 Q 32 72 42 70" stroke="#00f2fe" stroke-width="1.5" fill="none" />
-          </svg>
-          <span class="absolute bottom-1 right-1 bg-[#fe007a] text-white font-mono text-[9px] font-bold px-1.5 py-0.5 uppercase tracking-tighter">FIELD-READY</span>
-        </div>
-
-        <div>
-          <h2 class="text-xl sm:text-2xl font-orbitron font-black text-white glow-cyan">KEVAL PATEL</h2>
-          <p class="text-xs text-[#00f2fe] font-mono mt-1">OTTAWA, ON // IT SYSTEMS & OPS</p>
-        </div>
-      </div>
-
-      <!-- Core Specs Grid -->
-      <div class="grid grid-cols-1 gap-2 text-xs font-mono max-w-xl mx-auto">
-        <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
-          <span class="text-slate-400">Target Role:</span>
-          <span id="target-role-text" class="text-white font-bold">IT Support & Systems Specialist</span>
-        </div>
-        <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
-          <span class="text-slate-400">Core Dual-Spec:</span>
-          <span class="text-white font-bold">Computer Science + Business Strategy</span>
-        </div>
-        <div class="bg-black/60 p-2.5 border border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-1">
-          <span class="text-slate-400">Deployment:</span>
-          <span class="text-[#00ff88] font-bold">Available Immediately</span>
-        </div>
-      </div>
-
-      <!-- Interactive Recruiter Comms Feed & Directive Switcher -->
-      <div class="max-w-xl mx-auto bg-black/70 border border-[#00f2fe]/40 p-3 rounded space-y-3">
-        <div class="flex items-center justify-between text-[10px] font-mono text-[#00f2fe] border-b border-white/10 pb-1">
-          <span>OPERATOR_SUMMARY // RECRUITER DIRECTIVE</span>
-          <span class="animate-pulse text-[#00ff88]">ACTIVE</span>
-        </div>
-        
-        <p id="comms-text" class="text-xs text-slate-300 font-mono min-h-[44px] leading-relaxed">
-          "Bridging computer science foundations with business operations to resolve L1/L2 incidents, streamline workflows, and ensure 99.9% endpoint uptime."
+    <!-- Live Transmission Comms Banner -->
+    <div class="hud-box p-3 bg-slate-950/90 border-l-4 border-l-[#fe007a] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs leading-relaxed font-mono">
+      <div class="flex items-start gap-2.5">
+        <span class="text-[#fe007a] font-bold shrink-0 animate-pulse">[TRANSMISSION]</span>
+        <p id="comms-text" class="text-slate-300">
+          Bridging computer science foundations with business operations to resolve L1/L2 incidents, streamline workflows, and ensure 99.9% endpoint uptime.
         </p>
+      </div>
+      <div class="flex gap-2 shrink-0">
+        <button onclick="triggerComms('deploy')" class="bg-slate-900 border border-slate-800 hover:border-[#00f2fe] hover:text-white px-2 py-1 rounded transition text-[10px]">STATUS</button>
+        <button onclick="triggerComms('skills')" class="bg-slate-900 border border-slate-800 hover:border-[#00f2fe] hover:text-white px-2 py-1 rounded transition text-[10px]">TOOLKIT</button>
+        <button onclick="triggerComms('contact')" class="bg-slate-900 border border-slate-800 hover:border-[#00f2fe] hover:text-white px-2 py-1 rounded transition text-[10px]">CONNECT</button>
+      </div>
+    </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/10">
-          <div class="flex flex-wrap gap-1.5">
-            <button onclick="triggerComms('deploy')" class="px-2 py-1 bg-[#00f2fe]/10 border border-[#00f2fe] text-[#00f2fe] text-[10px] font-mono hover:bg-[#00f2fe] hover:text-black transition">
-              [DEPLOYMENT]
-            </button>
-            <button onclick="triggerComms('skills')" class="px-2 py-1 bg-[#fe007a]/10 border border-[#fe007a] text-[#fe007a] text-[10px] font-mono hover:bg-[#fe007a] hover:text-white transition">
-              [SKILL_MATRIX]
-            </button>
-            <button onclick="triggerComms('contact')" class="px-2 py-1 bg-[#fcee0a]/10 border border-[#fcee0a] text-[#fcee0a] text-[10px] font-mono hover:bg-[#fcee0a] hover:text-black transition">
-              [TRANSMIT_MSG]
-            </button>
+    <!-- MAIN DISPLAY SCREEN WINDOWS -->
+    <main class="flex-1">
+
+      <!-- SCREEN 1: PROFILE & STATUS -->
+      <div id="screen-status" class="space-y-6">
+        
+        <!-- Objective & Core Profile Summary -->
+        <div class="hud-box p-6 bg-slate-900/40">
+          <div class="flex items-center gap-2 mb-3">
+            <i data-lucide="terminal" class="w-5 h-5 text-[#00f2fe]"></i>
+            <h2 class="text-sm font-orbitron font-bold tracking-wider text-white">MISSION OBJECTIVE</h2>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed max-w-4xl">
+            Results-driven business and computer science graduate seeking an opportunity to apply analytical, technical, and customer service expertise to contribute to organizational success and professional growth. 
+            <strong>Specialised in bridging the gap between technical infrastructure and business efficiency</strong> by leveraging expertise in diagnostics, machine learning model pipeline validation, systems troubleshooting, and end-user support.
+          </p>
+        </div>
+
+        <!-- Two Column Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Left Main Column (Experience & Credentials) -->
+          <div class="lg:col-span-8 space-y-6">
+            
+            <!-- Work Experience Section -->
+            <div class="hud-box p-6 space-y-6 bg-slate-900/40">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2.5">
+                  <i data-lucide="briefcase" class="w-5 h-5 text-[#fe007a]"></i>
+                  <h2 class="text-base font-orbitron font-bold tracking-wide text-white">PROFESSIONAL HISTORY</h2>
+                </div>
+                <span class="text-[10px] text-slate-400 font-mono">3 Records found</span>
+              </div>
+              
+              <!-- Role 1: Canna Cabana -->
+              <div class="space-y-2 relative border-l-2 border-slate-800 pl-4 ml-2">
+                <span class="absolute -left-1.5 top-1 w-3 h-3 rounded-full bg-[#fe007a] border-2 border-black"></span>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <h3 class="text-sm font-bold text-white font-orbitron">Shift Leader / Manager On Duty</h3>
+                  <span class="text-xs text-slate-400 font-mono">June 2025 - Present</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-semibold text-[#fe007a]">Canna Cabana</span>
+                  <span class="text-[10px] text-slate-500 font-mono">Ottawa, ON</span>
+                </div>
+                <ul class="text-xs text-slate-300 space-y-1.5 list-disc pl-4 mt-2">
+                  <li>Delivered exceptional customer service by providing product knowledge and personalized recommendations, improving customer satisfaction and repeat business.</li>
+                  <li>Supported daily store operations including opening/closing procedures, cash handling, and inventory tracking.</li>
+                  <li>Assisted in supervising staff during shifts, ensuring smooth workflow and adherence to company policies.</li>
+                </ul>
+              </div>
+
+              <!-- Role 2: Gao Tech -->
+              <div class="space-y-2 relative border-l-2 border-slate-800 pl-4 ml-2">
+                <span class="absolute -left-1.5 top-1 w-3 h-3 rounded-full bg-[#00f2fe] border-2 border-black"></span>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <h3 class="text-sm font-bold text-white font-orbitron">Tech Support Intern</h3>
+                  <span class="text-xs text-slate-400 font-mono">May 2024 - Jan 2025</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-semibold text-[#00f2fe]">Gao Tech</span>
+                  <span class="text-[10px] text-slate-500 font-mono">Toronto, ON // Remote</span>
+                </div>
+                <ul class="text-xs text-slate-300 space-y-1.5 list-disc pl-4 mt-2">
+                  <li>Provided front-line technical support to customers, diagnosing and resolving issues related to connectivity, devices, and services.</li>
+                  <li>Guided customers through step-by-step troubleshooting processes, improving issue resolution efficiency.</li>
+                  <li>Logged and tracked customer issues using internal ticketing systems, ensuring accurate documentation and timely follow-up.</li>
+                </ul>
+              </div>
+
+              <!-- Role 3: Platinum Parking -->
+              <div class="space-y-2 relative border-l-2 border-slate-800 pl-4 ml-2">
+                <span class="absolute -left-1.5 top-1 w-3 h-3 rounded-full bg-[#fcee0a] border-2 border-black"></span>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <h3 class="text-sm font-bold text-white font-orbitron">Facility Ambassador / On-Site Technical Support</h3>
+                  <span class="text-xs text-slate-400 font-mono">Sept 2023 - May 2025</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-semibold text-[#fcee0a]">Platinum Parking Management</span>
+                  <span class="text-[10px] text-slate-500 font-mono">Regina, SK</span>
+                </div>
+                <ul class="text-xs text-slate-300 space-y-1.5 list-disc pl-4 mt-2">
+                  <li>Maintained and troubleshot pay-and-park machines, ensuring consistent functionality and minimal downtime.</li>
+                  <li>Responded to technical service tickets, diagnosing and resolving issues efficiently on-site.</li>
+                  <li>Performed routine inspections and preventive maintenance on parking equipment and systems.</li>
+                  <li>Conducted cash collection, reconciliation, and reporting with accuracy and accountability.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Education Section -->
+            <div class="hud-box p-6 space-y-6 bg-slate-900/40">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2.5">
+                  <i data-lucide="graduation-cap" class="w-5 h-5 text-[#00f2fe]"></i>
+                  <h2 class="text-base font-orbitron font-bold tracking-wide text-white">ACADEMIC BACKGROUND</h2>
+                </div>
+                <span class="text-[10px] text-slate-400 font-mono">2 Degrees</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="hud-card-item p-4 border border-slate-800 rounded relative">
+                  <div class="absolute top-2 right-2 flex gap-1">
+                    <span class="w-2 h-2 rounded-full bg-[#00f2fe]"></span>
+                  </div>
+                  <h3 class="text-sm font-bold text-white font-orbitron">Diploma in Business</h3>
+                  <p class="text-xs font-semibold text-slate-300 mt-0.5">Algonquin College</p>
+                  <p class="text-[10px] text-slate-500 font-mono mt-0.5">Ottawa, ON // May 2024 - Dec 2025</p>
+                  <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                    Developed a strong foundation in key business areas including marketing, operations, and project management. Gained experience in market research, data analysis, and business strategy development.
+                  </p>
+                </div>
+
+                <div class="hud-card-item p-4 border border-slate-800 rounded relative">
+                  <div class="absolute top-2 right-2 flex gap-1">
+                    <span class="w-2 h-2 rounded-full bg-[#fe007a]"></span>
+                  </div>
+                  <h3 class="text-sm font-bold text-white font-orbitron">Diploma in Computer Science</h3>
+                  <p class="text-xs font-semibold text-slate-300 mt-0.5">University of Regina</p>
+                  <p class="text-[10px] text-slate-500 font-mono mt-0.5">Regina, SK // Jan 2021 - Dec 2023</p>
+                  <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                    Built a robust foundation in software design, programming languages, algorithms, data structures, and computer architecture. Focused heavily on problem-solving, debugging, and systems logic.
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <button onclick="resetObjectiveDirective()" class="px-2.5 py-1 bg-[#00f2fe]/10 border border-[#00f2fe] text-[#00f2fe] text-[10px] font-mono hover:bg-[#00f2fe] hover:text-black transition flex items-center gap-1">
-            <i data-lucide="rotate-cw" class="w-3 h-3"></i>
-            <span>SWITCH VALUE PITCH</span>
+          <!-- Right Column (Skills & Certifications) -->
+          <div class="lg:col-span-4 space-y-6">
+            
+            <!-- Core Technical Matrix -->
+            <div class="hud-box p-6 bg-slate-900/40">
+              <div class="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3">
+                <i data-lucide="sliders" class="w-5 h-5 text-[#fcee0a]"></i>
+                <h2 class="text-sm font-orbitron font-bold tracking-wider text-white">SKILL TELEMETRY</h2>
+              </div>
+              
+              <div class="space-y-4">
+                <!-- Skill 1 -->
+                <div>
+                  <div class="flex justify-between text-xs mb-1 font-mono">
+                    <span class="text-slate-200 font-medium">System Diagnostics & IT Support</span>
+                    <span class="text-[#00f2fe] font-bold">95%</span>
+                  </div>
+                  <div class="w-full bg-slate-950 h-1.5 rounded overflow-hidden">
+                    <div class="bg-[#00f2fe] h-full shadow-[0_0_8px_rgba(0,242,254,0.5)]" style="width: 95%;"></div>
+                  </div>
+                </div>
+                <!-- Skill 2 -->
+                <div>
+                  <div class="flex justify-between text-xs mb-1 font-mono">
+                    <span class="text-slate-200 font-medium">Customer Support & Ticketing</span>
+                    <span class="text-[#00ff88] font-bold">90%</span>
+                  </div>
+                  <div class="w-full bg-slate-950 h-1.5 rounded overflow-hidden">
+                    <div class="bg-[#00ff88] h-full shadow-[0_0_8px_rgba(0,255,136,0.5)]" style="width: 90%;"></div>
+                  </div>
+                </div>
+                <!-- Skill 3 -->
+                <div>
+                  <div class="flex justify-between text-xs mb-1 font-mono">
+                    <span class="text-slate-200 font-medium">Python & Automation</span>
+                    <span class="text-[#fe007a] font-bold">85%</span>
+                  </div>
+                  <div class="w-full bg-slate-950 h-1.5 rounded overflow-hidden">
+                    <div class="bg-[#fe007a] h-full shadow-[0_0_8px_rgba(254,0,122,0.5)]" style="width: 85%;"></div>
+                  </div>
+                </div>
+                <!-- Skill 4 -->
+                <div>
+                  <div class="flex justify-between text-xs mb-1 font-mono">
+                    <span class="text-slate-200 font-medium">Machine Learning Validation</span>
+                    <span class="text-[#fcee0a] font-bold">78%</span>
+                  </div>
+                  <div class="w-full bg-slate-950 h-1.5 rounded overflow-hidden">
+                    <div class="bg-[#fcee0a] h-full shadow-[0_0_8px_rgba(252,238,10,0.5)]" style="width: 78%;"></div>
+                  </div>
+                </div>
+                <!-- Skill 5 -->
+                <div>
+                  <div class="flex justify-between text-xs mb-1 font-mono">
+                    <span class="text-slate-200 font-medium">Business Operations Strategy</span>
+                    <span class="text-violet-400 font-bold">88%</span>
+                  </div>
+                  <div class="w-full bg-slate-950 h-1.5 rounded overflow-hidden">
+                    <div class="bg-violet-400 h-full shadow-[0_0_8px_rgba(167,139,250,0.5)]" style="width: 88%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Credentials & Certifications -->
+            <div class="hud-box p-6 bg-slate-900/40">
+              <div class="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3">
+                <i data-lucide="award" class="w-5 h-5 text-[#00ff88]"></i>
+                <h2 class="text-sm font-orbitron font-bold tracking-wider text-white">VERIFIED CREDENTIALS</h2>
+              </div>
+              
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2 text-xs">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-[#00ff88] shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong class="text-slate-100 block">Crash Course in Python</strong>
+                    <span class="text-slate-400">Google Career Certificates</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2 text-xs">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-[#00ff88] shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong class="text-slate-100 block">TensorFlow AI/ML Foundations</strong>
+                    <span class="text-slate-400">DeepLearning.AI / Coursera</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2 text-xs">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-[#00ff88] shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong class="text-slate-100 block">Convolutional Neural Networks</strong>
+                    <span class="text-slate-400">DeepLearning.AI / TensorFlow</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2 text-xs">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-[#00ff88] shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong class="text-slate-100 block">Search Engine Optimization (SEO)</strong>
+                    <span class="text-slate-400">Squarespace Mastery</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2 text-xs">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-[#00ff88] shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong class="text-slate-100 block">CannSell Certification</strong>
+                    <span class="text-slate-400">Retail Operations Ontario</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SCREEN 2: PROJECT MISSIONS -->
+      <div id="screen-missions" class="hidden space-y-6">
+        <div class="hud-box p-6 bg-slate-900/40">
+          <div class="flex items-center gap-2.5 border-b border-slate-800 pb-3 mb-4">
+            <i data-lucide="compass" class="w-5 h-5 text-[#fe007a]"></i>
+            <h2 class="text-base font-orbitron font-bold text-white tracking-wide">SYSTEM MISSIONS</h2>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Explore developer configurations and custom operations demonstrating core skills in action. Each project represents tactical application of systems logic, scripting, and operational management.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Mission 1 -->
+            <div class="hud-card-item p-5 border border-slate-800 rounded relative hover:border-[#00f2fe] transition flex flex-col justify-between">
+              <div>
+                <span class="text-[9px] font-mono bg-indigo-900/60 text-[#00f2fe] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Neural Science</span>
+                <h3 class="text-sm font-bold text-white font-orbitron mt-3">Vision Inference Sentinel</h3>
+                <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                  Deep Learning image recognition engine using a custom CNN built in TensorFlow. Trained on the CIFAR dataset to classify images with high confidence scores. Validate model inferences on the <em>Demos</em> screen.
+                </p>
+              </div>
+              <button onclick="switchScreen('prototypes')" class="mt-4 border border-slate-800 hover:border-[#00f2fe] text-xs font-orbitron text-slate-300 hover:text-white py-1.5 rounded transition text-center">
+                Launch Demo
+              </button>
+            </div>
+
+            <!-- Mission 2 -->
+            <div class="hud-card-item p-5 border border-slate-800 rounded relative hover:border-[#00ff88] transition flex flex-col justify-between">
+              <div>
+                <span class="text-[9px] font-mono bg-emerald-950/60 text-[#00ff88] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Network Automation</span>
+                <h3 class="text-sm font-bold text-white font-orbitron mt-3">Active Latency Probe</h3>
+                <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                  Real-time network diagnostic tool that tests server reachability and analyzes packet transmission. Simulates RTT fluctuations and identifies sudden jitter spikes. Inspect the terminal log dynamically on the <em>Demos</em> tab.
+                </p>
+              </div>
+              <button onclick="switchScreen('prototypes')" class="mt-4 border border-slate-800 hover:border-[#00ff88] text-xs font-orbitron text-slate-300 hover:text-white py-1.5 rounded transition text-center">
+                Launch Probe
+              </button>
+            </div>
+
+            <!-- Mission 3 -->
+            <div class="hud-card-item p-5 border border-slate-800 rounded relative hover:border-[#fe007a] transition flex flex-col justify-between">
+              <div>
+                <span class="text-[9px] font-mono bg-[#fe007a]/20 text-[#fe007a] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Business Automation</span>
+                <h3 class="text-sm font-bold text-white font-orbitron mt-3">POS Diagnostic Scripting</h3>
+                <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                  A custom suite of automated Python scripts for POS infrastructure maintenance. Developed to automate system audits, hardware health verification, cache reconciliation, and network log uploads.
+                </p>
+              </div>
+              <button onclick="switchScreen('status')" class="mt-4 border border-slate-800 hover:border-[#fe007a] text-xs font-orbitron text-slate-300 hover:text-white py-1.5 rounded transition text-center">
+                View Credentials
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: INTERACTIVE DEMOS -->
+      <div id="screen-prototypes" class="hidden space-y-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Demo 1: Latency Simulator -->
+          <div class="hud-box p-6 bg-slate-900/40">
+            <div class="flex items-center gap-2.5 border-b border-slate-800 pb-3 mb-4">
+              <i data-lucide="activity" class="w-5 h-5 text-[#00ff88]"></i>
+              <h3 class="text-sm font-orbitron font-bold text-white">LATENCY PROBE ROUTER</h3>
+            </div>
+            
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+              Diagnostic simulation script verifying ICMP route performance. Configured to monitor connection stability, average Round-Trip Time (RTT), and active routing jitter.
+            </p>
+            
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[10px] font-orbitron font-bold text-slate-400 mb-1">PROBE TARGET</label>
+                  <select id="sim-target" class="w-full bg-[#05070a] border border-slate-800 text-xs text-white p-2 rounded focus:border-[#00ff88] outline-none">
+                    <option value="val">VALVE SERVER [US EAST]</option>
+                    <option value="cf">CLOUDFLARE EDG [ANYCAST]</option>
+                    <option value="ggl">GOOGLE DNS [PRIMARY]</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-orbitron font-bold text-slate-400 mb-1">PROBE STATUS</label>
+                  <div class="bg-[#05070a] border border-slate-800 p-2 text-xs text-slate-300 flex items-center justify-between rounded">
+                    <span id="sim-status" class="font-bold text-slate-400">IDLE</span>
+                    <span class="w-2 h-2 rounded-full bg-slate-500" id="sim-indicator"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Output Telemetry -->
+              <div class="grid grid-cols-2 gap-3 bg-[#05070a] border border-slate-800 p-3 rounded font-mono">
+                <div>
+                  <span class="text-[10px] text-slate-500 block">RTT PACKET LATENCY:</span>
+                  <span id="sim-rtt" class="text-sm font-bold text-white">-- ms</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-500 block">JITTER MEASUREMENT:</span>
+                  <span id="sim-jitter" class="text-sm font-bold text-[#fcee0a]">-- ms</span>
+                </div>
+              </div>
+
+              <button id="sim-btn" onclick="toggleWebSimulation()" class="w-full bg-[#05070a] hover:bg-[#00ff88] hover:text-black border border-[#00ff88] text-[#00ff88] transition py-2 rounded text-xs font-orbitron font-bold tracking-wider">
+                RUN PROBE ENGINE
+              </button>
+            </div>
+          </div>
+
+          <!-- Demo 2: TensorFlow CNN Classifier -->
+          <div class="hud-box p-6 bg-slate-900/40">
+            <div class="flex items-center gap-2.5 border-b border-slate-800 pb-3 mb-4">
+              <i data-lucide="eye" class="w-5 h-5 text-[#00f2fe]"></i>
+              <h3 class="text-sm font-orbitron font-bold text-white">CNN IMAGE CLASSIFIER</h3>
+            </div>
+            
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+              Automated evaluation script validating Convolutional Neural Network prediction arrays. Trained in TensorFlow/Keras utilizing a softmax activation output layer.
+            </p>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[10px] font-orbitron font-bold text-slate-400 mb-1">INPUT IMAGE DATASET</label>
+                  <select id="vision-sample" class="w-full bg-[#05070a] border border-slate-800 text-xs text-white p-2 rounded focus:border-[#00f2fe] outline-none">
+                    <option value="plane">CIFAR-10 [AIRPLANE_SAMPLE_94]</option>
+                    <option value="truck">CIFAR-10 [TRUCK_SAMPLE_102]</option>
+                    <option value="dog">CIFAR-10 [CANINE_SAMPLE_443]</option>
+                    <option value="ship">CIFAR-10 [VESSEL_SAMPLE_819]</option>
+                  </select>
+                </div>
+                <div class="flex items-end">
+                  <button id="vision-btn" onclick="runVisionInference()" class="w-full bg-[#05070a] hover:bg-[#00f2fe] hover:text-black border border-[#00f2fe] text-[#00f2fe] transition py-2.5 rounded text-xs font-orbitron font-bold tracking-wider">
+                    RUN INFERENCE
+                  </button>
+                </div>
+              </div>
+
+              <!-- Output Predictor Array -->
+              <div class="bg-[#05070a] border border-slate-800 p-3 rounded space-y-3 font-mono text-xs">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-slate-400" id="label-top">Predicted: Class --</span>
+                    <span class="text-[#00f2fe] font-bold" id="conf-top">0%</span>
+                  </div>
+                  <div class="w-full bg-slate-950 h-1.5 rounded overflow-hidden">
+                    <div id="bar-top" class="bg-[#00f2fe] h-full transition-all duration-300" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-slate-500" id="label-sub">Secondary: Class --</span>
+                    <span class="text-slate-400 font-bold" id="conf-sub">0%</span>
+                  </div>
+                  <div class="w-full bg-slate-950 h-1 rounded overflow-hidden">
+                    <div id="bar-sub" class="bg-slate-700 h-full transition-all duration-300" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SCREEN 4: LOOT CHEST ENVIRONMENT -->
+      <div id="screen-loot" class="hidden space-y-6">
+        
+        <div class="hud-box p-6 bg-slate-900/40 text-center max-w-xl mx-auto space-y-5">
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-16 h-16 bg-[#fcee0a]/10 border border-[#fcee0a] rounded-full flex items-center justify-center animate-bounce">
+              <i data-lucide="package-open" class="w-8 h-8 text-[#fcee0a]"></i>
+            </div>
+            <h2 class="text-lg font-orbitron font-extrabold text-white tracking-widest glow-amber">ATMOSPHERIC LOOT BOX</h2>
+            <p class="text-xs text-slate-300 leading-relaxed max-w-sm">
+              Unlock different terminal environments instantly! Spinning the crate roulette will customize the entire backdrop of the website with animated and scenic visual overrides.
+            </p>
+          </div>
+
+          <!-- Spin Console Button -->
+          <button onclick="window.openLootModal()" class="w-full bg-gradient-to-r from-[#fcee0a] to-[#ffaa00] text-black font-orbitron font-black text-xs py-3 rounded tracking-wider shadow-[0_0_15px_rgba(252,238,10,0.35)] hover:brightness-110 transition uppercase">
+            Initialize Environmental Spin
           </button>
         </div>
+
       </div>
 
-      <div class="max-w-xl mx-auto">
-        <button onclick="switchScreen('loot')" class="w-full py-3 bg-[#00f2fe] hover:bg-[#00f2fe]/80 text-black font-orbitron font-black text-xs uppercase flex items-center justify-center gap-2 transition tracking-wider shadow-[0_0_10px_rgba(0,242,254,0.3)]">
-          <i data-lucide="unlock" class="w-4 h-4"></i> Open Loot Vault (Credentials & Skills)
-        </button>
-      </div>
-    </section>
-
-    <!-- SCREEN 2: LOOT CHEST (2 DIPLOMAS & 4 ACCREDITED CERTS + CANNSELL) -->
-    <section id="screen-loot" class="hidden hud-box p-4 sm:p-6 space-y-6">
-      <div class="flex items-center justify-between border-b border-[#1b2a4a] pb-3">
-        <div>
-          <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-[#fcee0a] uppercase flex items-center gap-2">
-            <i data-lucide="package-open" class="w-5 h-5 text-[#fcee0a]"></i> Vault // Loot Chest
-          </h2>
-          <div class="text-[10px] font-mono text-slate-400">2 DIPLOMAS // 4 TECHNICAL CERTS & SPECIALIZATIONS</div>
-        </div>
-        <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-[#00f2fe] flex items-center gap-1">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
-        </button>
-      </div>
-
-      <!-- Part 1: Diplomas -->
-      <div class="space-y-2">
-        <div class="text-[10px] font-mono text-[#00f2fe] font-bold uppercase tracking-wider flex items-center gap-1.5">
-          <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i> Academic Credentials & Diplomas
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-          <div class="hud-card-item p-3.5 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-center text-[10px] text-[#00f2fe] font-bold">
-                <span>UNIVERSITY LEVEL</span>
-                <span class="text-[#00ff88]">COMPLETED 12/2023</span>
-              </div>
-              <div class="font-bold text-white text-sm mt-1">Diploma in Computer Science</div>
-              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
-                University of Regina. Object-oriented architecture, data structures, algorithms, operating system principles, and network socket programming.
-              </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
-              <span>University of Regina</span>
-              <span class="text-[#00f2fe]">Regina, SK</span>
-            </div>
+      <!-- SCREEN 5: CONTACT SCREEN -->
+      <div id="screen-contact" class="hidden space-y-6">
+        
+        <div class="hud-box p-6 bg-slate-900/40">
+          <div class="flex items-center gap-3 border-b border-slate-800 pb-4 mb-4">
+            <i data-lucide="phone-call" class="w-6 h-6 text-[#00ff88]"></i>
+            <h2 class="text-lg font-orbitron font-extrabold text-white tracking-wider">SECURE COMMS CHANNEL</h2>
           </div>
-
-          <div class="hud-card-item p-3.5 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-center text-[10px] text-[#fcee0a] font-bold">
-                <span>COLLEGE LEVEL</span>
-                <span class="text-[#00ff88]">COMPLETED 02/2026</span>
-              </div>
-              <div class="font-bold text-white text-sm mt-1">Diploma in Business</div>
-              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
-                Algonquin College. Business operations, requirements gathering, workflow optimization, financial modeling, and cross-functional team communication.
-              </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
-              <span>Algonquin College</span>
-              <span class="text-[#fcee0a]">Ottawa, ON</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Part 2: Technical Certifications -->
-      <div class="space-y-2 pt-1">
-        <div class="text-[10px] font-mono text-[#fcee0a] font-bold uppercase tracking-wider flex items-center gap-1.5">
-          <i data-lucide="award" class="w-3.5 h-3.5"></i> Verified Professional Certifications
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
           
-          <div class="hud-card-item p-3.5 border-l-2 border-l-[#00f2fe] flex flex-col justify-between">
-            
-            <div>
-              <div class="flex justify-between items-center text-[10px] text-[#00f2fe] font-bold">
-                <span>PYTHON / AUTOMATION</span>
-                <a href="https://www.coursera.org/account/accomplishments/verify/GNXW49F8CC5L" target="_blank" rel="noopener noreferrer" class="text-[#00f2fe] hover:underline flex items-center gap-1 font-bold">
-                <span class="text-[#00ff88]">VERIFIED</span>
-                </a>
-                
-              </div>
-              <div class="font-bold text-white text-sm mt-1">Crash Course in Python</div>
-              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
-                Google IT Automation Specialization. Scripting system automation, file manipulation, data parsing, and algorithmic troubleshooting.
-              </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
-              <span>Google / Coursera</span>
-        
-              <span class="text-[#00f2fe]">SCRIPTING CORE</span>
-            </div>
-          </div>
-
-          <div class="hud-card-item p-3.5 border-l-2 border-l-[#fe007a] flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-center text-[10px] text-[#fe007a] font-bold">
-                <span>DEEP LEARNING / AI</span>
-                 <a href="https://www.coursera.org/account/accomplishments/verify/ZFYS2S8W3G8T" target="_blank" rel="noopener noreferrer" class="text-[#00f2fe] hover:underline flex items-center gap-1 font-bold">
-                <span class="text-[#00ff88]">VERIFIED</span>
-                 </a>
-                
-              </div>
-              <div class="font-bold text-white text-sm mt-1">Convolutional Neural Networks in TensorFlow</div>
-              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
-                DeepLearning.AI. Multi-class image classifier architectures, max-pooling feature extractors, and dropout regularization.
-              </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
-              <span>DeepLearning.AI</span>
-              
-              <span class="text-[#fe007a]">VISION SPEC</span>
-            </div>
-          </div>
-
-          <div class="hud-card-item p-3.5 border-l-2 border-l-[#fe007a] flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-center text-[10px] text-[#fe007a] font-bold">
-                <span>AI & MACHINE LEARNING</span>
-                <a href="https://www.coursera.org/account/accomplishments/verify/V3A2GRKM2JDW" target="_blank" rel="noopener noreferrer" class="text-[#00f2fe] hover:underline flex items-center gap-1 font-bold">
-                <span class="text-[#00ff88]">VERIFIED</span>
-                </a>
-                
-              </div>
-              <div class="font-bold text-white text-sm mt-1">Introduction to TensorFlow for AI, ML, & DL</div>
-              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
-                DeepLearning.AI. Neural network graphs, loss function optimization, backpropagation, and regression/classification models.
-              </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
-              <span>DeepLearning.AI</span>
-              
-               
-              
-              <span class="text-[#fe007a]">AI FOUNDATIONS</span>
-            </div>
-          </div>
-
-          <div class="hud-card-item p-3.5 border-l-2 border-l-[#fcee0a] flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-center text-[10px] text-[#fcee0a] font-bold">
-                <span>WEB & DIGITAL OPS</span>
-                 <a href="https://www.coursera.org/account/accomplishments/verify/HSH8HBYAHEWS" target="_blank" rel="noopener noreferrer" class="text-[#00f2fe] hover:underline flex items-center gap-1 font-bold">
-                <span class="text-[#00ff88]">VERIFIED</span>
-                 </a>
-              </div>
-              <div class="font-bold text-white text-sm mt-1">SEO with Squarespace</div>
-              <div class="text-slate-400 text-[11px] mt-1.5 leading-relaxed">
-                Search engine indexing & optimization.
-              </div>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
-              <span>Coursera</span>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Secure communications interface fully initialized. Feel free to contact me directly using any of the direct endpoints listed below for recruitment inquiries, technical positions, or immediate operations collaborations.
+          </p>
           
-              
-              <span class="text-[#fcee0a]">OPS & COMPLIANCE</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Part 3: Technical Skills Matrix -->
-      <div class="space-y-2 pt-1">
-        <div class="text-[10px] font-mono text-[#00ff88] font-bold uppercase tracking-wider flex items-center gap-1.5">
-          <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Operator Technical Stack & Competencies
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono">
-          <div class="hud-card-item p-2.5">
-            <div class="text-[10px] text-slate-500">SYSTEMS & SUPPORT</div>
-            <div class="font-bold text-white mt-0.5">Helpdesk & ITSM</div>
-            <div class="text-[9px] text-[#00f2fe] mt-0.5">Ticket Management</div>
-          </div>
-          <div class="hud-card-item p-2.5">
-            <div class="text-[10px] text-slate-500">SCRIPTING & DEV</div>
-            <div class="font-bold text-white mt-0.5">Python / Java</div>
-            <div class="text-[9px] text-[#00f2fe] mt-0.5">Automation & Sockets</div>
-          </div>
-          <div class="hud-card-item p-2.5">
-            <div class="text-[10px] text-slate-500">HARDWARE & POS</div>
-            <div class="font-bold text-white mt-0.5">Terminals & Gates</div>
-            <div class="text-[9px] text-[#00f2fe] mt-0.5">Diagnostic Repair</div>
-          </div>
-          <div class="hud-card-item p-2.5">
-            <div class="text-[10px] text-slate-500">BUSINESS & DATA</div>
-            <div class="font-bold text-white mt-0.5">Data Analysis</div>
-            <div class="text-[9px] text-[#00f2fe] mt-0.5">Workflow Optimization</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCREEN 3: MISSIONS (FULL CAREER HISTORY & WORK EXPERIENCE) -->
-    <section id="screen-missions" class="hidden hud-box p-4 sm:p-6 space-y-5">
-      <div class="flex items-center justify-between border-b border-[#1b2a4a] pb-3">
-        <div>
-          <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-[#fe007a] uppercase flex items-center gap-2">
-            <i data-lucide="crosshair" class="w-5 h-5 text-[#fe007a]"></i> Tactical Missions // Career History
-          </h2>
-          <div class="text-[10px] font-mono text-slate-400">FIELD EMPLOYMENT HISTORY & OPERATIONS</div>
-        </div>
-        <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-[#00f2fe] flex items-center gap-1">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
-        </button>
-      </div>
-
-      <div class="space-y-4 text-xs font-mono">
-        
-        <!-- Mission Log 01: Canna Cabana -->
-        <div class="hud-card-item p-4 border-l-4 border-l-[#fcee0a]">
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center text-[10px] font-bold uppercase mb-1.5 gap-1">
-            <span class="text-[#fcee0a]">MISSION 01 // SHIFT LEADER / MANAGER ON DUTY</span>
-            <span class="text-[#00ff88] flex items-center gap-1"><span class="w-1.5 h-1.5 bg-[#00ff88] rounded-full animate-pulse"></span> JUN 2025 – PRESENT</span>
-          </div>
-          <div class="text-xs font-bold text-white font-orbitron">Canna Cabana // Ottawa, ON</div>
-          <p class="text-slate-400 mt-2 leading-relaxed text-[11px]">
-            • Delivered exceptional customer service by providing deep product knowledge and personalized recommendations, boosting repeat client retention[cite: 2].<br>
-            • Supervised daily store operations including shift staff oversight, cash handling reconciliation, opening/closing procedures, and real-time inventory tracking[cite: 2].<br>
-            • Ensured strict operational adherence to provincial regulations and internal store compliance standards[cite: 2].
-          </p>
-          <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-300">
-            <span class="px-2 py-0.5 bg-[#fcee0a]/10 text-[#fcee0a] border border-[#fcee0a]/30">#StaffSupervision</span>
-            <span class="px-2 py-0.5 bg-[#fcee0a]/10 text-[#fcee0a] border border-[#fcee0a]/30">#InventoryAudit</span>
-            <span class="px-2 py-0.5 bg-[#fcee0a]/10 text-[#fcee0a] border border-[#fcee0a]/30">#OperationsLeadership</span>
-          </div>
-        </div>
-
-        <!-- Mission Log 02: GAO Tek -->
-        <div class="hud-card-item p-4 border-l-4 border-l-[#fe007a]">
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center text-[10px] font-bold uppercase mb-1.5 gap-1">
-            <span class="text-[#fe007a]">MISSION 02 // TECH SUPPORT INTERN</span>
-            <span class="text-[#00ff88] flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> MAY 2024 – JAN 2025</span>
-          </div>
-          <div class="text-xs font-bold text-white font-orbitron">Gao Tek // Toronto, ON (Remote)</div>
-          <p class="text-slate-400 mt-2 leading-relaxed text-[11px]">
-            • Provided front-line technical support to customers, diagnosing and resolving connectivity, device, and service-related issues[cite: 2].<br>
-            • Guided end-users through step-by-step diagnostic workflows, improving overall issue resolution efficiency and user satisfaction[cite: 2].<br>
-            • Logged and tracked technical tickets within internal ticketing systems to ensure accurate documentation and prompt follow-up SLAs[cite: 2].
-          </p>
-          <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-300">
-            <span class="px-2 py-0.5 bg-[#fe007a]/10 text-[#fe007a] border border-[#fe007a]/30">#HelpdeskOperations</span>
-            <span class="px-2 py-0.5 bg-[#fe007a]/10 text-[#fe007a] border border-[#fe007a]/30">#TicketingSystem</span>
-            <span class="px-2 py-0.5 bg-[#fe007a]/10 text-[#fe007a] border border-[#fe007a]/30">#DiagnosticSupport</span>
-          </div>
-        </div>
-
-        <!-- Mission Log 03: Platinum Parking -->
-        <div class="hud-card-item p-4 border-l-4 border-l-[#00f2fe]">
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center text-[10px] font-bold uppercase mb-1.5 gap-1">
-            <span class="text-[#00f2fe]">MISSION 03 // FACILITY AMBASSADOR / ON-SITE TECH SUPPORT</span>
-            <span class="text-[#00ff88] flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> SEPT 2023 – MAY 2025</span>
-          </div>
-          <div class="text-xs font-bold text-white font-orbitron">Platinum Parking Management // Regina, SK</div>
-          <p class="text-slate-400 mt-2 leading-relaxed text-[11px]">
-            • Maintained and troubleshot automated pay-and-park terminals, minimizing equipment failure and hardware downtime[cite: 2].<br>
-            • Responded to on-site technical service tickets to diagnose and resolve hardware/electrical issues efficiently[cite: 2].<br>
-            • Executed scheduled routine inspections, preventive maintenance protocols, cash collection, and financial reconciliation reporting[cite: 2].
-          </p>
-          <div class="flex flex-wrap gap-2 mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-300">
-            <span class="px-2 py-0.5 bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/30">#HardwareDiagnostics</span>
-            <span class="px-2 py-0.5 bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/30">#PreventiveMaintenance</span>
-            <span class="px-2 py-0.5 bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/30">#OnSiteSupport</span>
-          </div>
-        </div>
-
-      </div>
-      
-    </section>
-
-    <!-- SCREEN 4: PROTOTYPES (LAB & LIVE DEMOS) -->
-    <section id="screen-prototypes" class="hidden hud-box p-4 sm:p-6 space-y-4">
-      <div class="flex items-center justify-between border-b border-[#1b2a4a] pb-3">
-        <div>
-          <h2 class="text-base sm:text-lg font-orbitron font-extrabold text-[#00f2fe] glow-cyan uppercase flex items-center gap-2">
-            <i data-lucide="terminal" class="w-5 h-5 text-[#00f2fe]"></i> Technical Lab & Prototypes
-          </h2>
-          <div class="text-[10px] font-mono text-slate-400">INTERACTIVE IN-BROWSER SIMULATIONS</div>
-        </div>
-        <button onclick="switchScreen('status')" class="text-xs text-slate-400 hover:text-[#00f2fe] flex items-center gap-1">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        
-        <!-- Prototype 1: PingStabilizer -->
-        <div class="hud-card-item p-4 border border-[#00f2fe]/40 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="flex items-center justify-between text-[10px] text-[#00f2fe] font-bold uppercase mb-1">
-              <span>SYSTEMS UTILITY // PYTHON</span>
-              <span class="text-[#00ff88] flex items-center gap-1"><span class="w-1.5 h-1.5 bg-[#00ff88] rounded-full animate-pulse"></span> LIVE SIM</span>
-            </div>
-            <h3 class="text-sm font-orbitron font-bold text-white mb-1">PingStabilizer // Telemetry Probe</h3>
-            <p class="text-[11px] text-slate-400 leading-relaxed mb-3">
-              Monitors packet round-trip time (RTT), tracks delta jitter, and detects network queue spikes.
-            </p>
-
-            <div class="bg-[#05070a] border border-slate-800 p-2.5 rounded mb-2">
-              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-2 text-xs">
-                <select id="sim-target" class="bg-[#111927] border border-slate-700 text-white text-[11px] p-1.5 rounded flex-1 focus:outline-none focus:border-[#00f2fe] w-full">
-                  <option value="val">Valorant NA East (Ashburn)</option>
-                  <option value="cf">Cloudflare Edge (1.1.1.1)</option>
-                  <option value="ggl">Google DNS (8.8.8.8)</option>
-                </select>
-                <button id="sim-btn" onclick="toggleWebSimulation()" class="w-full sm:w-auto px-3 py-1.5 bg-[#00f2fe] text-black font-bold font-orbitron text-[11px] uppercase hover:bg-[#00f2fe]/80 transition text-center whitespace-nowrap">
-                  Run Demo
-                </button>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Email Card -->
+            <a href="mailto:kevalp061411@gmail.com" class="hud-card-item block p-5 border border-slate-800 rounded-lg hover:border-[#00ff88] hover:bg-slate-900/30 transition group">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="mail" class="w-5 h-5 text-[#fe007a] group-hover:scale-110 transition"></i>
+                  <span class="text-xs font-bold text-slate-400 font-orbitron tracking-wider">DIRECT EMAIL</span>
+                </div>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-600 group-hover:text-white transition"></i>
               </div>
-
-              <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
-                <div class="bg-black/60 p-1.5 border border-white/5">
-                  <div class="text-[9px] text-slate-500">RTT</div>
-                  <div id="sim-rtt" class="font-bold text-[#00f2fe] text-xs">-- ms</div>
-                </div>
-                <div class="bg-black/60 p-1.5 border border-white/5">
-                  <div class="text-[9px] text-slate-500">JITTER</div>
-                  <div id="sim-jitter" class="font-bold text-[#fe007a] text-xs">-- ms</div>
-                </div>
-                <div class="bg-black/60 p-1.5 border border-white/5">
-                  <div class="text-[9px] text-slate-500">STATUS</div>
-                  <div id="sim-status" class="font-bold text-slate-400 text-xs">IDLE</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap justify-between items-center pt-2 border-t border-white/10 gap-2 text-[11px]">
-            <span class="text-[#00f2fe] font-bold">#Python #Sockets #Win32API</span>
-            <a href="https://github.com/keval0611/ping-stabilizer" target="_blank" class="px-2.5 py-1 bg-[#00f2fe]/10 border border-[#00f2fe] text-[#00f2fe] hover:bg-[#00f2fe] hover:text-black font-bold transition flex items-center gap-1">
-              <span>Desktop Repo</span>
-              <i data-lucide="external-link" class="w-3 h-3"></i>
+              <p class="text-sm font-bold text-white font-mono mt-1">kevalp061411@gmail.com</p>
+              <span class="text-[10px] text-slate-500 mt-2 block">Launches your default mail client instantly</span>
             </a>
-          </div>
-        </div>
 
-        <!-- Prototype 2: CNN Vision Pipeline -->
-        <div class="hud-card-item p-4 border border-[#fcee0a]/40 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="flex items-center justify-between text-[10px] text-[#fcee0a] font-bold uppercase mb-1">
-              <span>AI / VISION // TENSORFLOW</span>
-              <span class="text-[#00ff88] flex items-center gap-1"><span class="w-1.5 h-1.5 bg-[#00ff88] rounded-full animate-pulse"></span> INFERENCE READY</span>
-            </div>
-            <h3 class="text-sm font-orbitron font-bold text-white mb-1">CNN Vision // Classifier</h3>
-            <p class="text-[11px] text-slate-400 leading-relaxed mb-3">
-              Multi-class feature extraction engine classifying optical targets with softmax probability vectors.
-            </p>
-
-            <div class="bg-[#05070a] border border-slate-800 p-2.5 rounded mb-2">
-              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-2 text-xs">
-                <select id="vision-sample" class="bg-[#111927] border border-slate-700 text-white text-[11px] p-1.5 rounded flex-1 focus:outline-none focus:border-[#fcee0a] w-full">
-                  <option value="plane">Target Alpha: Commercial Airliner</option>
-                  <option value="truck">Target Bravo: Freight Truck</option>
-                  <option value="dog">Target Charlie: K9 / Canine</option>
-                  <option value="ship">Target Delta: Naval Cargo Vessel</option>
-                </select>
-                <button id="vision-btn" onclick="runVisionInference()" class="w-full sm:w-auto px-3 py-1.5 bg-[#fcee0a] text-black font-bold font-orbitron text-[11px] uppercase hover:bg-[#fcee0a]/80 transition text-center whitespace-nowrap">
-                  Classify
-                </button>
-              </div>
-
-              <div class="space-y-1.5 text-xs pt-1">
-                <div>
-                  <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
-                    <span id="label-top" class="font-bold text-white">Top Match: Ready</span>
-                    <span id="conf-top" class="text-[#fcee0a] font-bold">0%</span>
-                  </div>
-                  <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                    <div id="bar-top" class="bg-[#fcee0a] h-full w-0 transition-all duration-500"></div>
-                  </div>
+            <!-- Phone Card -->
+            <a href="tel:613-219-6739" class="hud-card-item block p-5 border border-slate-800 rounded-lg hover:border-[#00ff88] hover:bg-slate-900/30 transition group">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="phone" class="w-5 h-5 text-[#00f2fe] group-hover:scale-110 transition"></i>
+                  <span class="text-xs font-bold text-slate-400 font-orbitron tracking-wider">PHONE LINE</span>
                 </div>
-                <div>
-                  <div class="flex justify-between text-[10px] text-slate-400 mb-0.5">
-                    <span id="label-sub" class="text-slate-400">Secondary Candidate</span>
-                    <span id="conf-sub" class="text-slate-400">0%</span>
-                  </div>
-                  <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                    <div id="bar-sub" class="bg-slate-500 h-full w-0 transition-all duration-500"></div>
-                  </div>
-                </div>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-600 group-hover:text-white transition"></i>
               </div>
-            </div>
-          </div>
+              <p class="text-sm font-bold text-white font-mono mt-1">+1 (613) 219-6739</p>
+              <span class="text-[10px] text-slate-500 mt-2 block">Call or message for immediate scheduling</span>
+            </a>
 
-          <div class="flex flex-wrap justify-between items-center pt-2 border-t border-white/10 gap-2 text-[11px]">
-            <span class="text-[#fcee0a] font-bold">#TensorFlow #DeepLearning</span>
-            <a href="https://github.com/keval0611/cnn-vision-pipeline" target="_blank" class="px-2.5 py-1 bg-[#fcee0a]/10 border border-[#fcee0a] text-[#fcee0a] hover:bg-[#fcee0a] hover:text-black font-bold transition flex items-center gap-1">
-              <span>Pipeline Repo</span>
-              <i data-lucide="external-link" class="w-3 h-3"></i>
+            <!-- Location Card -->
+            <div class="hud-card-item p-5 border border-slate-800 rounded-lg">
+              <div class="flex items-center gap-3 mb-2">
+                <i data-lucide="map-pin" class="w-5 h-5 text-[#fcee0a]"></i>
+                <span class="text-xs font-bold text-slate-400 font-orbitron tracking-wider">OPERATIONAL BASE</span>
+              </div>
+              <p class="text-sm font-bold text-white font-mono mt-1">Ottawa, ON, Canada</p>
+              <span class="text-[10px] text-slate-500 mt-2 block">Open to on-site, hybrid, remote, and relocation</span>
+            </div>
+
+            <!-- Resume Download Card -->
+            <a href="./resume.pdf" download="Keval_Patel_Resume.pdf" class="hud-card-item block p-5 border border-slate-800 rounded-lg hover:border-green-400 hover:bg-slate-900/30 transition group">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <i data-lucide="file-check" class="w-5 h-5 text-[#00ff88] group-hover:translate-y-0.5 transition"></i>
+                  <span class="text-xs font-bold text-slate-400 font-orbitron tracking-wider">VERIFIED DOSSIER</span>
+                </div>
+                <i data-lucide="download" class="w-3.5 h-3.5 text-slate-600 group-hover:text-white transition"></i>
+              </div>
+              <p class="text-sm font-bold text-white font-mono mt-1">Download Printable PDF Resume</p>
+              <span class="text-[10px] text-slate-500 mt-2 block">Verified 1-page resume document</span>
             </a>
           </div>
         </div>
 
       </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="pt-6 pb-2 text-center text-[10px] font-mono text-slate-500 space-y-1">
-      <div class="flex items-center justify-center gap-1 text-[#00ff88]">
-        <span class="w-1.5 h-1.5 bg-[#00ff88] rounded-full"></span>
-        <span>SYSTEM ALLOCATION: OPTIMAL</span>
+    </main>
+
+    <!-- Footer System Log Bar -->
+    <footer class="hud-box p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono text-slate-500 bg-slate-950/80">
+      <div class="flex items-center gap-1.5">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-green-500"></span>
+        <span>HUD ENGINE V2.2 // CONNECTION STABLE // RECRUITER CHANNEL OPEN</span>
       </div>
-      <div>&copy; KEVAL PATEL // TACTICAL FIELD PORTFOLIO</div>
+      <div>
+        <span>DESIGNED BY KEVAL PATEL &copy; 2026 // COGNITIVE INTERFACE</span>
+      </div>
     </footer>
 
-  </main>
-<!-- LOOT CHEST POPUP MODAL -->
-  <div id="loot-modal" class="fixed inset-0 bg-[#05070a]/90 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
-    <div class="w-full max-w-xl bg-[#0a0f18] border border-[#00f2fe] shadow-[0_0_30px_rgba(0,242,254,0.25)] p-5 text-white font-mono space-y-4">
+  </div>
+
+  <!-- LOOT DRAWER / MODAL POPUP -->
+  <div id="loot-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
+    <div class="hud-box w-full max-w-lg bg-[#070b12] border border-[#fcee0a] p-6 relative flex flex-col gap-4 shadow-[0_0_25px_rgba(252,238,10,0.15)]">
       
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between border-b border-[#1b2a4a] pb-2 text-xs font-orbitron text-[#00f2fe]">
-        <span>// CRATE DEPLOYMENT: SUPPLY_DROP_v1.0</span>
-        <button id="close-btn" class="text-slate-400 hover:text-white text-base px-2 py-0.5 cursor-pointer">✕</button>
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <i data-lucide="package-open" class="text-[#fcee0a] w-5 h-5 animate-pulse"></i>
+          <h3 class="text-sm font-orbitron font-extrabold text-white tracking-widest uppercase">ENV UNBOXING SEQUENCE</h3>
+        </div>
+        <button id="close-btn" class="text-slate-400 hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
       </div>
 
-      <!-- Roulette Frame -->
-      <div id="roulette-viewport" class="relative w-full h-28 bg-[#05070a] border border-[#1b2a4a] overflow-hidden my-3">
-        <!-- Center Target Line -->
-        <div class="absolute left-1/2 top-0 bottom-0 w-[2px] bg-[#fcee0a] shadow-[0_0_10px_#fcee0a] -translate-x-1/2 z-20 pointer-events-none"></div>
+      <p class="text-[11px] text-slate-400 font-mono -mt-1 leading-relaxed">
+        Spin terminal will sweep through various environment matrices. Landing on an option will synchronize the website background.
+      </p>
+
+      <!-- Roulette Viewing Window -->
+      <div class="relative w-full h-24 bg-slate-950 border-y-2 border-slate-800 overflow-hidden rounded flex items-center">
+        <!-- Target Selector Tick Marks -->
+        <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#fcee0a] z-10 -translate-x-1/2 shadow-[0_0_8px_#fcee0a]"></div>
+        <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1 w-2 h-2 bg-[#fcee0a] rotate-45 z-10"></div>
+        <div class="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1 w-2 h-2 bg-[#fcee0a] rotate-45 z-10"></div>
         
-        <!-- Moving Roulette Strip -->
-        <div id="roulette-strip" class="flex h-full absolute left-0 top-0 transition-transform duration-[4500ms] ease-[cubic-bezier(0.12,0.8,0.2,1)]">
+        <!-- Scrolling Horizontal Roulette Strip -->
+        <div id="roulette-strip" class="flex items-center h-full gap-1 px-4 text-center select-none" style="width: max-content;">
+          <!-- Generated cards inserted dynamically -->
         </div>
       </div>
 
-      <!-- Actions & Result -->
-      <div class="space-y-3">
-        <button id="spin-btn" class="w-full py-3 bg-[#00f2fe] hover:bg-[#00f2fe]/80 text-black font-orbitron font-black text-xs uppercase tracking-wider transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
-          INITIATE UNBOXING
+      <!-- Live Action Center -->
+      <div class="flex flex-col items-center gap-3">
+        <button id="spin-btn" class="w-full bg-[#fcee0a] hover:bg-[#ffbe0b] text-black font-orbitron font-black text-xs py-2.5 rounded tracking-widest uppercase transition-all shadow-[0_0_15px_rgba(252,238,10,0.2)]">
+          INITIATE MATRIX SWEEP
         </button>
         
-        <div id="reward-display" class="hidden p-3 bg-black/70 border border-[#1b2a4a] text-xs"></div>
+        <!-- Unboxed Reward Reveal Box -->
+        <div id="reward-display" class="hidden w-full hud-card-item p-4 border rounded text-center space-y-1 transition duration-500 scale-95 opacity-0">
+          <span class="text-[9px] font-mono font-bold uppercase tracking-widest" id="reward-rarity">COMMON</span>
+          <h4 class="text-base font-orbitron font-black tracking-wide" id="reward-name">REWARD</h4>
+          <p class="text-xs text-slate-400" id="reward-desc">Description</p>
+        </div>
       </div>
 
     </div>
   </div>
-<!-- External Script -->
+
   <script src="main.js"></script>
-  <script>
-    lucide.createIcons();
-  </script>
 </body>
 </html>
