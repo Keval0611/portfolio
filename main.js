@@ -1,4 +1,4 @@
-// Screen Navigation Switching
+// Screen Navigation Switching Logic
 function switchScreen(screenId) {
   const screens = ['status', 'loot', 'missions', 'prototypes'];
   const tabs = ['tab-status', 'tab-loot', 'tab-missions', 'tab-prototypes'];
@@ -33,6 +33,30 @@ function triggerComms(mode) {
     feed.innerText = "\"Core matrix: L1/L2 Technical Support, Active Directory, Python automation, Win32 network optimization, and TensorFlow CNN pipelines.\"";
   } else if (mode === 'contact') {
     feed.innerText = "\"Transmission channel open: Connect via GitHub or direct professional channels for interview scheduling.\"";
+  }
+}
+
+// Reset Directive / Target Objective Cycling Logic
+let directiveIndex = 0;
+const directives = [
+  "IT Systems / Support Specialist",
+  "Technical Operations & Systems Analyst",
+  "Infrastructure & Network Support Specialist"
+];
+
+function resetObjectiveDirective() {
+  directiveIndex = (directiveIndex + 1) % directives.length;
+  const roleEl = document.getElementById('target-role-text');
+  const commsEl = document.getElementById('comms-text');
+  
+  if (roleEl) {
+    roleEl.innerText = directives[directiveIndex];
+    roleEl.classList.add('text-hud-yellow');
+    setTimeout(() => roleEl.classList.remove('text-hud-yellow'), 500);
+  }
+  
+  if (commsEl) {
+    commsEl.innerText = `\"Directive updated: Target profile re-aligned to [${directives[directiveIndex]}]. System calibration complete.\"`;
   }
 }
 
@@ -121,8 +145,9 @@ function runVisionInference() {
   }, 400);
 }
 
-// Initialize Lucide Icons
+// Initial Screen Boot & Lucide Icon Mount
 document.addEventListener("DOMContentLoaded", () => {
+  switchScreen('status');
   if (window.lucide) {
     lucide.createIcons();
   }
