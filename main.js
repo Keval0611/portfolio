@@ -1,7 +1,6 @@
-// Screen Navigation Switching Logic
+// --- SCREEN NAVIGATION SYSTEM ---
 function switchScreen(screenId) {
-  const screens = ['status', 'loot', 'missions', 'prototypes'];
-  const tabs = ['tab-status', 'tab-loot', 'tab-missions', 'tab-prototypes'];
+  const screens = ['status', 'loot', 'missions', 'prototypes', 'contact'];
   
   // Hide all screens
   screens.forEach(s => {
@@ -9,46 +8,44 @@ function switchScreen(screenId) {
     if (el) el.classList.add('hidden');
   });
 
-  // Reset all tabs to inactive state
-  tabs.forEach(t => {
-    const tabEl = document.getElementById(t);
-    if (tabEl) {
-      tabEl.className = "px-3 py-2 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18] text-slate-300 hover:border-[#00f2fe] hover:text-[#00f2fe] whitespace-nowrap transition";
-    }
+  // Reset all navigation tabs to inactive state
+  const navButtons = document.querySelectorAll('nav button');
+  navButtons.forEach(btn => {
+    btn.className = "px-4 py-2.5 text-xs font-orbitron font-bold border border-slate-700 bg-[#0a0f18]/90 text-slate-300 hover:border-[#00f2fe] hover:text-[#00f2fe] whitespace-nowrap transition flex items-center gap-1.5 rounded";
   });
 
-  // Activate chosen screen
+  // Activate selected screen
   const activeScreen = document.getElementById(`screen-${screenId}`);
   if (activeScreen) {
     activeScreen.classList.remove('hidden');
   }
 
-  // Activate chosen tab
+  // Activate selected tab styling
   const activeTab = document.getElementById(`tab-${screenId}`);
   if (activeTab) {
-    activeTab.className = "px-3 py-2 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe] text-black whitespace-nowrap transition";
+    activeTab.className = "px-4 py-2.5 text-xs font-orbitron font-bold border border-[#00f2fe] bg-[#00f2fe] text-black whitespace-nowrap transition flex items-center gap-1.5 rounded shadow-[0_0_10px_rgba(0,242,254,0.3)]";
   }
 
-  // Refresh Lucide Icons on DOM updates
+  // Refresh Lucide Icons
   if (window.lucide) {
     lucide.createIcons();
   }
 }
 
-// Recruiter-Focused Objective Directive Switcher
+// --- OBJECTIVE DIRECTIVE TOGGLER ---
 let directiveIndex = 0;
 const recruiterDirectives = [
-  {
-    role: "IT Support & Systems Specialist",
-    hook: "Bridging computer science foundations with business operations to resolve L1/L2 incidents, streamline workflows, and ensure 99.9% endpoint uptime."
+  { 
+    role: "IT Support & Systems Specialist", 
+    hook: "Bridging computer science foundations with business operations to resolve L1/L2 incidents, streamline workflows, and ensure 99.9% endpoint uptime." 
   },
-  {
-    role: "Operations & Technical Analyst",
-    hook: "Leveraging dual-discipline expertise in CS and Business Strategy to translate technical telemetry and POS diagnostics into scalable business growth."
+  { 
+    role: "Operations & Technical Analyst", 
+    hook: "Leveraging dual-discipline expertise in CS and Business Strategy to translate technical telemetry and POS diagnostics into scalable business growth." 
   },
-  {
-    role: "Helpdesk & Infrastructure Analyst",
-    hook: "Dedicated to rapid-response incident resolution, automated hardware diagnostics, and delivering white-glove technical support across enterprise environments."
+  { 
+    role: "Helpdesk & Infrastructure Analyst", 
+    hook: "Dedicated to rapid-response incident resolution, automated hardware diagnostics, and delivering white-glove technical support across enterprise environments." 
   }
 ];
 
@@ -66,25 +63,25 @@ function resetObjectiveDirective() {
   }
   
   if (commsEl) {
-    commsEl.innerText = `"${current.hook}"`;
+    commsEl.innerText = current.hook;
   }
 }
 
-// Interactive Comms Dialogue Feeds
+// --- INTERACTIVE COMMS PANEL FEED ---
 function triggerComms(mode) {
   const feed = document.getElementById('comms-text');
   if (!feed) return;
-
+  
   if (mode === 'deploy') {
-    feed.innerText = "\"Candidate status: Available immediately. Open to on-site, hybrid, and remote IT Support & Operations opportunities in Ottawa and across Ontario.\"";
+    feed.innerText = "Candidate status: Available immediately. Open to on-site, hybrid, and remote IT Support & Operations opportunities in Ottawa and across Ontario.";
   } else if (mode === 'skills') {
-    feed.innerText = "\"Core Toolkit: Python automation, hardware diagnostics, POS infrastructure, TensorFlow CNN pipelines, ticketing workflows, and Active Directory.\"";
+    feed.innerText = "Core Toolkit: Python automation, hardware diagnostics, POS infrastructure, TensorFlow CNN pipelines, ticketing workflows, and Active Directory.";
   } else if (mode === 'contact') {
-    feed.innerText = "\"Transmission open: Reach out at kevalp061411@gmail.com or 613-219-6739 for immediate interview scheduling.\"";
+    feed.innerText = "Transmission open: Reach out at kevalp061411@gmail.com or 613-219-6739 for immediate interview scheduling.";
   }
 }
 
-// 1. Interactive In-Browser Ping Probe Simulation
+// --- LATENCY PROBE SIMULATOR ---
 let simInterval = null;
 let lastSimRTT = 0;
 
@@ -93,47 +90,47 @@ function toggleWebSimulation() {
   const rttEl = document.getElementById('sim-rtt');
   const jitterEl = document.getElementById('sim-jitter');
   const statusEl = document.getElementById('sim-status');
+  const indicatorEl = document.getElementById('sim-indicator');
   const target = document.getElementById('sim-target') ? document.getElementById('sim-target').value : 'val';
-
+  
   if (simInterval) {
     clearInterval(simInterval);
     simInterval = null;
-    if (btn) btn.innerText = "Run Demo";
+    if (btn) btn.innerText = "RUN PROBE ENGINE";
     if (statusEl) {
       statusEl.innerText = "IDLE";
-      statusEl.className = "font-bold text-slate-400 text-xs";
+      statusEl.className = "font-bold text-slate-400";
+    }
+    if (indicatorEl) {
+      indicatorEl.className = "w-2 h-2 rounded-full bg-slate-500";
     }
     return;
   }
-
-  if (btn) btn.innerText = "Stop Demo";
-
+  
+  if (btn) btn.innerText = "STOP PROBE ENGINE";
   const baseLatencies = { val: 24, cf: 12, ggl: 18 };
-
+  
   simInterval = setInterval(() => {
     const base = baseLatencies[target] || 20;
-    const isSpike = Math.random() < 0.15;
+    const isSpike = Math.random() < 0.12;
     const variance = isSpike ? Math.floor(Math.random() * 45) + 30 : Math.floor(Math.random() * 6) - 3;
     const currentRTT = Math.max(8, base + variance);
     const jitter = lastSimRTT > 0 ? Math.abs(currentRTT - lastSimRTT) : 1;
     lastSimRTT = currentRTT;
-
+    
     if (rttEl) rttEl.innerText = `${currentRTT} ms`;
     if (jitterEl) jitterEl.innerText = `${jitter} ms`;
-
     if (statusEl) {
-      if (jitter > 20) {
-        statusEl.innerText = "SPIKE";
-        statusEl.className = "font-bold text-[#fe007a] text-xs";
-      } else {
-        statusEl.innerText = "OPTIMAL";
-        statusEl.className = "font-bold text-[#00ff88] text-xs";
-      }
+      statusEl.innerText = "ACTIVE";
+      statusEl.className = "font-bold text-green-400 animate-pulse";
+    }
+    if (indicatorEl) {
+      indicatorEl.className = "w-2 h-2 rounded-full bg-green-500 animate-ping";
     }
   }, 600);
 }
 
-// 2. Interactive In-Browser CNN Softmax Inference Simulation
+// --- CNN IMAGE CLASSIFICATION INFERENCE ---
 function runVisionInference() {
   const btn = document.getElementById('vision-btn');
   const target = document.getElementById('vision-sample') ? document.getElementById('vision-sample').value : 'plane';
@@ -143,158 +140,111 @@ function runVisionInference() {
   const labelSub = document.getElementById('label-sub');
   const confSub = document.getElementById('conf-sub');
   const barSub = document.getElementById('bar-sub');
-
+  
   if (btn) {
-    btn.innerText = "Analyzing...";
+    btn.innerText = "RUNNING...";
     btn.disabled = true;
   }
-
+  
   const datasetMap = {
     plane: { top: "Airplane (Class 0)", topPct: 94.2, sub: "Bird (Class 2)", subPct: 4.1 },
-    truck: { top: "Automobile/Truck (Class 9)", topPct: 91.8, sub: "Ship (Class 8)", subPct: 5.3 },
-    dog:   { top: "Dog / Canine (Class 5)", topPct: 88.6, sub: "Cat / Feline (Class 3)", subPct: 8.4 },
-    ship:  { top: "Ship / Vessel (Class 8)", topPct: 96.1, sub: "Airplane (Class 0)", subPct: 2.7 }
+    truck: { top: "Automobile/Truck (Class 9)\n[Automobile/Truck]", topPct: 91.8, sub: "Ship (Class 8)\n[Ship / Vessel]", subPct: 5.3 },
+    dog:   { top: "Dog / Canine (Class 5)\n[Dog / Canine]", topPct: 88.6, sub: "Cat / Feline (Class 3)\n[Cat / Feline]", subPct: 8.4 },
+    ship:  { top: "Ship / Vessel (Class 8)\n[Ship / Vessel]", topPct: 96.1, sub: "Airplane (Class 0)", subPct: 2.7 }
   };
-
+  
   setTimeout(() => {
     const res = datasetMap[target];
     if (labelTop) labelTop.innerText = `Identified: ${res.top}`;
     if (confTop) confTop.innerText = `${res.topPct}%`;
     if (barTop) barTop.style.width = `${res.topPct}%`;
-
+    
     if (labelSub) labelSub.innerText = `Secondary: ${res.sub}`;
     if (confSub) confSub.innerText = `${res.subPct}%`;
     if (barSub) barSub.style.width = `${res.subPct}%`;
-
+    
     if (btn) {
-      btn.innerText = "Classify";
+      btn.innerText = "RUN INFERENCE";
       btn.disabled = false;
     }
-  }, 400);
+  }, 800);
 }
 
-// Mount Default Screen on Boot
-document.addEventListener("DOMContentLoaded", () => {
-  switchScreen('status');
-  if (window.lucide) {
-    lucide.createIcons();
+// --- DYNAMIC BACKGROUND SWITCHING ENGINE ---
+function changeWebsiteBackground(bgKey) {
+  // Remove existing background classes
+  document.body.classList.remove('bg-default', 'bg-sakura', 'bg-cybercity', 'bg-matrix', 'bg-synthwave', 'bg-nebula');
+  
+  // Add new background class
+  document.body.classList.add(`bg-${bgKey}`);
+  
+  // Persist background selection across page reloads
+  localStorage.setItem("operator_background_theme", bgKey);
+  
+  // Announce background change to user in real-time
+  const commsEl = document.getElementById("comms-text");
+  if (commsEl) {
+    commsEl.innerText = `// ATMOSPHERE LOG: Environmental backdrop calibrated successfully to "${bgKey.toUpperCase()}". Grid matrix synced.`;
+    commsEl.style.color = "#00ff88";
+    setTimeout(() => { commsEl.style.color = ""; }, 3500);
   }
-});
-// --- LOOT CHEST UNBOXING SYSTEM ---
+}
 
+// --- GAMIFIED ENVIRONMENTAL LOOT CHEST SYSTEM ---
 const lootTable = [
-  {
-    name: "CYBERPUNK HUD",
-    rarity: "item-rare",
-    desc: "Terminal palette shifted to Neon Magenta.",
-    action: () => applyTheme("theme-violet")
+  { 
+    name: "SAKURA SANCTUARY", 
+    rarity: "item-rare", 
+    desc: "Deploys a serene, glowing cyber-cherry blossom canopy.", 
+    action: () => changeWebsiteBackground("sakura") 
   },
-  {
-    name: "MATRIX OVERRIDE",
-    rarity: "item-rare",
-    desc: "Terminal palette shifted to Matrix Green.",
-    action: () => applyTheme("theme-matrix")
+  { 
+    name: "NEON METROPOLIS", 
+    rarity: "item-rare", 
+    desc: "Shifts UI background to a high-rise rainy cyberpunk city skyline.", 
+    action: () => changeWebsiteBackground("cybercity") 
   },
-  {
-    name: "SOLAR FLARE HUD",
-    rarity: "item-rare",
-    desc: "Terminal palette shifted to Tactical Amber.",
-    action: () => applyTheme("theme-amber")
+  { 
+    name: "MATRIX GRID", 
+    rarity: "item-rare", 
+    desc: "Loads an active hacking green digital code-rain terminal wall.", 
+    action: () => changeWebsiteBackground("matrix") 
   },
-  {
-    name: "CLASSIFIED RESUME",
-    rarity: "item-legendary",
-    desc: "Operator Dossier ready for download.",
+  { 
+    name: "SYNTHWAVE SUNSET", 
+    rarity: "item-rare", 
+    desc: "Renders a vintage neon outrun sunset grid landscape.", 
+    action: () => changeWebsiteBackground("synthwave") 
+  },
+  { 
+    name: "COSMIC NEBULA", 
+    rarity: "item-legendary", 
+    desc: "Synchronizes background to a highly detailed deep space nebula starfield.", 
+    action: () => changeWebsiteBackground("nebula") 
+  },
+  { 
+    name: "CLASSIFIED RESUME", 
+    rarity: "item-legendary", 
+    desc: "Ready for high-speed download. Ingressing PDF operator file.", 
     action: () => {
       const link = document.createElement("a");
       link.href = "./resume.pdf";
       link.download = "Keval_Patel_Resume.pdf";
       link.click();
-    }
+    } 
   },
-  {
-    name: "TELEMETRY LOG",
-    rarity: "item-common",
-    desc: "Telemetry probe: Jitter 0.3ms // Status Optimal.",
-    action: () => triggerCommsLog()
+  { 
+    name: "TACTICAL DEFAULT", 
+    rarity: "item-common", 
+    desc: "Resets environmental settings to initial neon blue overlay grids.", 
+    action: () => changeWebsiteBackground("default") 
   }
 ];
 
-// Comms trigger for Telemetry drop
-function triggerCommsLog() {
-  const commsEl = document.getElementById("comms-text");
-  if (commsEl) {
-    commsEl.innerText = "\"// SYSTEM EVENT: Tactical probe telemetry buffer synchronized. Latency stabilized.\"";
-    commsEl.style.color = "#00ff88";
-    setTimeout(() => { commsEl.style.color = ""; }, 2500);
-  }
-}
 const CARD_WIDTH = 130;
 const TOTAL_CARDS = 40;
 let generatedCards = [];
 
-function applyTheme(themeClass) {
-  // Theme Color Configurations
-  const themes = {
-    "theme-matrix": {
-      primaryHex: "#00ff88",
-      primaryText: "text-[#00ff88]",
-      primaryBg: "bg-[#00ff88]",
-      primaryBorder: "border-[#00ff88]",
-      glowColor: "rgba(0, 255, 136, 0.6)"
-    },
-    "theme-violet": {
-      primaryHex: "#fe007a",
-      primaryText: "text-[#fe007a]",
-      primaryBg: "bg-[#fe007a]",
-      primaryBorder: "border-[#fe007a]",
-      glowColor: "rgba(254, 0, 122, 0.6)"
-    },
-    "theme-amber": {
-      primaryHex: "#fcee0a",
-      primaryText: "text-[#fcee0a]",
-      primaryBg: "bg-[#fcee0a]",
-      primaryBorder: "border-[#fcee0a]",
-      glowColor: "rgba(252, 238, 10, 0.6)"
-    }
-  };
-
-  const theme = themes[themeClass];
-  if (!theme) return;
-
-  // 1. Swap Active Nav Tab Button
-  const activeTab = document.querySelector("#tab-status");
-  if (activeTab) {
-    activeTab.style.backgroundColor = theme.primaryHex;
-    activeTab.style.borderColor = theme.primaryHex;
-    activeTab.style.color = "#000000";
-  }
-
-  // 2. Swap Big Vault Button
-  const vaultBtn = document.querySelector("button[onclick*='loot']");
-  if (vaultBtn) {
-    vaultBtn.style.backgroundColor = theme.primaryHex;
-    vaultBtn.style.boxShadow = `0 0 15px ${theme.glowColor}`;
-  }
-
-  // 3. Swap "OPERATOR:" label & Avatar border
-  const operatorLabel = document.querySelector("header div div");
-  if (operatorLabel) operatorLabel.style.color = theme.primaryHex;
-
-  // 4. Update Header Name Glow
-  const glowNames = document.querySelectorAll(".glow-cyan, h2.glow-cyan");
-  glowNames.forEach(el => {
-    el.style.textShadow = `0 0 12px ${theme.glowColor}`;
-  });
-
-  // 5. Swap corner tick marks
-  const box = document.querySelector(".hud-box");
-  if (box) {
-    box.style.setProperty("--theme-primary", theme.primaryHex);
-  }
-
-  localStorage.setItem("operator_hud_theme", themeClass);
-}
 function populateStrip() {
   const strip = document.getElementById("roulette-strip");
   if (!strip) return;
@@ -302,23 +252,31 @@ function populateStrip() {
   strip.style.transition = "none";
   strip.style.transform = "translateX(0px)";
   generatedCards = [];
-
+  
   for (let i = 0; i < TOTAL_CARDS; i++) {
+    // Generate a random item from loot pool
     const item = lootTable[Math.floor(Math.random() * lootTable.length)];
     generatedCards.push(item);
-
-    let borderAccent = "border-b-[#00f2fe] text-[#00f2fe]";
-    if (item.rarity === "item-rare") borderAccent = "border-b-[#fe007a] text-[#fe007a]";
-    if (item.rarity === "item-legendary") borderAccent = "border-b-[#fcee0a] text-[#fcee0a]";
-
+    
+    // Create card element
     const card = document.createElement("div");
-    card.className = `w-[130px] h-full flex-shrink-0 border-r border-[#1b2a4a] border-b-4 ${borderAccent} flex flex-col items-center justify-center font-orbitron text-[10px] text-center p-2 box-border bg-[#0a0f18] select-none`;
-    card.innerHTML = `<span class="font-bold tracking-wide">${item.name}</span>`;
+    card.style.width = `${CARD_WIDTH}px`;
+    card.className = `flex-shrink-0 h-16 border border-slate-800 bg-[#070b12] rounded flex flex-col items-center justify-center p-1 font-orbitron transition ${item.rarity}`;
+    
+    // Rarity styles inside class definitions
+    let rarityColor = "text-slate-400";
+    if (item.rarity === 'item-rare') rarityColor = "text-[#00f2fe]";
+    if (item.rarity === 'item-legendary') rarityColor = "text-[#fcee0a]";
+    
+    card.innerHTML = `
+      <span class="text-[9px] font-bold ${rarityColor}">${item.rarity.replace('item-', '').toUpperCase()}</span>
+      <span class="text-[10px] font-black text-white whitespace-nowrap overflow-hidden text-ellipsis w-full px-1">${item.name}</span>
+    `;
     strip.appendChild(card);
   }
 }
 
-// Global function callable from HTML onclick
+// Global modal toggle controls
 window.openLootModal = function() {
   const modal = document.getElementById("loot-modal");
   if (modal) {
@@ -337,51 +295,103 @@ function initLootChestEvents() {
   const spinBtn = document.getElementById("spin-btn");
   const strip = document.getElementById("roulette-strip");
   const rewardDisplay = document.getElementById("reward-display");
-
+  
   if (closeBtn) {
     closeBtn.onclick = window.closeLootModal;
   }
-
+  
   if (spinBtn) {
     spinBtn.onclick = function() {
       populateStrip();
       spinBtn.disabled = true;
-      if (rewardDisplay) rewardDisplay.classList.add("hidden");
-
-      const winningIndex = 32;
-      const viewport = document.getElementById("roulette-viewport");
-      const containerWidth = viewport ? viewport.offsetWidth : 540;
-      const offset = -(winningIndex * CARD_WIDTH - (containerWidth / 2 - CARD_WIDTH / 2));
-
+      spinBtn.innerText = "SWEEPING GRID...";
+      
+      if (rewardDisplay) {
+        rewardDisplay.classList.add('hidden');
+        rewardDisplay.style.opacity = "0";
+        rewardDisplay.classList.remove('scale-100');
+        rewardDisplay.classList.add('scale-95');
+      }
+      
+      // Determine winning item (index 35 serves as the anchor item)
+      const winningIndex = 35;
+      const winningItem = lootTable[Math.floor(Math.random() * lootTable.length)];
+      generatedCards[winningIndex] = winningItem;
+      
+      // Render the specific winning item card directly into position 35
+      const stripCards = strip.childNodes;
+      if (stripCards && stripCards[winningIndex]) {
+        let rarityColor = "text-slate-400";
+        if (winningItem.rarity === 'item-rare') rarityColor = "text-[#00f2fe]";
+        if (winningItem.rarity === 'item-legendary') rarityColor = "text-[#fcee0a]";
+        
+        stripCards[winningIndex].className = `flex-shrink-0 h-16 border border-[#fcee0a] bg-slate-900 rounded flex flex-col items-center justify-center p-1 font-orbitron shadow-[0_0_12px_rgba(252,238,10,0.3)] ${winningItem.rarity}`;
+        stripCards[winningIndex].innerHTML = `
+          <span class="text-[9px] font-bold ${rarityColor}">${winningItem.rarity.replace('item-', '').toUpperCase()}</span>
+          <span class="text-[10px] font-black text-white whitespace-nowrap overflow-hidden text-ellipsis w-full px-1">${winningItem.name}</span>
+        `;
+      }
+      
+      // Smooth animated spin to the winning card
       setTimeout(() => {
-        if (strip) {
-          strip.style.transition = "transform 4.5s cubic-bezier(0.12, 0.8, 0.2, 1)";
-          strip.style.transform = `translateX(${offset}px)`;
-        }
+        const containerWidth = strip.parentElement.clientWidth;
+        const targetOffset = - (winningIndex * CARD_WIDTH) + (containerWidth / 2) - (CARD_WIDTH / 2);
+        
+        strip.style.transition = "transform 4.5s cubic-bezier(0.1, 0.85, 0.25, 1)";
+        strip.style.transform = `translateX(${targetOffset}px)`;
       }, 50);
-
+      
+      // Unveil the reward upon spin arrival
       setTimeout(() => {
         spinBtn.disabled = false;
-        const wonReward = generatedCards[winningIndex];
-        if (rewardDisplay && wonReward) {
-          rewardDisplay.innerHTML = `
-            <div class="text-[#fcee0a] font-bold font-orbitron text-xs">// DROP ACQUIRED: ${wonReward.name}</div>
-            <div class="text-[11px] text-slate-400 mt-1 font-mono">${wonReward.desc}</div>
-          `;
-          rewardDisplay.classList.remove("hidden");
+        spinBtn.innerText = "INITIATE MATRIX SWEEP";
+        
+        // Populate reward description boxes
+        const rewardName = document.getElementById("reward-name");
+        const rewardRarity = document.getElementById("reward-rarity");
+        const rewardDesc = document.getElementById("reward-desc");
+        
+        if (rewardName) rewardName.innerText = winningItem.name;
+        if (rewardDesc) rewardDesc.innerText = winningItem.desc;
+        if (rewardRarity) {
+          rewardRarity.innerText = winningItem.rarity.replace('item-', '').toUpperCase();
+          rewardRarity.className = "text-[9px] font-mono font-bold uppercase tracking-widest ";
+          if (winningItem.rarity === 'item-common') rewardRarity.classList.add('text-slate-400');
+          if (winningItem.rarity === 'item-rare') rewardRarity.classList.add('text-[#00f2fe]');
+          if (winningItem.rarity === 'item-legendary') rewardRarity.classList.add('text-[#fcee0a]');
         }
-
-        if (wonReward && typeof wonReward.action === "function") {
-          wonReward.action();
+        
+        if (rewardDisplay) {
+          rewardDisplay.classList.remove('hidden');
+          // Add border glow matching rarity
+          rewardDisplay.className = "w-full hud-card-item p-4 border rounded text-center space-y-1 transition duration-500 scale-95 opacity-0";
+          if (winningItem.rarity === 'item-rare') rewardDisplay.classList.add('border-[#00f2fe]/40', 'shadow-[0_0_10px_rgba(0,242,254,0.15)]');
+          else if (winningItem.rarity === 'item-legendary') rewardDisplay.classList.add('border-[#fcee0a]/40', 'shadow-[0_0_10px_rgba(252,238,10,0.15)]');
+          else rewardDisplay.classList.add('border-slate-800');
+          
+          setTimeout(() => {
+            rewardDisplay.classList.remove('scale-95', 'opacity-0');
+            rewardDisplay.classList.add('scale-100', 'opacity-100');
+          }, 50);
         }
+        
+        // Fire reward action
+        if (winningItem.action) {
+          winningItem.action();
+        }
+        
       }, 4600);
     };
   }
 }
 
-// Initialize on load
+// --- BOOT AND EVENT MOUNTING ---
 document.addEventListener("DOMContentLoaded", () => {
+  // Enforce Status Screen on launch
+  switchScreen('status');
   initLootChestEvents();
-  const savedTheme = localStorage.getItem("operator_hud_theme");
-  if (savedTheme) document.body.classList.add(savedTheme);
+  
+  // Reload and apply saved environment background settings
+  const savedBg = localStorage.getItem("operator_background_theme") || "default";
+  document.body.classList.add(`bg-${savedBg}`);
 });
