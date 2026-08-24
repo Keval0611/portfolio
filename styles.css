@@ -75,107 +75,15 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-/* --- DYNAMIC HUD COLOR THEMES --- */
-:root {
-  --hud-primary: #00f2fe;
-  --hud-secondary: #fcee0a;
-}
-
-/* 1. Matrix Theme Override */
+/* --- THEME OVERRIDES (GLOBAL PALETTE ROTATION) --- */
 body.theme-matrix {
-  --hud-primary: #00ff88;
-  --hud-secondary: #a3e635;
-}
-body.theme-matrix #tab-status,
-body.theme-matrix #sim-btn {
-  background-color: #00ff88 !important;
-  border-color: #00ff88 !important;
-}
-body.theme-matrix .glow-cyan {
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
-}
-
-/* 2. Cyberpunk Violet Theme Override */
-body.theme-violet {
-  --hud-primary: #fe007a;
-  --hud-secondary: #c084fc;
-}
-body.theme-violet #tab-status,
-body.theme-violet #sim-btn {
-  background-color: #fe007a !important;
-  border-color: #fe007a !important;
-}
-body.theme-violet .glow-cyan {
-  text-shadow: 0 0 10px rgba(254, 0, 122, 0.6);
-}
-
-/* 3. Amber Theme Override */
-body.theme-amber {
-  --hud-primary: #fcee0a;
-  --hud-secondary: #ff8800;
-}
-body.theme-amber #tab-status,
-body.theme-amber #sim-btn {
-  background-color: #fcee0a !important;
-  border-color: #fcee0a !important;
-}
-body.theme-amber .glow-cyan {
-  text-shadow: 0 0 10px rgba(252, 238, 10, 0.6);
-}
-/* Dynamic Palette Shifts */
-body.theme-matrix {
-  --theme-color: #00ff88;
-}
-body.theme-matrix header h1,
-body.theme-matrix .glow-cyan {
-  text-shadow: 0 0 12px rgba(0, 255, 136, 0.7);
-  color: #00ff88 !important;
-}
-body.theme-matrix #tab-status,
-body.theme-matrix #spin-btn,
-body.theme-matrix #sim-btn {
-  background-color: #00ff88 !important;
-  border-color: #00ff88 !important;
-  color: #000 !important;
-}
-body.theme-matrix .hud-box::before {
-  border-color: #00ff88 !important;
+  filter: hue-rotate(70deg) saturate(1.4);
 }
 
 body.theme-violet {
-  --theme-color: #fe007a;
-}
-body.theme-violet header h1,
-body.theme-violet .glow-cyan {
-  text-shadow: 0 0 12px rgba(254, 0, 122, 0.7);
-  color: #fe007a !important;
-}
-body.theme-violet #tab-status,
-body.theme-violet #spin-btn,
-body.theme-violet #sim-btn {
-  background-color: #fe007a !important;
-  border-color: #fe007a !important;
-  color: #fff !important;
-}
-body.theme-violet .hud-box::before {
-  border-color: #fe007a !important;
+  filter: hue-rotate(140deg) saturate(1.5);
 }
 
 body.theme-amber {
-  --theme-color: #fcee0a;
-}
-body.theme-amber header h1,
-body.theme-amber .glow-cyan {
-  text-shadow: 0 0 12px rgba(252, 238, 10, 0.7);
-  color: #fcee0a !important;
-}
-body.theme-amber #tab-status,
-body.theme-amber #spin-btn,
-body.theme-amber #sim-btn {
-  background-color: #fcee0a !important;
-  border-color: #fcee0a !important;
-  color: #000 !important;
-}
-body.theme-amber .hud-box::before {
-  border-color: #fcee0a !important;
+  filter: hue-rotate(215deg) saturate(1.6);
 }
